@@ -10,7 +10,7 @@ cmake_minimum_required(VERSION 3.18)
 get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
-add_definitions(-DRENAME_ME_LIBRARY)
+add_definitions(-Deasyssl_LIBRARY)
 
 
 file(GLOB_RECURSE SOURCE_CPP
@@ -45,5 +45,5 @@ prepareQM(${CURRENT_PROJECT} ${CMAKE_CURRENT_SOURCE_DIR} "${LANGS}")
 
 set(QML_IMPORT_PATH ${QML_IMPORT_PATH} "${CMAKE_CURRENT_SOURCE_DIR}/src" CACHE STRING "" FORCE)
 
-set(global_file "${CMAKE_CURRENT_SOURCE_DIR}/src/public/RENAME_ME/global.h")
+set(global_file "${CMAKE_CURRENT_SOURCE_DIR}/src/public/easyssl/global.h")
 configure_file("${global_file}.in" ${global_file} @ONLY)

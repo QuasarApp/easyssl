@@ -1,0 +1,9 @@
+<RCC>
+    <qresource prefix="/">
+        <file>src/easysslModule/qmldir</file>
+        <file>src/easysslModule/easyssl.qml</file>
+    </qresource>
+    <qresource prefix="/easysslTr">
+        <file>languages/en.qm</file>
+    </qresource>
+</RCC>

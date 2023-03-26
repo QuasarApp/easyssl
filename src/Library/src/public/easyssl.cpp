@@ -5,18 +5,18 @@
 //# of this license document, but changing it is not allowed.
 //#
 
-#include "RENAME_ME.h"
+#include "easyssl.h"
 
 
-namespace RENAME_ME {
+namespace easyssl {
 
 bool init() {
-    initRENAME_MEResources();
+    initeasysslResources();
     return true;
 }
 
 QString version() {
-    return RENAME_ME_VERSION;
+    return easyssl_VERSION;
 }
 
 
