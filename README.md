@@ -1,15 +1,76 @@
-# CMakeProject
-Template repository for cmake project
-Fork me and replase easyssl to Name of your new project.
+# EasySSL
+This is simple wrapper library that make using ssl simple. 
+This library contains interfaces for the signing and encription data.
 
-1. Clone this repository 
-2. Run ./init.sh NewProjectName 
+### Supported encription alhorithms:
+* edsa based on sll 1.1 
 
-# This template supports next build targets:
+### Supported features
+* encription 
+* signing
+* keys creating
+* asyn auth bse on the asyn encriptions methods
 
-|   Command or make target   |  Description    |
-|------|------|
-| **make test** | The run tests for a project (dependet of Qt Tests, so you need to add Qt in Cmake using CMAKE_PREFIX_PATH) |
-| **make doc** | The generate a documentation for a project (dependet of doxygen) |
-| **make deploy** | The generate distribution for a project (dependet of CQtDeployer) |
-| **make release** | The prepare Qt Installer framework repository for a project, generate a snap package and APK file for android (dependet of CQtDeployer,  snapcraft, AndroidDeployer). |
+
+## Build and Include
+ 
+ * cd yourRepo
+ * git submodule add https://github.com/QuasarApp/easyssl.git # add the repository of Heart into your repo like submodule
+ * git submodule update --init --recursive
+ * Include in your CMakeLists.txt file the main CMakeLists.txt file of Heart library
+ 
+     ```cmake
+     add_subdirectory(easyssl)
+     ```
+     
+ * link the Heart library to your target
+     ```cmake
+     target_link_libraries(yourLib PUBLIC easyssl)
+     ```
+ * rebuild yuor project
+
+
+
+## Usage
+
+Authentication 
+
+```cpp
+#include <easyssl/authecdsa.h>
+
+class ECDSA: public EasySSL::AuthECDSA {
+
+public:
+
+    // AsyncKeysAuth interface
+    void setPrivateKey(const QByteArray &newPriv) {
+        _priv = newPriv;
+    }
+
+    QByteArray getPrivateKey() const {
+        return _priv;
+    };
+
+private:
+    QByteArray _priv;
+
+};
+
+ECDSA edsa;
+QByteArray pub, priv;
+QString userID;
+
+// make public and private keys.
+edsa.makeKeys(pub, priv);
+edsa.setPrivateKey(priv);
+edsa.setPublicKey(pub);
+
+// prepare an authentication object.
+edsa.prepare();
+edsa.setPrivateKey({});
+
+edsa.auth(1000, &userID)
+
+```
+
+
