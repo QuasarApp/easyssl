@@ -5,12 +5,12 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.19)
 
 get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
 set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
-add_definitions(-Deasyssl_LIBRARY)
+add_definitions(-DEASYSSL_LIBRARY)
 
 
 file(GLOB_RECURSE SOURCE_CPP

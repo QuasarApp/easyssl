@@ -21,7 +21,7 @@
         ],
     "extraLib": "crypto",
     "targetDir": "@CMAKE_SOURCE_DIR@/Distro",
-    "deployVersion": "@easyssl_VERSION@",
+    "deployVersion": "@EASYSSL_VERSION@",
 
 }
 

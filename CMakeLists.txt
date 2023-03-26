@@ -5,7 +5,7 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.19)
 project(easyssl LANGUAGES CXX)
 if(TARGET ${PROJECT_NAME})
   message("The ${PROJECT_NAME} arledy included in main Project")
@@ -32,31 +32,31 @@ find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
 include(submodules/CMake/QuasarApp.cmake)
 
 updateGitVars()
-set(easyssl_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
-set(easyssl_PACKAGE_ID "quasarapp.core.easyssl")
+set(EASYSSL_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
+set(EASYSSL_PACKAGE_ID "quasarapp.core.easyssl")
 
-option(easyssl_TESTS "This option disables or enables tests of the ${PROJECT_NAME} project"  ON)
-option(easyssl_EXAMPLE "This option disables or enables example app of the ${PROJECT_NAME} project" ON)
+option(EASYSSL_TESTS "This option disables or enables tests of the ${PROJECT_NAME} project"  ON)
+option(EASYSSL_EXAMPLE "This option disables or enables example app of the ${PROJECT_NAME} project" ON)
 
 if (ANDROID OR IOS OR NOT QT_VERSION_MAJOR OR QA_WASM32)
-    set(easyssl_TESTS OFF CACHE BOOL "This option force disbled for ANDROID IOS QA_WASM32 and Not Qt projects" FORCE)
+    set(EASYSSL_TESTS OFF CACHE BOOL "This option force disbled for ANDROID IOS QA_WASM32 and Not Qt projects" FORCE)
 endif()
 
 if (NOT QT_VERSION_MAJOR)
-    set(easyssl_EXAMPLE OFF CACHE BOOL "This option force disbled for Not Qt projects" FORCE)
+    set(EASYSSL_EXAMPLE OFF CACHE BOOL "This option force disbled for Not Qt projects" FORCE)
 endif()
 
 make_directory(Distro)
 
 initAll()
 
-add_subdirectory(src/Library)
+add_subdirectory(src/lib)
 
-if (DEFINED easyssl_EXAMPLE)
-    add_subdirectory(src/Example)
+if (DEFINED EASYSSL_EXAMPLE)
+    add_subdirectory(src/example)
 endif()
 
-if (easyssl_TESTS)
+if (EASYSSL_TESTS)
     add_subdirectory(tests)
 else()
     message("The ${PROJECT_NAME} tests is disabled.")

@@ -5,18 +5,18 @@
 //# of this license document, but changing it is not allowed.
 //#
 
-#ifndef easyssl_GLOBAL_H
-#define easyssl_GLOBAL_H
+#ifndef EASYSSL_GLOBAL_H
+#define EASYSSL_GLOBAL_H
 
 #include <QtCore/qglobal.h>
 
-#define easyssl_VERSION "@easyssl_VERSION@"
+#define EASYSSL_VERSION "0.2.a2c421a"
 
-#if defined(easyssl_LIBRARY)
-#  define easyssl_EXPORT Q_DECL_EXPORT
+#if defined(EASYSSL_LIBRARY)
+#  define EASYSSL_EXPORT Q_DECL_EXPORT
 #else
-#  define easyssl_EXPORT Q_DECL_IMPORT
+#  define EASYSSL_EXPORT Q_DECL_IMPORT
 #endif
 
-#endif //easyssl_GLOBAL_H
+#endif //EASYSSL_GLOBAL_H
 

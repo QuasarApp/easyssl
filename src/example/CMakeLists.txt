@@ -5,7 +5,7 @@
 # of this license document, but changing it is not allowed.
 #
 
-cmake_minimum_required(VERSION 3.18)
+cmake_minimum_required(VERSION 3.19)
 
 get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
@@ -43,7 +43,7 @@ else()
 
 endif()
 
-target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME}Library)
+target_link_libraries(${CURRENT_PROJECT} PUBLIC ${PROJECT_NAME}lib)
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
@@ -58,7 +58,7 @@ if (ANDROID)
     set(ANDROID_API_VERSION $ENV{ANDROID_API_VERSION})
     set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
 
-    set(easyssl_EXTRA_LIBS
+    set(EASYSSL_EXTRA_LIBS
         ${PROJECT_NAME}Library
 #        libName
         )
@@ -74,7 +74,7 @@ if (ANDROID)
             "${SIGPATH}/quasarapp.keystore"
             "${SIGPASS_QUASARAPP}"
             "${TARGET_DIR}"
-            "${easyssl_EXTRA_LIBS}")
+            "${EASYSSL_EXTRA_LIBS}")
 
     else()
         message("NO_SIGN_APP")
@@ -82,7 +82,7 @@ if (ANDROID)
         addDeployAPK(${CURRENT_PROJECT}
             "${CMAKE_CURRENT_LIST_DIR}/android"
             "${TARGET_DIR}"
-            "${easyssl_EXTRA_LIBS}")
+            "${EASYSSL_EXTRA_LIBS}")
 
     endif()
     set(manifest_file "${CMAKE_CURRENT_SOURCE_DIR}/android/AndroidManifest.xml")
@@ -108,9 +108,9 @@ elseif(IOS)
 #    set_xcode_property(${CURRENT_PROJECT} PRODUCT_BUNDLE_IDENTIFIER ${CHEATCARD_PACKAGE_ID} All)
 
     set_target_properties(${CURRENT_PROJECT} PROPERTIES
-        MACOSX_BUNDLE_GUI_IDENTIFIER ${easyssl_PACKAGE_ID}
-        MACOSX_BUNDLE_BUNDLE_VERSION ${easyssl_VERSION}
-        MACOSX_BUNDLE_SHORT_VERSION_STRING ${easyssl_VERSION}
+        MACOSX_BUNDLE_GUI_IDENTIFIER ${EASYSSL_PACKAGE_ID}
+        MACOSX_BUNDLE_BUNDLE_VERSION ${EASYSSL_VERSION}
+        MACOSX_BUNDLE_SHORT_VERSION_STRING ${EASYSSL_VERSION}
     )
 else()
     # Desctop deploying

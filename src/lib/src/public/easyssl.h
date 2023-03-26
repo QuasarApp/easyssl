@@ -16,12 +16,12 @@ namespace easyssl {
  * @brief init main initialize method of The easyssl library
  * @return true if library initialized successfull
  */
-bool easyssl_EXPORT init();
+bool EASYSSL_EXPORT init();
 
 /**
  * @brief version This method return string value of a library version
  * @return string value of a library version
  */
-QString easyssl_EXPORT version();
+QString EASYSSL_EXPORT version();
 
 };

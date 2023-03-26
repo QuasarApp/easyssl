@@ -16,7 +16,7 @@ bool init() {
 }
 
 QString version() {
-    return easyssl_VERSION;
+    return EASYSSL_VERSION;
 }
 
 
