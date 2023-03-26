@@ -1,12 +1,14 @@
 //#
 //# Copyright (C) 2020-2023 QuasarApp.
-//# Distributed under the GPLv3 software license, see the accompanying
+//# Distributed under the lgplv3 software license, see the accompanying
 //# Everyone is permitted to copy and distribute verbatim copies
 //# of this license document, but changing it is not allowed.
 //#
 
 #include <QtTest>
-#include "exampletest.h"
+#include "cryptotest.h"
+#include "authtest.h"
+#include <easyssl/ecdsassl11.h>
 
 // Use This macros for initialize your own test classes.
 // Check exampletests
@@ -32,7 +34,9 @@ private slots:
 
 
     // BEGIN TESTS CASES
-    TestCase(exampleTest, ExampleTest)
+    TestCase(authTest, AuthTest)
+    TestCase(cryptoTest, CryptoTest<EasySSL::ECDSASSL11>)
+
     // END TEST CASES
 
 private:

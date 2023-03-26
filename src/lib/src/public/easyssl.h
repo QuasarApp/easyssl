@@ -1,6 +1,6 @@
 //#
 //# Copyright (C) 2021-2023 QuasarApp.
-//# Distributed under the GPLv3 software license, see the accompanying
+//# Distributed under the lgplv3 software license, see the accompanying
 //# Everyone is permitted to copy and distribute verbatim copies
 //# of this license document, but changing it is not allowed.
 //#
@@ -10,7 +10,7 @@
 
 inline void initeasysslResources() { Q_INIT_RESOURCE(easyssl); }
 
-namespace easyssl {
+namespace EasySSL {
 
 /**
  * @brief init main initialize method of The easyssl library
