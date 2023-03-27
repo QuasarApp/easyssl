@@ -73,4 +73,4 @@ edsa.auth(1000, &userID)
 
 ```
 
-
+Full documentation available [here](https://quasarapp.ddns.net:3031/docs/QuasarApp/easyssl/latest/index.html) 
