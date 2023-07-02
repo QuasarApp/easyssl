@@ -20,14 +20,14 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if (ANDROID OR IOS)
+if (ANDROID)
     set(BUILD_SHARED_LIBS ON)
 endif()
 
 if (NOT QT_VERSION_MAJOR)
-    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test QUIET)
+    find_package(QT NAMES Qt6 Qt5 COMPONENTS Core Test REQUIRED)
 endif()
-find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test QUIET)
+find_package(Qt${QT_VERSION_MAJOR} COMPONENTS Core Test REQUIRED)
 
 include(submodules/CMake/QuasarApp.cmake)
 

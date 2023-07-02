@@ -9,11 +9,11 @@ cmake_minimum_required(VERSION 3.19)
 
 get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 
-set(CURRENT_PROJECT "${PROJECT_NAME}${CURRENT_PROJECT_DIR}")
+set(CURRENT_PROJECT "${PROJECT_NAME}")
 add_definitions(-DEASYSSL_LIBRARY)
 
 list(APPEND CMAKE_FIND_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
-find_package(OpenSSL REQUIRED)
+find_package(OpenSSL 3.0 REQUIRED)
 
 file(GLOB_RECURSE SOURCE_CPP
     "src/*.cpp"
@@ -43,7 +43,20 @@ else()
 
     message("Use shared ssl ")
     target_link_libraries(${CURRENT_PROJECT} PRIVATE OpenSSL::Crypto OpenSSL::SSL)
+
+    if (ANDROID)
+        set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
+
+        set(ANDROID_EXTRA_LIBS
+            ${OPENSSL_ROOT_PATH}/lib/libcrypto_android.so
+            ${OPENSSL_ROOT_PATH}/lib/libssl_android.so
+        CACHE INTERNAL "")
+
+        message(ANDROID_EXTRA_LIBS = ${ANDROID_EXTRA_LIBS})
+    endif()
 endif()
+
+message("Use the OpenSSL libraries: ${OPENSSL_LIBRARIES}")
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
