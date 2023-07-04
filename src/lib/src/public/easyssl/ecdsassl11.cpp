@@ -17,14 +17,9 @@
 #include <QDataStream>
 #include <QIODevice>
 #include <QVector>
+#include <easysslutils.h>
 
 namespace EasySSL {
-
-void printlastOpenSSlError() {
-    int error = ERR_get_error();
-    char buffer[256];
-    ERR_error_string(error, buffer);
-}
 
 bool prepareKeyAdnGroupObjects(EC_KEY **eckey, EC_GROUP **ecgroup) {
 
@@ -46,7 +41,7 @@ bool prepareKeyAdnGroupObjects(EC_KEY **eckey, EC_GROUP **ecgroup) {
 
     *eckey = EC_KEY_new();
     if (!*eckey) {
-        printlastOpenSSlError();
+        EasySSLUtils::printlastOpenSSlError();
         free();
         return false;
     }
@@ -54,13 +49,13 @@ bool prepareKeyAdnGroupObjects(EC_KEY **eckey, EC_GROUP **ecgroup) {
     *ecgroup = EC_GROUP_new_by_curve_name(NID_secp256k1);
 
     if (!*ecgroup) {
-        printlastOpenSSlError();
+        EasySSLUtils::printlastOpenSSlError();
         free();
         return false;
     }
 
     if (!EC_KEY_set_group(*eckey, *ecgroup)) {
-        printlastOpenSSlError();
+        EasySSLUtils::printlastOpenSSlError();
         free();
         return false;
     }
@@ -69,33 +64,11 @@ bool prepareKeyAdnGroupObjects(EC_KEY **eckey, EC_GROUP **ecgroup) {
 }
 
 
-ECDSASSL11::ECDSASSL11() {
-
-}
-
-QByteArray bignumToArray(const BIGNUM* num) {
-    int length = BN_bn2mpi(num, nullptr);
-    QVector<unsigned char> data(length);
-    BN_bn2mpi(num, data.data());
-    QByteArray result;
-    result.insert(0, reinterpret_cast<char*>(data.data()), data.length());
-    return result;
-}
-
-BIGNUM* bignumFromArray(const QByteArray& array) {
-    auto d = reinterpret_cast<const unsigned char*>(array.data());
-    BIGNUM* result = BN_mpi2bn(d,
-                               array.length(), nullptr);
-    if (!result) {
-        printlastOpenSSlError();
-    }
-
-    return result;
-}
+ECDSASSL11::ECDSASSL11() {}
 
 QByteArray extractPrivateKey(EC_KEY* ec_key) {
     const BIGNUM* ec_priv = EC_KEY_get0_private_key(ec_key);
-    return bignumToArray(ec_priv);
+    return EasySSLUtils::bignumToArray(ec_priv);
 }
 
 QByteArray extractPublicKey(EC_KEY* key, EC_GROUP* group) {
@@ -107,7 +80,7 @@ QByteArray extractPublicKey(EC_KEY* key, EC_GROUP* group) {
     size_t length = EC_KEY_key2buf(key, form, &pub_key_buffer, nullptr);
 
     if (length <= 0) {
-        printlastOpenSSlError();
+        EasySSLUtils::printlastOpenSSlError();
         return {};
     }
 
@@ -128,7 +101,7 @@ bool ECDSASSL11::makeKeys(QByteArray &pubKey, QByteArray &privKey) const {
     }
 
     if (!EC_KEY_generate_key(eckey)) {
-        printlastOpenSSlError();
+        EasySSLUtils::printlastOpenSSlError();
         EC_GROUP_free(ecgroup);
         EC_KEY_free(eckey);
         return false;
@@ -157,9 +130,9 @@ QByteArray ECDSASSL11::signMessage(const QByteArray &inputData,
     auto hash = QCryptographicHash::hash(inputData,
                                          QCryptographicHash::Sha256);
 
-    BIGNUM* priv = bignumFromArray(key);
+    BIGNUM* priv = EasySSLUtils::bignumFromArray(key);
     if (!EC_KEY_set_private_key(eckey, priv)) {
-        printlastOpenSSlError();
+        EasySSLUtils::printlastOpenSSlError();
         EC_GROUP_free(ecgroup);
         EC_KEY_free(eckey);
         return {};
@@ -172,7 +145,7 @@ QByteArray ECDSASSL11::signMessage(const QByteArray &inputData,
     EC_GROUP_free(ecgroup);
 
     if (!signature) {
-        printlastOpenSSlError();
+        EasySSLUtils::printlastOpenSSlError();
         return {};
     }
 
@@ -182,8 +155,8 @@ QByteArray ECDSASSL11::signMessage(const QByteArray &inputData,
     QByteArray result;
     QDataStream stream(&result, QIODevice::WriteOnly);
 
-    stream << bignumToArray(R);
-    stream << bignumToArray(S);
+    stream << EasySSLUtils::bignumToArray(R);
+    stream << EasySSLUtils::bignumToArray(S);
 
     ECDSA_SIG_free(signature);
 
@@ -203,15 +176,14 @@ bool ECDSASSL11::checkSign(const QByteArray &inputData,
     QByteArray rR,rS;
     stream >> rR;
     stream >> rS;
-    R = bignumFromArray(rR);
-    S = bignumFromArray(rS);
+    R = EasySSLUtils::bignumFromArray(rR);
+    S = EasySSLUtils::bignumFromArray(rS);
 
     ECDSA_SIG *sig = ECDSA_SIG_new();
     ECDSA_SIG_set0(sig, R, S);
 
     auto hash = QCryptographicHash::hash(inputData,
                                          QCryptographicHash::Sha256);
-
 
     EC_KEY *eckey= nullptr;
     EC_GROUP *ecgroup = nullptr;
@@ -220,7 +192,6 @@ bool ECDSASSL11::checkSign(const QByteArray &inputData,
         ECDSA_SIG_free(sig);
         return {};
     }
-
 
     // extract key from raw array;
     EC_POINT* ec_point = EC_POINT_new(ecgroup);

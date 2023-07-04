@@ -7,6 +7,7 @@
 
 
 #include "rsassl11.h"
+#include "qcryptographichash.h"
 #include <openssl/bn.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
@@ -81,19 +82,118 @@ ICrypto::Features RSASSL11::supportedFeatures() const {
 }
 
 QByteArray RSASSL11::signMessage(const QByteArray &inputData, const QByteArray &key) const {
+    QByteArray signature;
 
+    BIO* privateKeyBio = BIO_new_mem_buf(key.data(), key.size());
+
+    RSA* rsaPrivateKey = PEM_read_bio_RSAPrivateKey(privateKeyBio, nullptr, nullptr, nullptr);
+    BIO_free(privateKeyBio);
+
+    if (!rsaPrivateKey) {
+        perror("Error reading private key");
+        return {};
+    }
+
+    auto hash = QCryptographicHash::hash(inputData,
+                                         QCryptographicHash::Sha256);
+
+    signature.resize(RSA_size(rsaPrivateKey));
+    unsigned int signatureLength = 0;
+    int result = RSA_sign(NID_sha256, reinterpret_cast<const unsigned char*>(hash.data()),
+                          hash.size(), reinterpret_cast<unsigned char*>(signature.data()),
+                          &signatureLength, rsaPrivateKey);
+    RSA_free(rsaPrivateKey);
+
+    if (result != 1) {
+        perror("Error signing message");
+        return {};
+    }
+
+    signature.resize(signatureLength);
+    return signature;
 }
 
 bool RSASSL11::checkSign(const QByteArray &inputData, const QByteArray &signature, const QByteArray &key) const {
+    BIO* publicKeyBio = BIO_new_mem_buf(key.data(), key.size());
 
+    RSA* rsaPublicKey = PEM_read_bio_RSA_PUBKEY(publicKeyBio, nullptr, nullptr, nullptr);
+    BIO_free(publicKeyBio);
+
+    if (!rsaPublicKey) {
+        perror("Error reading public key");
+        return false;
+    }
+
+    auto hash = QCryptographicHash::hash(inputData,
+                                         QCryptographicHash::Sha256);
+
+    int result = RSA_verify(NID_sha256, reinterpret_cast<const unsigned char*>(hash.data()),
+                            hash.size(), reinterpret_cast<const unsigned char*>(signature.data()),
+                            signature.size(), rsaPublicKey);
+    RSA_free(rsaPublicKey);
+
+    if (result != 1) {
+        perror("Error verifying signature");
+        return false;
+    }
+
+    return true;
 }
 
 QByteArray RSASSL11::decrypt(const QByteArray &message, const QByteArray &key) {
+    QByteArray decryptedMessage;
 
+    BIO* privateKeyBio = BIO_new_mem_buf(key.data(), key.size());
+
+    RSA* rsaPrivateKey = PEM_read_bio_RSAPrivateKey(privateKeyBio, nullptr, nullptr, nullptr);
+    BIO_free(privateKeyBio);
+
+    if (!rsaPrivateKey) {
+        perror("Error reading private key");
+        return {};
+    }
+
+    decryptedMessage.resize(RSA_size(rsaPrivateKey));
+    int result = RSA_private_decrypt(message.size(),
+                                     reinterpret_cast<const unsigned char*>(message.data()),
+                                     reinterpret_cast<unsigned char*>(decryptedMessage.data()),
+                                     rsaPrivateKey, RSA_PKCS1_PADDING);
+    RSA_free(rsaPrivateKey);
+
+    if (result == -1) {
+        perror("Error decrypting ciphertext");
+        return {};
+    }
+
+    return decryptedMessage;
 }
 
 QByteArray RSASSL11::encrypt(const QByteArray &message, const QByteArray &key) {
+    QByteArray encryptedMessage;
+    BIO* publicKeyBio = BIO_new_mem_buf(key.data(), key.size());
 
+    RSA* rsaPublicKey = PEM_read_bio_RSA_PUBKEY(publicKeyBio, nullptr, nullptr, nullptr);
+    BIO_free(publicKeyBio);
+
+    if (!rsaPublicKey) {
+        perror("Error reading public key");
+        return {};
+    }
+
+    encryptedMessage.resize(RSA_size(rsaPublicKey));
+
+    int result = RSA_public_encrypt(message.size(),
+                                    reinterpret_cast<const unsigned char*>(message.data()),
+                                    reinterpret_cast<unsigned char*>(encryptedMessage.data()),
+                                    rsaPublicKey, RSA_PKCS1_PADDING);
+    RSA_free(rsaPublicKey);
+
+    if (result == -1) {
+        perror("Error encrypting message");
+        return {};
+    }
+
+    return encryptedMessage;
 }
 
 }
