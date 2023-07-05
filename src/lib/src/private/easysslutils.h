@@ -37,6 +37,22 @@ public:
      */
     [[nodiscard("This pointer will not free automatically. Please free returned pointer after using.")]]
     static BIGNUM* bignumFromArray(const QByteArray& array);
+
+    /**
+     * @brief bioToByteArray This method conver openssl BIO to QByteArry
+     * @param bio input arrary.
+     * @return Qt Array
+     */
+    static QByteArray bioToByteArray(BIO *bio);
+
+    /**
+     * @brief byteArrayToBio This method create BIO struct from the Qt QByteArray object.
+     * @param byteArray This is input Qt byte array.
+     * @return pointer tot the BIO.
+     * @note Do not forget free result pointer.
+     */
+    [[nodiscard("This pointer will not free automatically. Please free returned pointer after using.")]]
+    static BIO *byteArrayToBio(const QByteArray &byteArray);
 };
 
 

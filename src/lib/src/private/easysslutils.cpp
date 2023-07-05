@@ -40,5 +40,21 @@ BIGNUM *EasySSLUtils::bignumFromArray(const QByteArray &array) {
     return result;
 }
 
+QByteArray EasySSLUtils::bioToByteArray(BIO* bio) {
+    QByteArray byteArray;
+
+    int dataSize = BIO_ctrl_pending(bio);
+    byteArray.resize(dataSize);
+    if (BIO_read(bio, byteArray.data(), dataSize) != dataSize) {
+        return {};
+    }
+
+    return byteArray;
+}
+
+BIO* EasySSLUtils::byteArrayToBio(const QByteArray& byteArray) {
+    BIO* bio = BIO_new_mem_buf(byteArray.constData(), byteArray.length());
+    return bio;
+}
 
 }
