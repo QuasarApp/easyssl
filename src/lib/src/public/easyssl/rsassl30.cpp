@@ -144,59 +144,99 @@ bool RSASSL30::checkSign(const QByteArray &inputData, const QByteArray &signatur
 }
 
 QByteArray RSASSL30::decrypt(const QByteArray &message, const QByteArray &key) {
-    QByteArray decryptedMessage;
 
-    BIO* privateKeyBio = BIO_new_mem_buf(key.data(), key.size());
-
-    RSA* rsaPrivateKey = PEM_read_bio_RSAPrivateKey(privateKeyBio, nullptr, nullptr, nullptr);
-    BIO_free(privateKeyBio);
+    auto pkey = EasySSLUtils::byteArrayToBio(key);
+    auto rsaPrivateKey = PEM_read_bio_PrivateKey(pkey, nullptr, nullptr, nullptr);
+    BIO_free(pkey);
 
     if (!rsaPrivateKey) {
         perror("Error reading private key");
         return {};
     }
 
-    decryptedMessage.resize(RSA_size(rsaPrivateKey));
-    int result = RSA_private_decrypt(message.size(),
-                                     reinterpret_cast<const unsigned char*>(message.data()),
-                                     reinterpret_cast<unsigned char*>(decryptedMessage.data()),
-                                     rsaPrivateKey, RSA_PKCS1_PADDING);
-    RSA_free(rsaPrivateKey);
-
-    if (result == -1) {
-        perror("Error decrypting ciphertext");
+    EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new(rsaPrivateKey, nullptr);
+    if (ctx == nullptr) {
+        EVP_PKEY_free(rsaPrivateKey);
         return {};
     }
 
-    return decryptedMessage;
+    if (EVP_PKEY_decrypt_init(ctx) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPrivateKey);
+        return {};
+    }
+
+    if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPrivateKey);
+        return {};
+    }
+
+    size_t decryptedDataLength = 0;
+    if (EVP_PKEY_decrypt(ctx, nullptr, &decryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPrivateKey);
+        return {};
+    }
+
+    QByteArray decryptedData(decryptedDataLength, 0);
+    if (EVP_PKEY_decrypt(ctx, reinterpret_cast<unsigned char*>(decryptedData.data()), &decryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPrivateKey);
+        return {};
+    }
+
+    EVP_PKEY_CTX_free(ctx);
+    EVP_PKEY_free(rsaPrivateKey);
+    return decryptedData;
+
 }
 
 QByteArray RSASSL30::encrypt(const QByteArray &message, const QByteArray &key) {
-    QByteArray encryptedMessage;
-    BIO* publicKeyBio = BIO_new_mem_buf(key.data(), key.size());
-
-    RSA* rsaPublicKey = PEM_read_bio_RSA_PUBKEY(publicKeyBio, nullptr, nullptr, nullptr);
-    BIO_free(publicKeyBio);
+    auto pkey = EasySSLUtils::byteArrayToBio(key);
+    auto rsaPublicKey = PEM_read_bio_PUBKEY(pkey, nullptr, nullptr, nullptr);
+    BIO_free(pkey);
 
     if (!rsaPublicKey) {
         perror("Error reading public key");
         return {};
     }
 
-    encryptedMessage.resize(RSA_size(rsaPublicKey));
-
-    int result = RSA_public_encrypt(message.size(),
-                                    reinterpret_cast<const unsigned char*>(message.data()),
-                                    reinterpret_cast<unsigned char*>(encryptedMessage.data()),
-                                    rsaPublicKey, RSA_PKCS1_PADDING);
-    RSA_free(rsaPublicKey);
-
-    if (result == -1) {
-        perror("Error encrypting message");
+    EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new(rsaPublicKey, nullptr);
+    if (ctx == nullptr) {
+        EVP_PKEY_free(rsaPublicKey);
         return {};
     }
 
-    return encryptedMessage;
+    if (EVP_PKEY_encrypt_init(ctx) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPublicKey);
+        return {};
+    }
+
+    if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPublicKey);
+        return {};
+    }
+
+    size_t encryptedDataLength = 0;
+    if (EVP_PKEY_encrypt(ctx, nullptr, &encryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPublicKey);
+        return {};
+    }
+
+    QByteArray encryptedData(encryptedDataLength, 0);
+    if (EVP_PKEY_encrypt(ctx, reinterpret_cast<unsigned char*>(encryptedData.data()), &encryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
+        EVP_PKEY_CTX_free(ctx);
+        EVP_PKEY_free(rsaPublicKey);
+        return {};
+    }
+
+    EVP_PKEY_CTX_free(ctx);
+    EVP_PKEY_free(rsaPublicKey);
+    return encryptedData;
 }
 
 }
