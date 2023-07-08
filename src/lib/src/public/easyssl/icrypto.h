@@ -10,7 +10,9 @@
 #define I_CRYPTO_H
 
 #include "global.h"
+#include "qssl.h"
 #include <QByteArray>
+#include <openssl/types.h>
 
 namespace EasySSL {
 
@@ -38,7 +40,19 @@ public:
      * @param privKey This is result private key.
      * @return true if keys generated successful.
      */
-    virtual bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const = 0;
+    bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const;
+
+    /**
+     * @brief makeKeys This method generate the public and private keys of the ECDSA.
+     * @return pointer to generated keys.
+     */
+    virtual EVP_PKEY * makeRawKeys() const = 0;
+
+    /**
+     * @brief keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.)
+     * @return
+     */
+    virtual QSsl::KeyAlgorithm keyAlgorithm() const = 0;
 
     /**
      * @brief supportedFeatures This method should return supported featurs of the current encription alhorithm

@@ -53,6 +53,21 @@ public:
      */
     [[nodiscard("This pointer will not free automatically. Please free returned pointer after using.")]]
     static BIO *byteArrayToBio(const QByteArray &byteArray);
+
+    /**
+     * @brief extractPublcKey This method extracts publick key from the ssl (pem) structure.
+     * @param ssl_keys This is ssl keys objects.
+     * @return bytes array of the extracted key.
+     */
+    static QByteArray extractPublcKey(EVP_PKEY* ssl_keys);
+
+    /**
+     * @brief extractPrivateKey This method extracts private key from the ssl (pem) structure.
+     * @param ssl_keys This is ssl keys objects.
+     * @return bytes array of the extracted key.
+     */
+    static QByteArray extractPrivateKey(EVP_PKEY* ssl_keys);
+
 };
 
 

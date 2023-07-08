@@ -1,3 +1,11 @@
+//#
+//# Copyright (C) 2021-2023 QuasarApp.
+//# Distributed under the GPLv3 software license, see the accompanying
+//# Everyone is permitted to copy and distribute verbatim copies
+//# of this license document, but changing it is not allowed.
+//#
+
+
 #ifndef RSASSL30_H
 #define RSASSL30_H
 
@@ -14,9 +22,8 @@ class EASYSSL_EXPORT RSASSL30: public EasySSL::ICrypto
 public:
     RSASSL30();
 
-    bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const override;
+    EVP_PKEY *makeRawKeys() const override;
     Features supportedFeatures() const override;
-
 
     QByteArray signMessage(const QByteArray &inputData, const QByteArray &key) const override;
     bool checkSign(const QByteArray &inputData, const QByteArray &signature, const QByteArray &key) const override;

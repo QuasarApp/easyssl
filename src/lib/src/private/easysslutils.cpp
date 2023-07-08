@@ -8,6 +8,7 @@
 #include "easysslutils.h"
 #include <openssl/bn.h>
 #include <openssl/err.h>
+#include <openssl/pem.h>
 #include <openssl/types.h>
 #include <QVector>
 
@@ -55,6 +56,38 @@ QByteArray EasySSLUtils::bioToByteArray(BIO* bio) {
 BIO* EasySSLUtils::byteArrayToBio(const QByteArray& byteArray) {
     BIO* bio = BIO_new_mem_buf(byteArray.constData(), byteArray.length());
     return bio;
+}
+
+QByteArray EasySSLUtils::extractPublcKey(EVP_PKEY *ssl_keys) {
+    if (!ssl_keys)
+        return {};
+
+    BIO* bio = BIO_new(BIO_s_mem());
+    if (PEM_write_bio_PUBKEY(bio, ssl_keys) != 1) {
+        BIO_free(bio);
+        return {};
+    }
+
+    QByteArray pubKey = bioToByteArray(bio);
+    BIO_free(bio);
+
+    return pubKey;
+}
+
+QByteArray EasySSLUtils::extractPrivateKey(EVP_PKEY *ssl_keys) {
+    if (!ssl_keys)
+        return {};
+
+    BIO* bio = BIO_new(BIO_s_mem());
+    if (PEM_write_bio_PrivateKey(bio, ssl_keys, nullptr, nullptr, 0, nullptr, nullptr) != 1) {
+        BIO_free(bio);
+        return {};
+    }
+
+    QByteArray pKey = bioToByteArray(bio);
+    BIO_free(bio);
+
+    return pKey;
 }
 
 }

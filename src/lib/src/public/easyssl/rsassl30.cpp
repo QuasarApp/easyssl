@@ -20,37 +20,17 @@ RSASSL30::RSASSL30() {
 
 }
 
-bool RSASSL30::makeKeys(QByteArray &pubKey, QByteArray &privKey) const {
+EVP_PKEY * RSASSL30::makeRawKeys() const {
 
     EVP_PKEY *pkey = nullptr;
-    EVP_PKEY_CTX *pctx =  EVP_PKEY_CTX_new_from_name(NULL, "RSA", NULL);
+    EVP_PKEY_CTX *pctx =  EVP_PKEY_CTX_new_from_name(nullptr, "RSA", nullptr);
     EVP_PKEY_CTX_set_rsa_keygen_bits(pctx, 4096);
 
     EVP_PKEY_keygen_init(pctx);
     EVP_PKEY_generate(pctx, &pkey);
     EVP_PKEY_CTX_free(pctx);
 
-    if (!pkey) {
-        return false;
-    }
-
-    BIO* bio = BIO_new(BIO_s_mem());
-    if (PEM_write_bio_PUBKEY(bio, pkey) != 1) {
-        EVP_PKEY_free(pkey);
-        return false;
-    }
-    pubKey = EasySSLUtils::bioToByteArray(bio);
-
-    if (PEM_write_bio_PrivateKey(bio, pkey, nullptr, nullptr, 0, nullptr, nullptr) != 1)
-    {
-        EVP_PKEY_free(pkey);
-        return false;
-    }
-
-    privKey = EasySSLUtils::bioToByteArray(bio);
-
-    return true;
-
+    return pkey;
 }
 
 ICrypto::Features RSASSL30::supportedFeatures() const {
