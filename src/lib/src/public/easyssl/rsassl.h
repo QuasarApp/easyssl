@@ -6,8 +6,8 @@
 //#
 
 
-#ifndef QH_ECDSA_SSL_1_1_H
-#define QH_ECDSA_SSL_1_1_H
+#ifndef RSASSL30_H
+#define RSASSL30_H
 
 #include "global.h"
 #include "icrypto.h"
@@ -15,17 +15,16 @@
 namespace EasySSL {
 
 /**
- * @brief The ECDSASSL11 class is ecdsa implementation of the Async authentication. This implementation based on Openssl library.
- * @note This class compatibility only with ssl 1.1
+ * @brief The RSASSL30 class This is wrapper for RSA algorithm of openssl 3.0 libraryry.
  */
-class EASYSSL_EXPORT ECDSASSL11: public EasySSL::ICrypto
+class EASYSSL_EXPORT RSASSL: public EasySSL::ICrypto
 {
-
 public:
-    ECDSASSL11();
-    bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const override;
-    Features supportedFeatures() const override;
+    RSASSL();
 
+    EVP_PKEY *makeRawKeys() const override;
+    Features supportedFeatures() const override;
+    QSsl::KeyAlgorithm keyAlgorithm() const override;
 
     QByteArray signMessage(const QByteArray &inputData, const QByteArray &key) const override;
     bool checkSign(const QByteArray &inputData, const QByteArray &signature, const QByteArray &key) const override;
@@ -42,8 +41,7 @@ public:
      */
     QByteArray encrypt(const QByteArray &message, const QByteArray &key) override;
 
-   };
+};
 
 }
-
-#endif // QH_ECDSA_SSL_1_1_H
+#endif // RSASSL30_H

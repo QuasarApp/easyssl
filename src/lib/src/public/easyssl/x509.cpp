@@ -52,13 +52,10 @@ SelfSignedSertificate X509::create(const SslSrtData &certificateData) const {
     if(result.key.isNull()) {
         EVP_PKEY_free(pkey);
         X509_free(x509);
-        BIO_free_all(bp_public);
-        BIO_free_all(bp_private);
         qCritical("Failed to generate a random private key");
         return {};
     }
     EVP_PKEY_free(pkey);
-    BIO_free_all(bp_private);
 
     BIO * bp_public = BIO_new(BIO_s_mem());
     q_check_ptr(bp_public);

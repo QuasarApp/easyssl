@@ -16,9 +16,7 @@ namespace EasySSL {
 
 
 void EasySSLUtils::printlastOpenSSlError() {
-    int error = ERR_get_error();
-    char buffer[256];
-    ERR_error_string(error, buffer);
+    ERR_print_errors_fp(stderr);
 }
 
 QByteArray EasySSLUtils::bignumToArray(const BIGNUM *num) {

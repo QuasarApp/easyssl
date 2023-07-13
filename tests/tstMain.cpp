@@ -8,7 +8,8 @@
 #include <QtTest>
 #include "cryptotest.h"
 #include "authtest.h"
-#include <easyssl/ecdsassl11.h>
+#include "easyssl/rsassl.h"
+#include <easyssl/ecdsassl.h>
 
 // Use This macros for initialize your own test classes.
 // Check exampletests
@@ -35,7 +36,8 @@ private slots:
 
     // BEGIN TESTS CASES
     TestCase(authTest, AuthTest)
-    TestCase(cryptoTest, CryptoTest<EasySSL::ECDSASSL11>)
+    TestCase(cryptoTestESDSA, CryptoTest<EasySSL::ECDSASSL>)
+    TestCase(cryptoTestRSA, CryptoTest<EasySSL::RSASSL>)
 
     // END TEST CASES
 

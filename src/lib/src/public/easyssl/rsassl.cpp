@@ -6,21 +6,22 @@
 //#
 
 
-#include "rsassl30.h"
+#include "rsassl.h"
 #include "qcryptographichash.h"
 #include <openssl/bn.h>
 #include <openssl/evp.h>
 #include <openssl/pem.h>
 #include <openssl/rsa.h>
 #include <easysslutils.h>
+#include <QDebug>
 
 namespace EasySSL {
 
-RSASSL30::RSASSL30() {
+RSASSL::RSASSL() {
 
 }
 
-EVP_PKEY * RSASSL30::makeRawKeys() const {
+EVP_PKEY * RSASSL::makeRawKeys() const {
 
     EVP_PKEY *pkey = nullptr;
     EVP_PKEY_CTX *pctx =  EVP_PKEY_CTX_new_from_name(nullptr, "RSA", nullptr);
@@ -33,11 +34,15 @@ EVP_PKEY * RSASSL30::makeRawKeys() const {
     return pkey;
 }
 
-ICrypto::Features RSASSL30::supportedFeatures() const {
+ICrypto::Features RSASSL::supportedFeatures() const {
     return static_cast<ICrypto::Features>(Features::Encription | Features::Signing);
 }
 
-QByteArray RSASSL30::signMessage(const QByteArray &inputData, const QByteArray &key) const {
+QSsl::KeyAlgorithm RSASSL::keyAlgorithm() const {
+    return QSsl::KeyAlgorithm::Rsa;
+}
+
+QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &key) const {
     QByteArray signature;
 
     auto pkey = EasySSLUtils::byteArrayToBio(key);
@@ -45,7 +50,7 @@ QByteArray RSASSL30::signMessage(const QByteArray &inputData, const QByteArray &
     BIO_free(pkey);
 
     if (!rsaPrivateKey) {
-        perror("Error reading private key");
+        qCritical() << "Error reading private key";
         return {};
     }
 
@@ -88,7 +93,7 @@ QByteArray RSASSL30::signMessage(const QByteArray &inputData, const QByteArray &
     return signature;
 }
 
-bool RSASSL30::checkSign(const QByteArray &inputData, const QByteArray &signature, const QByteArray &key) const {
+bool RSASSL::checkSign(const QByteArray &inputData, const QByteArray &signature, const QByteArray &key) const {
     EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
     if (mdctx == nullptr) {
         return false;
@@ -123,16 +128,25 @@ bool RSASSL30::checkSign(const QByteArray &inputData, const QByteArray &signatur
     return verificationResult == 1;
 }
 
-QByteArray RSASSL30::decrypt(const QByteArray &message, const QByteArray &key) {
+QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
 
     auto pkey = EasySSLUtils::byteArrayToBio(key);
     auto rsaPrivateKey = PEM_read_bio_PrivateKey(pkey, nullptr, nullptr, nullptr);
     BIO_free(pkey);
 
     if (!rsaPrivateKey) {
-        perror("Error reading private key");
+        qCritical() << "Error reading private key";
         return {};
     }
+
+    const long long maxDencryptedSize = EVP_PKEY_size(rsaPrivateKey);
+    if (message.length() % maxDencryptedSize) {
+        qCritical() << "Error wrong encripted data size.";
+        qCritical() << "Your key requir size multiple " << maxDencryptedSize;
+
+        return {};
+    }
+
 
     EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new(rsaPrivateKey, nullptr);
     if (ctx == nullptr) {
@@ -152,18 +166,25 @@ QByteArray RSASSL30::decrypt(const QByteArray &message, const QByteArray &key) {
         return {};
     }
 
-    size_t decryptedDataLength = 0;
-    if (EVP_PKEY_decrypt(ctx, nullptr, &decryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
-        EVP_PKEY_CTX_free(ctx);
-        EVP_PKEY_free(rsaPrivateKey);
-        return {};
-    }
+    QByteArray decryptedData;
 
-    QByteArray decryptedData(decryptedDataLength, 0);
-    if (EVP_PKEY_decrypt(ctx, reinterpret_cast<unsigned char*>(decryptedData.data()), &decryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
-        EVP_PKEY_CTX_free(ctx);
-        EVP_PKEY_free(rsaPrivateKey);
-        return {};
+    for (int index = 0; index < message.size(); index += maxDencryptedSize) {
+
+        QByteArray decryptedDataPart(maxDencryptedSize, 0);
+        size_t realDecryptedDataPartSize = 0;
+        if (EVP_PKEY_decrypt(ctx,
+                             reinterpret_cast<unsigned char*>(decryptedDataPart.data()),
+                             &realDecryptedDataPartSize,
+                             reinterpret_cast<const unsigned char*>(&(message.constData()[index])),
+                             maxDencryptedSize) <= 0) {
+
+            EasySSLUtils::printlastOpenSSlError();
+            EVP_PKEY_CTX_free(ctx);
+            EVP_PKEY_free(rsaPrivateKey);
+            return {};
+        }
+
+        decryptedData += decryptedDataPart.left(realDecryptedDataPartSize);
     }
 
     EVP_PKEY_CTX_free(ctx);
@@ -172,13 +193,13 @@ QByteArray RSASSL30::decrypt(const QByteArray &message, const QByteArray &key) {
 
 }
 
-QByteArray RSASSL30::encrypt(const QByteArray &message, const QByteArray &key) {
+QByteArray RSASSL::encrypt(const QByteArray &message, const QByteArray &key) {
     auto pkey = EasySSLUtils::byteArrayToBio(key);
     auto rsaPublicKey = PEM_read_bio_PUBKEY(pkey, nullptr, nullptr, nullptr);
     BIO_free(pkey);
 
     if (!rsaPublicKey) {
-        perror("Error reading public key");
+        qCritical() << "Error reading public key";
         return {};
     }
 
@@ -200,18 +221,27 @@ QByteArray RSASSL30::encrypt(const QByteArray &message, const QByteArray &key) {
         return {};
     }
 
-    size_t encryptedDataLength = 0;
-    if (EVP_PKEY_encrypt(ctx, nullptr, &encryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
-        EVP_PKEY_CTX_free(ctx);
-        EVP_PKEY_free(rsaPublicKey);
-        return {};
-    }
+    const long long maxEncryptedSize = EVP_PKEY_size(rsaPublicKey);
+    QByteArray encryptedData;
 
-    QByteArray encryptedData(encryptedDataLength, 0);
-    if (EVP_PKEY_encrypt(ctx, reinterpret_cast<unsigned char*>(encryptedData.data()), &encryptedDataLength, reinterpret_cast<const unsigned char*>(message.constData()), message.length()) <= 0) {
-        EVP_PKEY_CTX_free(ctx);
-        EVP_PKEY_free(rsaPublicKey);
-        return {};
+    for (int index = 0; index < message.size();) {
+
+        QByteArray encryptedDataPart(maxEncryptedSize, 0);
+        size_t realEncryptedDataPartSize = 0;
+        int currentPartSize = std::min(message.length() - index, maxEncryptedSize);
+        if (EVP_PKEY_encrypt(ctx,
+                             reinterpret_cast<unsigned char*>(encryptedDataPart.data()),
+                             &realEncryptedDataPartSize,
+                             reinterpret_cast<const unsigned char*>(&(message.constData()[index])),
+                             currentPartSize) <= 0) {
+
+            EVP_PKEY_CTX_free(ctx);
+            EVP_PKEY_free(rsaPublicKey);
+            return {};
+        }
+
+        encryptedData += encryptedDataPart.left(realEncryptedDataPartSize);
+        index += currentPartSize;
     }
 
     EVP_PKEY_CTX_free(ctx);

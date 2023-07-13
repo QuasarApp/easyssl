@@ -20,6 +20,18 @@ class CryptoTest: public Test, protected TestUtils
 public:
 
     void test() override {
+        // test short messges
+        testImpl("Test");
+
+        //test long messages
+
+        const int Mb = 1024 * 1024 * 1024; //1 mb
+        testImpl(QByteArray(Mb, 'c'));
+
+    } ;
+
+
+    void testImpl(const QByteArray& message) const {
         // create a publick and private keys array.
         QByteArray pub, priv;
         TestClass crypto;
@@ -29,19 +41,18 @@ public:
         QVERIFY2(priv.size(), "Private key should be generated successfull");
 
         if (crypto.supportedFeatures() & EasySSL::ICrypto::Features::Signing) {
-            auto siganture = crypto.signMessage("Test", priv);
+            auto siganture = crypto.signMessage(message, priv);
             QVERIFY2(siganture.size(), "Siganture of the message should not be empty");
-            QVERIFY2(crypto.checkSign("Test", siganture, pub), "failed to check message");
+            QVERIFY2(crypto.checkSign(message, siganture, pub), "failed to check message");
         }
 
         if (crypto.supportedFeatures() & EasySSL::ICrypto::Features::Encription) {
-            auto encriptedMsg = crypto.encrypt("Test", pub);
+            auto encriptedMsg = crypto.encrypt(message, pub);
             QVERIFY2(encriptedMsg.size(), "Encripted message should not be empty");
             auto decryptedMsg = crypto.decrypt(encriptedMsg, priv);
-            QVERIFY2(decryptedMsg == "Test", "Failed to check message after decryption");
+            QVERIFY2(decryptedMsg == message, "Failed to check message after decryption");
         }
-
-    } ;
+    }
 };
 
 #endif // CRYPTO_TEST_H
