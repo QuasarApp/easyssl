@@ -17,17 +17,20 @@
 
 namespace EasySSL {
 
-RSASSL::RSASSL() {
-
+RSASSL::RSASSL(RSAPadding padding) {
+    setPadding(padding);
 }
 
 EVP_PKEY * RSASSL::makeRawKeys() const {
 
     EVP_PKEY *pkey = nullptr;
     EVP_PKEY_CTX *pctx =  EVP_PKEY_CTX_new_from_name(nullptr, "RSA", nullptr);
-    EVP_PKEY_CTX_set_rsa_keygen_bits(pctx, 4096);
-
     EVP_PKEY_keygen_init(pctx);
+
+    if (EVP_PKEY_CTX_set_rsa_keygen_bits(pctx, _bits) <= 0) {
+        EasySSLUtils::printlastOpenSSlError();
+    };
+
     EVP_PKEY_generate(pctx, &pkey);
     EVP_PKEY_CTX_free(pctx);
 
@@ -160,7 +163,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
         return {};
     }
 
-    if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0) {
+    if (EVP_PKEY_CTX_set_rsa_padding(ctx, getRawOpenSSLPandingValue(_padding)) <= 0) {
         EVP_PKEY_CTX_free(ctx);
         EVP_PKEY_free(rsaPrivateKey);
         return {};
@@ -171,7 +174,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
     for (int index = 0; index < message.size(); index += maxDencryptedSize) {
 
         QByteArray decryptedDataPart(maxDencryptedSize, 0);
-        size_t realDecryptedDataPartSize = 0;
+        size_t realDecryptedDataPartSize = maxDencryptedSize; // must be equals or large of private key size.
         if (EVP_PKEY_decrypt(ctx,
                              reinterpret_cast<unsigned char*>(decryptedDataPart.data()),
                              &realDecryptedDataPartSize,
@@ -215,7 +218,7 @@ QByteArray RSASSL::encrypt(const QByteArray &message, const QByteArray &key) {
         return {};
     }
 
-    if (EVP_PKEY_CTX_set_rsa_padding(ctx, RSA_PKCS1_OAEP_PADDING) <= 0) {
+    if (EVP_PKEY_CTX_set_rsa_padding(ctx, getRawOpenSSLPandingValue(_padding)) <= 0) {
         EVP_PKEY_CTX_free(ctx);
         EVP_PKEY_free(rsaPublicKey);
         return {};
@@ -228,13 +231,14 @@ QByteArray RSASSL::encrypt(const QByteArray &message, const QByteArray &key) {
 
         QByteArray encryptedDataPart(maxEncryptedSize, 0);
         size_t realEncryptedDataPartSize = 0;
-        int currentPartSize = std::min(message.length() - index, maxEncryptedSize);
+        int currentPartSize = std::min(message.length() - index, maxEncryptedSize - getPandingSize(_padding)) ;
         if (EVP_PKEY_encrypt(ctx,
                              reinterpret_cast<unsigned char*>(encryptedDataPart.data()),
                              &realEncryptedDataPartSize,
                              reinterpret_cast<const unsigned char*>(&(message.constData()[index])),
                              currentPartSize) <= 0) {
 
+            EasySSLUtils::printlastOpenSSlError();
             EVP_PKEY_CTX_free(ctx);
             EVP_PKEY_free(rsaPublicKey);
             return {};
@@ -247,6 +251,43 @@ QByteArray RSASSL::encrypt(const QByteArray &message, const QByteArray &key) {
     EVP_PKEY_CTX_free(ctx);
     EVP_PKEY_free(rsaPublicKey);
     return encryptedData;
+}
+
+RSASSL::RSAPadding RSASSL::padding() const {
+    return _padding;
+}
+
+void RSASSL::setPadding(RSAPadding newPadding) {
+    _padding = newPadding;
+}
+
+int RSASSL::getRawOpenSSLPandingValue(RSAPadding panding) {
+    switch (panding) {
+    case NO_PADDING: return RSA_NO_PADDING;
+    case PKCS1_OAEP_PADDING: return RSA_PKCS1_OAEP_PADDING;
+    case PKCS1_PADDING: return RSA_PKCS1_PADDING;
+
+    default:
+        return 0;
+    }
+}
+
+int RSASSL::getPandingSize(RSAPadding panding) {
+    switch (panding) {
+    case PKCS1_OAEP_PADDING: return 42;
+    case PKCS1_PADDING: return 11;
+
+    default:
+        return 0;
+    }
+}
+
+RSASSL::RSABits RSASSL::bits() const {
+    return _bits;
+}
+
+void RSASSL::setBits(RSABits newBits) {
+    _bits = newBits;
 }
 
 }

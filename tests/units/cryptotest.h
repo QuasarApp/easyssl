@@ -25,7 +25,7 @@ public:
 
         //test long messages
 
-        const int Mb = 1024 * 1024 * 1024; //1 mb
+        const int Mb = 1024 * 1024; //1 mb
         testImpl(QByteArray(Mb, 'c'));
 
     } ;
