@@ -3,7 +3,7 @@ This is simple wrapper library that make using ssl simple.
 This library contains interfaces for the signing and encription data.
 
 ### Supported encription alhorithms:
-* edsa based on sll 1.1 
+* ecdsa based on sll 1.1 
 
 ### Supported features
 * encription 
