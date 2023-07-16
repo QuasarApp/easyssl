@@ -8,8 +8,10 @@
 #include <QtTest>
 #include "cryptotest.h"
 #include "authtest.h"
+#include "crttest.h"
 #include "easyssl/rsassl.h"
 #include <easyssl/ecdsassl.h>
+
 
 // Use This macros for initialize your own test classes.
 // Check exampletests
@@ -17,6 +19,9 @@
     void name() { \
         initTest(new testClass()); \
     }
+
+using CrtTestX509RSA = CrtTest<EasySSL::X509, EasySSL::RSASSL>;
+using CrtTestX509ECDSA = CrtTest<EasySSL::X509, EasySSL::ECDSASSL>;
 
 /**
  * @brief The tstMain class - this is main test class
@@ -33,13 +38,14 @@ public:
 
 private slots:
 
-
     // BEGIN TESTS CASES
     TestCase(authTest, AuthTest)
     TestCase(cryptoTestESDSA, CryptoTest<EasySSL::ECDSASSL>)
     TestCase(cryptoTestRSA, CryptoTest<EasySSL::RSASSL>)
+    TestCase(crtTestX509RSA, CrtTestX509RSA)
+    TestCase(crtTestX509ECDSA, CrtTestX509ECDSA)
 
-    // END TEST CASES
+    // END TEST CASESa
 
 private:
 
