@@ -20,25 +20,39 @@
 #include <easysslutils.h>
 #include <QDebug>
 #include <openssl/pem.h>
+#include <openssl/core_names.h>
 
 namespace EasySSL {
 
 
-ECDSASSL::ECDSASSL() {}
+ECDSASSL::ECDSASSL(EllipticCurveStandart curveStandart) {
+    setCurve(curveStandart);
+}
 
 EVP_PKEY * ECDSASSL::makeRawKeys() const {
 
     EVP_PKEY *pkey = nullptr;
     EVP_PKEY_CTX *pctx =  EVP_PKEY_CTX_new_from_name(nullptr, "EC", nullptr);
     if (!pctx) {
-        qCritical() << "Error reading public key";
+        EasySSLUtils::printlastOpenSSlError();
         return nullptr;
     }
 
     EVP_PKEY_keygen_init(pctx);
+    OSSL_PARAM params[2];
+    params[0] = OSSL_PARAM_construct_utf8_string(OSSL_PKEY_PARAM_GROUP_NAME,
+                                                 const_cast<char*>(getCStr(_curve)),
+                                                 0);
+    params[1] = OSSL_PARAM_construct_end();
+    EVP_PKEY_CTX_set_params(pctx, params);
+
     EVP_PKEY_generate(pctx, &pkey);
     EVP_PKEY_CTX_free(pctx);
 
+    if (!pkey) {
+        EasySSLUtils::printlastOpenSSlError();
+        return nullptr;
+    }
     return pkey;
 }
 
@@ -61,6 +75,7 @@ QByteArray ECDSASSL::signMessage(const QByteArray &inputData,
 
     if (!ecPrivateKey) {
         qCritical() << "Error reading private key";
+        EasySSLUtils::printlastOpenSSlError();
         return {};
     }
 
@@ -71,6 +86,8 @@ QByteArray ECDSASSL::signMessage(const QByteArray &inputData,
 
     // Initialize the signing operation
     if (EVP_DigestSignInit(mdctx, nullptr, EVP_sha256(), nullptr, ecPrivateKey) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
+
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -80,6 +97,8 @@ QByteArray ECDSASSL::signMessage(const QByteArray &inputData,
 
     // Provide the message to be signed
     if (EVP_DigestSignUpdate(mdctx, hash.data(), hash.size()) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
+
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -87,6 +106,8 @@ QByteArray ECDSASSL::signMessage(const QByteArray &inputData,
     size_t signatureLength = 0;
     // Determine the length of the signature
     if (EVP_DigestSignFinal(mdctx, nullptr, &signatureLength) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
+
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -95,6 +116,8 @@ QByteArray ECDSASSL::signMessage(const QByteArray &inputData,
 
     // Perform the final signing operation and obtain the signature
     if (EVP_DigestSignFinal(mdctx, reinterpret_cast<unsigned char*>(signature.data()), &signatureLength) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
+
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -119,6 +142,8 @@ bool ECDSASSL::checkSign(const QByteArray &inputData,
 
     // Initialize the verification operation
     if (EVP_DigestVerifyInit(mdctx, NULL, EVP_sha256(), NULL, rsaPublickKey) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
+
         EVP_MD_CTX_free(mdctx);
         return false;
     }
@@ -128,6 +153,8 @@ bool ECDSASSL::checkSign(const QByteArray &inputData,
 
     // Provide the message to be verified
     if (EVP_DigestVerifyUpdate(mdctx, hash.data(), hash.size()) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
+
         EVP_MD_CTX_free(mdctx);
         return false;
     }
@@ -149,6 +176,26 @@ QByteArray ECDSASSL::decrypt(const QByteArray &, const QByteArray &) {
 
 QByteArray ECDSASSL::encrypt(const QByteArray &, const QByteArray &) {
     return {};
+}
+
+ECDSASSL::EllipticCurveStandart ECDSASSL::curve() const {
+    return _curve;
+}
+
+void ECDSASSL::setCurve(EllipticCurveStandart newCurve) {
+    _curve = newCurve;
+}
+
+const char *ECDSASSL::getCStr(EllipticCurveStandart value) const {
+    switch (value) {
+    case P_256:     return "P-256";
+    case P_384:     return "P-384";
+    case P_521:     return "P-521";
+    case X448:      return "X448";
+    case X25519:    return "X25519";
+
+    default: return nullptr;
+    }
 }
 
 }

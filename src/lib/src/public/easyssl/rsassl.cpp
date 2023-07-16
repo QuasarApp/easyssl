@@ -54,6 +54,7 @@ QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &ke
 
     if (!rsaPrivateKey) {
         qCritical() << "Error reading private key";
+        EasySSLUtils::printlastOpenSSlError();
         return {};
     }
 
@@ -64,6 +65,7 @@ QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &ke
 
     // Initialize the signing operation
     if (EVP_DigestSignInit(mdctx, nullptr, EVP_sha256(), nullptr, rsaPrivateKey) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -73,6 +75,7 @@ QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &ke
 
     // Provide the message to be signed
     if (EVP_DigestSignUpdate(mdctx, hash.data(), hash.size()) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -80,6 +83,7 @@ QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &ke
     size_t signatureLength = 0;
     // Determine the length of the signature
     if (EVP_DigestSignFinal(mdctx, nullptr, &signatureLength) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -88,6 +92,7 @@ QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &ke
 
     // Perform the final signing operation and obtain the signature
     if (EVP_DigestSignFinal(mdctx, reinterpret_cast<unsigned char*>(signature.data()), &signatureLength) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_MD_CTX_free(mdctx);
         return {};
     }
@@ -108,6 +113,7 @@ bool RSASSL::checkSign(const QByteArray &inputData, const QByteArray &signature,
 
     // Initialize the verification operation
     if (EVP_DigestVerifyInit(mdctx, NULL, EVP_sha256(), NULL, rsaPublickKey) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_MD_CTX_free(mdctx);
         return false;
     }
@@ -117,6 +123,7 @@ bool RSASSL::checkSign(const QByteArray &inputData, const QByteArray &signature,
 
     // Provide the message to be verified
     if (EVP_DigestVerifyUpdate(mdctx, hash.data(), hash.size()) != 1) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_MD_CTX_free(mdctx);
         return false;
     }
@@ -137,8 +144,9 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
     auto rsaPrivateKey = PEM_read_bio_PrivateKey(pkey, nullptr, nullptr, nullptr);
     BIO_free(pkey);
 
-    if (!rsaPrivateKey) {
+    if (!rsaPrivateKey) {        
         qCritical() << "Error reading private key";
+        EasySSLUtils::printlastOpenSSlError();
         return {};
     }
 
@@ -158,12 +166,15 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
     }
 
     if (EVP_PKEY_decrypt_init(ctx) <= 0) {
+        EasySSLUtils::printlastOpenSSlError();
+
         EVP_PKEY_CTX_free(ctx);
-        EVP_PKEY_free(rsaPrivateKey);
+        EVP_PKEY_free(rsaPrivateKey);        
         return {};
     }
 
     if (EVP_PKEY_CTX_set_rsa_padding(ctx, getRawOpenSSLPandingValue(_padding)) <= 0) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_PKEY_CTX_free(ctx);
         EVP_PKEY_free(rsaPrivateKey);
         return {};
@@ -203,22 +214,26 @@ QByteArray RSASSL::encrypt(const QByteArray &message, const QByteArray &key) {
 
     if (!rsaPublicKey) {
         qCritical() << "Error reading public key";
+        EasySSLUtils::printlastOpenSSlError();
         return {};
     }
 
     EVP_PKEY_CTX* ctx = EVP_PKEY_CTX_new(rsaPublicKey, nullptr);
     if (ctx == nullptr) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_PKEY_free(rsaPublicKey);
         return {};
     }
 
     if (EVP_PKEY_encrypt_init(ctx) <= 0) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_PKEY_CTX_free(ctx);
         EVP_PKEY_free(rsaPublicKey);
         return {};
     }
 
     if (EVP_PKEY_CTX_set_rsa_padding(ctx, getRawOpenSSLPandingValue(_padding)) <= 0) {
+        EasySSLUtils::printlastOpenSSlError();
         EVP_PKEY_CTX_free(ctx);
         EVP_PKEY_free(rsaPublicKey);
         return {};
