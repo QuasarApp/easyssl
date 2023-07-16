@@ -80,14 +80,7 @@ QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &ke
         return {};
     }
 
-    size_t signatureLength = 0;
-    // Determine the length of the signature
-    if (EVP_DigestSignFinal(mdctx, nullptr, &signatureLength) != 1) {
-        EasySSLUtils::printlastOpenSSlError();
-        EVP_MD_CTX_free(mdctx);
-        return {};
-    }
-
+    size_t signatureLength = EVP_PKEY_size(rsaPrivateKey);
     signature.resize(signatureLength);
 
     // Perform the final signing operation and obtain the signature
@@ -96,6 +89,8 @@ QByteArray RSASSL::signMessage(const QByteArray &inputData, const QByteArray &ke
         EVP_MD_CTX_free(mdctx);
         return {};
     }
+
+    signature.resize(signatureLength);
 
     EVP_MD_CTX_free(mdctx);
     return signature;
