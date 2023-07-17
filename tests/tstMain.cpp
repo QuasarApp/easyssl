@@ -45,7 +45,7 @@ private slots:
     TestCase(crtTestX509RSA, CrtTestX509RSA)
     TestCase(crtTestX509ECDSA, CrtTestX509ECDSA)
 
-    // END TEST CASESa
+    // END TEST CASES
 
 private:
 
