@@ -15,7 +15,7 @@
 namespace EasySSL {
 
 /**
- * @brief The ECDSASSL11 class is ecdsa implementation of the Async authentication. This implementation based on Openssl library.
+ * @brief The ECDSASSL class is ecdsa implementation of the Async authentication. This implementation based on Openssl library.
  */
 class EASYSSL_EXPORT ECDSASSL: public EasySSL::ICrypto
 {

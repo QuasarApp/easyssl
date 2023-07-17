@@ -17,7 +17,7 @@
 namespace EasySSL {
 
 /**
- * @brief The ICrypto class This is base interface that provide encription functionality.
+* @brief The ICrypto class, This is base interface that provide encryption functionality.
  */
 class EASYSSL_EXPORT ICrypto
 {
@@ -25,7 +25,7 @@ class EASYSSL_EXPORT ICrypto
 public:
 
     /**
-     * @brief The Features enum this is list of the supported ecription features
+     * @brief The Features enum this is list of the supported description features
      */
     enum Features {
         /// Signin and check sign of the data.

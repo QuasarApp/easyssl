@@ -17,7 +17,8 @@
 namespace EasySSL {
 
 /**
- * @brief The SslSrtData struct This structure contains base information for generate self signed ssl certefication.
+ * @brief The SslSrtData struct This structure contains base information to generate self-signed SSL certification.
+ * Use this interface for creating a new certificates algorithms.
  */
 struct SslSrtData {
     QString country = "BY";

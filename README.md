@@ -1,9 +1,10 @@
 # EasySSL
-This is simple wrapper library that make using ssl simple. 
+This is wrapper library that make using OpenSSL library more simple. 
 This library contains interfaces for the signing and encription data.
 
 ### Supported encription alhorithms:
-* edsa based on sll 1.1 
+* ECDSA
+* RSA
 
 ### Supported features
 * encription 
@@ -33,7 +34,48 @@ This library contains interfaces for the signing and encription data.
 
 ## Usage
 
-Authentication 
+### Encription
+
+```cpp
+#include <easyssl/authecdsa.h>
+
+class ECDSA: public EasySSL::AuthECDSA {
+
+public:
+
+    // AsyncKeysAuth interface
+    void setPrivateKey(const QByteArray &newPriv) {
+        _priv = newPriv;
+    }
+
+    QByteArray getPrivateKey() const {
+        return _priv;
+    };
+
+private:
+    QByteArray _priv;
+
+};
+
+ECDSA edsa;
+QByteArray pub, priv;
+QString userID;
+
+// make public and private keys.
+edsa.makeKeys(pub, priv);
+edsa.setPrivateKey(priv);
+edsa.setPublicKey(pub);
+
+// prepare an authentication object.
+edsa.prepare();
+edsa.setPrivateKey({});
+
+edsa.auth(1000, &userID)
+
+```
+
+
+### Authentication 
 
 ```cpp
 #include <easyssl/authecdsa.h>

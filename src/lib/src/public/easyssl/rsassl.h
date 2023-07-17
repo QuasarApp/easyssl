@@ -15,7 +15,7 @@
 namespace EasySSL {
 
 /**
- * @brief The RSASSL30 class This is wrapper for RSA algorithm of openssl 3.0 libraryry.
+ * @brief The RSASSL class This is wrapper for RSA algorithm of openssl 3.0 libraryry.
  */
 class EASYSSL_EXPORT RSASSL: public EasySSL::ICrypto
 {
