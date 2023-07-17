@@ -37,40 +37,21 @@ This library contains interfaces for the signing and encription data.
 ### Encription
 
 ```cpp
-#include <easyssl/authecdsa.h>
+#include "easyssl/rsassl.h"
 
-class ECDSA: public EasySSL::AuthECDSA {
+// create a publick and private keys array.
+int main() {
+    QByteArray pub, priv;
+    EasySSL::RSASSL crypto;
+    crypto.makeKeys(pub, priv)
+    
+    auto siganture = crypto.signMessage(message, priv);
+    crypto.checkSign(message, siganture, pub);
+    
+    auto encriptedMsg = crypto.encrypt(message, pub);
+    auto decryptedMsg = crypto.decrypt(encriptedMsg, priv);
+}
 
-public:
-
-    // AsyncKeysAuth interface
-    void setPrivateKey(const QByteArray &newPriv) {
-        _priv = newPriv;
-    }
-
-    QByteArray getPrivateKey() const {
-        return _priv;
-    };
-
-private:
-    QByteArray _priv;
-
-};
-
-ECDSA edsa;
-QByteArray pub, priv;
-QString userID;
-
-// make public and private keys.
-edsa.makeKeys(pub, priv);
-edsa.setPrivateKey(priv);
-edsa.setPublicKey(pub);
-
-// prepare an authentication object.
-edsa.prepare();
-edsa.setPrivateKey({});
-
-edsa.auth(1000, &userID)
 
 ```
 
@@ -114,5 +95,8 @@ edsa.setPrivateKey({});
 edsa.auth(1000, &userID)
 
 ```
+
+## Do not forget to help us make this library better... 
+See our main documentation about contributing to [EasySsl](https://github.com/QuasarApp/easyssl/blob/main/CONTRIBUTING.md) 
 
 Full documentation available [here](https://quasarapp.ddns.net:3031/docs/QuasarApp/easyssl/latest/index.html) 
