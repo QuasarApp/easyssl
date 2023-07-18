@@ -8,7 +8,6 @@
 #include "easyssl/global.h"
 #include <QString>
 
-inline void initeasysslResources() { Q_INIT_RESOURCE(easyssl); }
 
 namespace EasySSL {
 
