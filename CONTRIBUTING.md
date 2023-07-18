@@ -40,7 +40,7 @@ Adding supporting RSA algorithm to this library.
    
 Full implementation of the RSA you can see [here](https://github.com/QuasarApp/easyssl/blob/main/src/lib/src/public/easyssl/rsassl.h).
 
-2. Add your class to the tests Using The Template class "[CryptoTest](https://github.com/QuasarApp/easyssl/blob/main/tests/units/cryptotest.h)". See The [tstMain.cpp](https://github.com/QuasarApp/easyssl/blob/main/tests/tstMain.cpp) file
+2. Add your class to the tests Using The Template class [CryptoTest](https://github.com/QuasarApp/easyssl/blob/main/tests/units/cryptotest.h). See The [tstMain.cpp](https://github.com/QuasarApp/easyssl/blob/main/tests/tstMain.cpp) file
 
 ```cpp
 
@@ -68,7 +68,7 @@ Full implementation of the RSA you can see [here](https://github.com/QuasarApp/e
 
 Full implementation of x509 certificate format you can see [here](https://github.com/QuasarApp/easyssl/blob/main/src/lib/src/public/easyssl/x509.h).
 
-2. Add your class to the tests Using The Template class "[CrtTest](https://github.com/QuasarApp/easyssl/blob/main/tests/units/crttest.h)". See The [tstMain.cpp](https://github.com/QuasarApp/easyssl/blob/main/tests/tstMain.cpp) file
+2. Add your class to the tests Using The Template class [CrtTest](https://github.com/QuasarApp/easyssl/blob/main/tests/units/crttest.h). See The [tstMain.cpp](https://github.com/QuasarApp/easyssl/blob/main/tests/tstMain.cpp) file
 
 ```cpp
   #include "crttest.h"
