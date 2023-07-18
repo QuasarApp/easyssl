@@ -12,7 +12,6 @@
 #include "global.h"
 #include "qssl.h"
 #include <QByteArray>
-#include <openssl/types.h>
 
 namespace EasySSL {
 
@@ -41,12 +40,6 @@ public:
      * @return true if keys generated successful.
      */
     bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const;
-
-    /**
-     * @brief makeKeys This method generate the public and private keys of the ECDSA.
-     * @return pointer to generated keys.
-     */
-    virtual EVP_PKEY * makeRawKeys() const = 0;
 
     /**
      * @brief keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.)
@@ -98,6 +91,12 @@ public:
     virtual bool checkSign(const QByteArray& message,
                            const QByteArray& signature,
                            const QByteArray& key) const = 0;
+
+    /**
+     * @brief makeKeys This method generate the public and private keys of the ECDSA.
+     * @return pointer to generated keys. This method must return EVP_PKEY* structure.
+     */
+    virtual void * makeRawKeys() const = 0;
 };
 
 }

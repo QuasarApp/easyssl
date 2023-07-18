@@ -37,7 +37,6 @@ class EASYSSL_EXPORT ECDSASSL: public EasySSL::ICrypto
 
 public:
     ECDSASSL(EllipticCurveStandart curveStandart = EllipticCurveStandart::P_256);
-    EVP_PKEY * makeRawKeys() const override;
     Features supportedFeatures() const override;
     QSsl::KeyAlgorithm keyAlgorithm() const override;
 
@@ -68,6 +67,8 @@ public:
      * @param newCurve this is new value of curve standart.
      */
     void setCurve(EllipticCurveStandart newCurve);
+
+    void * makeRawKeys() const override;
 
 private:
     const char *getCStr(EllipticCurveStandart value) const;

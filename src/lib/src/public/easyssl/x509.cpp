@@ -22,7 +22,7 @@ SelfSignedSertificate X509::create(const SslSrtData &certificateData) const {
         return {};
     }
 
-    EVP_PKEY *pkey = keyGenerator()->makeRawKeys();
+    EVP_PKEY *pkey = static_cast<EVP_PKEY *>(keyGenerator()->makeRawKeys());
 
     ::X509 * x509 = nullptr;
     X509_NAME * name = nullptr;

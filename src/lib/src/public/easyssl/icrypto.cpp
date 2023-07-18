@@ -15,7 +15,7 @@ namespace EasySSL {
 
 bool EasySSL::ICrypto::makeKeys(QByteArray &pubKey, QByteArray &privKey) const
 {
-    EVP_PKEY *keys = makeRawKeys();
+    EVP_PKEY *keys = static_cast<EVP_PKEY *>(makeRawKeys());
     if (!keys)
         return false;
 

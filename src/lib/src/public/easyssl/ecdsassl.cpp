@@ -8,6 +8,7 @@
 
 #include "ecdsassl.h"
 
+#include <openssl/types.h>
 #include <openssl/ecdsa.h>   // for ECDSA_do_sign, ECDSA_do_verify
 #include <openssl/obj_mac.h> // for NID_secp192k1
 #include <openssl/evp.h>
@@ -29,7 +30,7 @@ ECDSASSL::ECDSASSL(EllipticCurveStandart curveStandart) {
     setCurve(curveStandart);
 }
 
-EVP_PKEY * ECDSASSL::makeRawKeys() const {
+void * ECDSASSL::makeRawKeys() const {
 
     EVP_PKEY *pkey = nullptr;
     EVP_PKEY_CTX *pctx =  EVP_PKEY_CTX_new_from_name(nullptr, "EC", nullptr);

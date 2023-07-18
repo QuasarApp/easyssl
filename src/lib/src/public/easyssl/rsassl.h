@@ -46,7 +46,7 @@ class EASYSSL_EXPORT RSASSL: public EasySSL::ICrypto
 public:
     RSASSL(RSAPadding padding = PKCS1_OAEP_PADDING);
 
-    EVP_PKEY *makeRawKeys() const override;
+    void *makeRawKeys() const override;
     Features supportedFeatures() const override;
     QSsl::KeyAlgorithm keyAlgorithm() const override;
 

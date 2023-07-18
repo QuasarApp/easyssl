@@ -21,7 +21,7 @@ RSASSL::RSASSL(RSAPadding padding) {
     setPadding(padding);
 }
 
-EVP_PKEY * RSASSL::makeRawKeys() const {
+void *RSASSL::makeRawKeys() const {
 
     EVP_PKEY *pkey = nullptr;
     EVP_PKEY_CTX *pctx =  EVP_PKEY_CTX_new_from_name(nullptr, "RSA", nullptr);
