@@ -12,6 +12,7 @@ This is a wrap library for the Qt developers. So if you think that is a good lib
 All Algorithms must be pass simple test. Encrypt, decrypt short and long data arrays. This simple test already implemented, and you just need to add it into main test file. 
 
 ### Example
+
 Adding supporting RSA algorithm to this library. 
 
 1. Create implementation of the iCrypto interface.
@@ -41,18 +42,20 @@ Full implementation of the RSA you can see [here](https://github.com/QuasarApp/e
 
 2. Add your class to the tests Using The Template class "[CryptoTest](https://github.com/QuasarApp/easyssl/blob/main/tests/units/cryptotest.h)". See The [tstMain.cpp](https://github.com/QuasarApp/easyssl/blob/main/tests/tstMain.cpp) file
 
-``` cpp
+```cpp
+
     TestCase(cryptoTestRSA, CryptoTest<EasySSL::RSASSL>)
 ```
 
 ## Adding new implementation of Certificate generator. 
 
 1. Create implementation of the iCrypto interface. And override the create method.
+
 ```cpp
   /**
    * @brief The X509 class This is wrapper of the ssl objects.
    */
-  class EASYSSL_EXPORT X509: public ICertificate
+  class EASYSSL_EXPORT X509: public  EasySSL::ICertificate
   {
   public:
       X509(const QSharedPointer<ICrypto>& generator);
@@ -79,7 +82,7 @@ Full implementation of x509 certificate format you can see [here](https://github
 
 1. All shared tools or useful functions located on the [EasySSLUtils](https://github.com/QuasarApp/easyssl/blob/main/src/lib/src/private/easysslutils.h) class.
 2. All implementation must contains goxygen xml comments (documentation)
-
+3. All implementation must be inner EasySSL name space.
 
 # Thank you  
 
