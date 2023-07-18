@@ -42,7 +42,7 @@ if (EASYSSL_STATIC_SSL)
 else()
 
     message("Use shared ssl ")
-    target_link_libraries(${CURRENT_PROJECT} PRIVATE OpenSSL::Crypto OpenSSL::SSL)
+    target_link_libraries(${CURRENT_PROJECT} PUBLIC OpenSSL::Crypto OpenSSL::SSL)
 
     if (ANDROID)
         set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
