@@ -25,7 +25,11 @@ public:
 
         //test long messages
 
+#ifdef Q_OS_UNIX
         const int Mb = 1024 * 1024; //1 mb
+#else
+        const int Mb = 1024 * 100; //100 kb
+#endif
         testImpl(QByteArray(Mb, 'c'));
 
     } ;

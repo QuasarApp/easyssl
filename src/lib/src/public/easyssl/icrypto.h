@@ -62,6 +62,7 @@ public:
      * @see IAsyncEncription::encript
      */
     virtual QByteArray decrypt(const QByteArray& message, const QByteArray& key) = 0;
+
     /**
      * @brief encrypt This method encript @a message using @a key.
      * @param message This is a message that should be decripted.
