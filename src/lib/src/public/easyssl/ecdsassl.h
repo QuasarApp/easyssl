@@ -56,7 +56,7 @@ public:
     QByteArray encrypt(const QByteArray &message, const QByteArray &key) override;
 
     /**
-     * @brief curve This method return current curve method. using only for generate new pair keys.
+     * @brief curve This method returns the current curve method. Using only for generating new pair of keys.
      * @return current cursve type.
      * @see EllipticCurveStandart
      */
