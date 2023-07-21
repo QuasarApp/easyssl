@@ -10,12 +10,13 @@
 #define I_CRYPTO_H
 
 #include "global.h"
+#include "qssl.h"
 #include <QByteArray>
 
 namespace EasySSL {
 
 /**
- * @brief The ICrypto class This is base interface that provide encription functionality.
+* @brief The ICrypto class, This is base interface that provide encryption functionality.
  */
 class EASYSSL_EXPORT ICrypto
 {
@@ -23,7 +24,7 @@ class EASYSSL_EXPORT ICrypto
 public:
 
     /**
-     * @brief The Features enum this is list of the supported ecription features
+     * @brief The Features enum this is list of the supported description features
      */
     enum Features {
         /// Signin and check sign of the data.
@@ -38,7 +39,13 @@ public:
      * @param privKey This is result private key.
      * @return true if keys generated successful.
      */
-    virtual bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const = 0;
+    bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const;
+
+    /**
+     * @brief keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.)
+     * @return
+     */
+    virtual QSsl::KeyAlgorithm keyAlgorithm() const = 0;
 
     /**
      * @brief supportedFeatures This method should return supported featurs of the current encription alhorithm
@@ -55,6 +62,7 @@ public:
      * @see IAsyncEncription::encript
      */
     virtual QByteArray decrypt(const QByteArray& message, const QByteArray& key) = 0;
+
     /**
      * @brief encrypt This method encript @a message using @a key.
      * @param message This is a message that should be decripted.
@@ -84,6 +92,12 @@ public:
     virtual bool checkSign(const QByteArray& message,
                            const QByteArray& signature,
                            const QByteArray& key) const = 0;
+
+    /**
+     * @brief makeKeys This method generate the public and private keys of the ECDSA.
+     * @return pointer to generated keys. This method must return EVP_PKEY* structure.
+     */
+    virtual void * makeRawKeys() const = 0;
 };
 
 }

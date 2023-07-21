@@ -51,7 +51,7 @@ PROJECT_BRIEF          = EasySSL is base back end library for your c++ Qt projec
 # pixels and the maximum width should not exceed 200 pixels. Doxygen will copy
 # the logo to the output directory.
 
-PROJECT_LOGO           = res/Logo_Web_alpha.png
+PROJECT_LOGO           =
 
 # The OUTPUT_DIRECTORY tag is used to specify the (relative or absolute) path
 # into which the generated documentation will be written. If a relative path is
@@ -791,7 +791,8 @@ WARN_LOGFILE           =
 # Note: If this tag is empty the current directory is searched.
 
 INPUT                  = src \
-                         README.md
+                         README.md \
+                         CONTRIBUTING.md
 
 
 # This tag can be used to specify the character encoding of the source files

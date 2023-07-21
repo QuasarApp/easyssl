@@ -10,7 +10,6 @@
 namespace EasySSL {
 
 bool init() {
-    initeasysslResources();
     return true;
 }
 

@@ -9,7 +9,7 @@
 #ifndef AUTHECDSA_H
 #define AUTHECDSA_H
 
-#include "ecdsassl11.h"
+#include "ecdsassl.h"
 #include "asynckeysauth.h"
 
 namespace EasySSL {
@@ -17,7 +17,7 @@ namespace EasySSL {
 /**
  * @brief The AuthECDSA class is ecdsa implementation of the Async authentication. This implementation based on Openssl library.
  */
-typedef AsyncKeysAuth<ECDSASSL11> AuthECDSA;
+typedef AsyncKeysAuth<ECDSASSL> AuthECDSA;
 
 }
 
