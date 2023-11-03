@@ -18,8 +18,8 @@ namespace EasySSL {
 
 /**
  * @brief The AsyncKeysAuth class is temaplate class for works with authorization of a pair of asynchronous keys
- *  This class contains base implementation for the authentication using async encription. The base encription alhorithm defined on the template argument **CryptoImplementation**.
- *  You can use any crypto alhorithm.
+ *  This class contains base implementation for the authentication using async encryption. The base encryption algorithm defined on the template argument **CryptoImplementation**.
+ *  You can use any crypto algorithm.
  *
  *  ## Exampel of use:
  *
@@ -60,7 +60,7 @@ namespace EasySSL {
  * * After accept server create new user with ID = sha256(PUB) or
  * if user alredy exits make them as a logined user.
  *
- * @tparam CryptoImplementation This is internal implementaion of base encription functions.
+ * @tparam CryptoImplementation This is internal implementaion of base encryption functions.
  * @see iCrypto class.
  *
  */

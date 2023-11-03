@@ -38,7 +38,7 @@ void *RSASSL::makeRawKeys() const {
 }
 
 ICrypto::Features RSASSL::supportedFeatures() const {
-    return static_cast<ICrypto::Features>(Features::Encription | Features::Signing);
+    return static_cast<ICrypto::Features>(Features::Encryption | Features::Signing);
 }
 
 QSsl::KeyAlgorithm RSASSL::keyAlgorithm() const {
@@ -139,7 +139,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
     auto rsaPrivateKey = PEM_read_bio_PrivateKey(pkey, nullptr, nullptr, nullptr);
     BIO_free(pkey);
 
-    if (!rsaPrivateKey) {        
+    if (!rsaPrivateKey) {
         qCritical() << "Error reading private key";
         EasySSLUtils::printlastOpenSSlError();
         return {};
@@ -147,7 +147,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
 
     const long long maxDencryptedSize = EVP_PKEY_size(rsaPrivateKey);
     if (message.length() % maxDencryptedSize) {
-        qCritical() << "Error wrong encripted data size.";
+        qCritical() << "Error wrong encrypted data size.";
         qCritical() << "Your key requir size multiple " << maxDencryptedSize;
 
         return {};
@@ -164,7 +164,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
         EasySSLUtils::printlastOpenSSlError();
 
         EVP_PKEY_CTX_free(ctx);
-        EVP_PKEY_free(rsaPrivateKey);        
+        EVP_PKEY_free(rsaPrivateKey);
         return {};
     }
 

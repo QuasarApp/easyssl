@@ -67,12 +67,12 @@ public:
 
     /**
      * @brief padding This is mode of pending data before icnription.
-     * @return encription pending mode.
+     * @return encryption pending mode.
      */
     RSAPadding padding() const;
 
     /**
-     * @brief setPadding This method sets new mode for encription pendong.
+     * @brief setPadding This method sets new mode for encryption pendong.
      * @param newPadding This is new new mode.
      * @note You must change padding mode for both side (encryption and decryption)
     */
