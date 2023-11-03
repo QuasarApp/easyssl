@@ -1,16 +1,16 @@
 # EasySSL
 This is wrapper library that make using OpenSSL library more simple. 
-This library contains interfaces for the signing and encription data.
+This library contains interfaces for the signing and encryption data.
 
-### Supported encription alhorithms:
+### Supported encryption algorithms:
 * ECDSA
 * RSA
 
 ### Supported features
-* encription 
+* encryption
 * signing
 * keys creating
-* asyn auth bse on the asyn encriptions methods
+* asyn auth bse on the asyn encryptions methods
 
 
 ## Build and Include
@@ -34,7 +34,7 @@ This library contains interfaces for the signing and encription data.
 
 ## Usage
 
-### Encription
+### Encryption
 
 ```cpp
 #include "easyssl/rsassl.h"
@@ -48,8 +48,8 @@ int main() {
     auto siganture = crypto.signMessage(message, priv);
     crypto.checkSign(message, siganture, pub);
     
-    auto encriptedMsg = crypto.encrypt(message, pub);
-    auto decryptedMsg = crypto.decrypt(encriptedMsg, priv);
+    auto encryptedMsg = crypto.encrypt(message, pub);
+    auto decryptedMsg = crypto.decrypt(encryptedMsg, priv);
 }
 
 

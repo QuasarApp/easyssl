@@ -50,10 +50,10 @@ public:
             QVERIFY2(crypto.checkSign(message, siganture, pub), "failed to check message");
         }
 
-        if (crypto.supportedFeatures() & EasySSL::ICrypto::Features::Encription) {
-            auto encriptedMsg = crypto.encrypt(message, pub);
-            QVERIFY2(encriptedMsg.size(), "Encripted message should not be empty");
-            auto decryptedMsg = crypto.decrypt(encriptedMsg, priv);
+        if (crypto.supportedFeatures() & EasySSL::ICrypto::Features::Encryption) {
+            auto encryptedMsg = crypto.encrypt(message, pub);
+            QVERIFY2(encryptedMsg.size(), "Encrypted message should not be empty");
+            auto decryptedMsg = crypto.decrypt(encryptedMsg, priv);
             QVERIFY2(decryptedMsg == message, "Failed to check message after decryption");
         }
     }
