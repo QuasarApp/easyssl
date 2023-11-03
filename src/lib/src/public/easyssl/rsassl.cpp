@@ -139,7 +139,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
     auto rsaPrivateKey = PEM_read_bio_PrivateKey(pkey, nullptr, nullptr, nullptr);
     BIO_free(pkey);
 
-    if (!rsaPrivateKey) {        
+    if (!rsaPrivateKey) {
         qCritical() << "Error reading private key";
         EasySSLUtils::printlastOpenSSlError();
         return {};
@@ -164,7 +164,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
         EasySSLUtils::printlastOpenSSlError();
 
         EVP_PKEY_CTX_free(ctx);
-        EVP_PKEY_free(rsaPrivateKey);        
+        EVP_PKEY_free(rsaPrivateKey);
         return {};
     }
 
