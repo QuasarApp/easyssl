@@ -30,7 +30,16 @@ This library contains interfaces for the signing and encryption data.
      ```
  * rebuild yuor project
 
+### independet of SSL build
+Dependency on the ssl library greatly complicates the deployment of the final product. For fix this issue, you can build EasySSL library with static SSL library. In this case, SSL library code will be saved in your EasySell binary, and deploy of your application will be easily. The ssl code will not available for your application or other libraries, so you will not get conflicts between different major versions ssl libraries if your distribution kit has it.  
 
+Just set the **EASYSSL_STATIC_SSL** option to true. 
+
+``` bash
+cmake .. -DEASYSSL_STATIC_SSL=1 
+```
+
+The described case may be useful for the Qt 5.15.x, because the QNetwork 5.15 depends on the SSL v1.1 and EasySsl works with the SSL >= 3.0. 
 
 ## Usage
 
