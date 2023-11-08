@@ -14,17 +14,18 @@ This library contains interfaces for the signing and encryption data.
 
 
 ## Build and Include
+### CMake
 
  * cd yourRepo
  * git submodule add https://github.com/QuasarApp/easyssl.git # add the repository of EasySSL into your repo like submodule
  * git submodule update --init --recursive
- * Include in your CMakeLists.txt file the main CMakeLists.txt file of Heart library
+ * Include in your CMakeLists.txt file the main CMakeLists.txt file of EasySSL library
 
      ```cmake
      add_subdirectory(easyssl)
      ```
 
- * link the Heart library to your target
+ * link the EasySSL library to your target
      ```cmake
      target_link_libraries(yourLib PUBLIC easyssl)
      ```
