@@ -12,9 +12,6 @@ get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(CURRENT_PROJECT "${PROJECT_NAME}")
 add_definitions(-DEASYSSL_LIBRARY)
 
-list(APPEND CMAKE_FIND_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
-find_package(OpenSSL 3.0 REQUIRED)
-
 file(GLOB_RECURSE SOURCE_CPP
     "src/*.cpp"
     "src/*.h"
@@ -35,28 +32,47 @@ add_library(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
 
 target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core )
 
-if (EASYSSL_STATIC_SSL)
+if (BUILD_WITH_OPENSSL)
 
-    message("Use static ssl")
-    target_link_libraries(${CURRENT_PROJECT} PRIVATE libcrypto.a libssl.a)
+    # The OpenSSL libraries are built with the project (see the
+    # cmake/BuildOpenSSL.cmake file). The easyssl target is linked
+    # against the imported targets of the built OpenSSL libraries.
+    message("Use the OpenSSL libraries that are built with the project")
+    target_link_libraries(${CURRENT_PROJECT} PRIVATE easyssl_openssl_ssl easyssl_openssl_crypto)
+
 else()
 
-    message("Use shared ssl ")
-    target_link_libraries(${CURRENT_PROJECT} PRIVATE OpenSSL::Crypto OpenSSL::SSL)
-
-    if (ANDROID)
-        set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
-
-        set(ANDROID_EXTRA_LIBS
-            ${OPENSSL_ROOT_PATH}/lib/libcrypto_android.so
-            ${OPENSSL_ROOT_PATH}/lib/libssl_android.so
-        CACHE INTERNAL "")
-
-        message(ANDROID_EXTRA_LIBS = ${ANDROID_EXTRA_LIBS})
+    if (EASYSSL_STATIC_SSL)
+        set(OPENSSL_USE_STATIC_LIBS ON)
     endif()
-endif()
 
-message("Use the OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+    list(APPEND CMAKE_FIND_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
+    find_package(OpenSSL 3.0 REQUIRED)
+
+    if (EASYSSL_STATIC_SSL)
+
+        message("Use static ssl")
+        target_link_libraries(${CURRENT_PROJECT} PRIVATE ${OPENSSL_SSL_LIBRARY} ${OPENSSL_CRYPTO_LIBRARY})
+    else()
+
+        message("Use shared ssl ")
+        target_link_libraries(${CURRENT_PROJECT} PRIVATE OpenSSL::Crypto OpenSSL::SSL)
+
+        if (ANDROID)
+            set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
+
+            set(ANDROID_EXTRA_LIBS
+                ${OPENSSL_ROOT_PATH}/lib/libcrypto_android.so
+                ${OPENSSL_ROOT_PATH}/lib/libssl_android.so
+            CACHE INTERNAL "")
+
+            message(ANDROID_EXTRA_LIBS = ${ANDROID_EXTRA_LIBS})
+        endif()
+    endif()
+
+    message("Use the OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+
+endif()
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
