@@ -89,8 +89,13 @@ binary. The built OpenSSL libraries are saved in the build directory
 on the system OpenSSL libraries and you will not get conflicts between
 different major versions of the SSL libraries.
 
-* Supported platforms: Linux, Android, iOS and macOS (arm/x86).
-* The Windows and WASM platforms are **not** supported.
+* Supported platforms: Linux, Windows (MinGW), Android, iOS and macOS (arm/x86).
+* The WASM platform is **not** supported.
+* On Windows the build requires the MinGW (GNU) compiler and the
+  `mingw32-make` tool. The OpenSSL Configure script also requires a perl
+  that produces Unix-like paths and that provides the perl core modules
+  (for example the MSYS2 perl; set the `MSYS2_ROOT` environment variable
+  to the MSYS2 installation directory if it is not found automatically).
 * The OpenSSL version can be changed with the `EASYSSL_OPENSSL_TAG` option
   (default `openssl-3.0.9`).
 
@@ -351,7 +356,7 @@ int main() {
 
 ## More information
 
-* Full doxygen documentation: [here](https://quasarapp.ddns.net:3031/docs/QuasarApp/easyssl/latest/index.html)
+* Full doxygen documentation: [here](https://quasarapp.github.io/easyssl/doc/)
 * Migration from the Qt-Secret library: [MIGRATION_FROM_QT_SECRET.md](MIGRATION_FROM_QT_SECRET.md)
 * Contributing: [CONTRIBUTING.md](../CONTRIBUTING.md)
 

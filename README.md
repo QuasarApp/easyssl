@@ -31,6 +31,41 @@ This library contains interfaces for the signing and encryption data.
      ```
  * rebuild your project
 
+### qmake
+
+  * cd yourRepo
+  * git submodule add https://github.com/QuasarApp/easyssl.git # add the repository of EasySSL into your repo like submodule
+  * git submodule update --init --recursive
+  * Include in your `.pro` file the EasySSL sources directly:
+
+      ```qmake
+      # myapp.pro
+
+      QT       += core network
+
+      INCLUDEPATH += $$PWD/../easyssl/src/lib/src/public
+
+      SOURCES += \
+                  ../easyssl/src/lib/src/public/easyssl.cpp \
+                  ../easyssl/src/lib/src/public/easyssl/icrypto.cpp \
+                  ../easyssl/src/lib/src/public/easyssl/ecdsassl.cpp \
+                  ../easyssl/src/lib/src/public/easyssl/rsassl.cpp \
+                  ../easyssl/src/lib/src/public/easyssl/x509.cpp \
+                  ../easyssl/src/lib/src/public/easyssl/icertificate.cpp \
+                  ../easyssl/src/lib/src/private/easysslutils.cpp
+
+      DEFINES += EASYSSL_LIBRARY
+
+      # Link the OpenSSL 3.0+ libraryes:
+      LIBS += -lcrypto -lssl
+      ```
+
+  * rebuild your project
+
+  > **Note:** the CMake build is the recommended way. The EasySSL library has the
+  > `EASYSSL_STATIC_SSL` and `BUILD_WITH_OPENSSL` build options that are only
+  > available for the CMake build.
+
 ### Independent of SSL build
 Dependency on the ssl library greatly complicates the deployment of the final product. For fix this issue, you can build EasySSL library with static SSL library. In this case, SSL library code will be saved in your EasySSL binary, and deploy of your application will be easily. The ssl code will not available for your application or other libraries, so you will not get conflicts between different major versions ssl libraries if your distribution kit has it.  
 
@@ -41,6 +76,39 @@ cmake .. -DEASYSSL_STATIC_SSL=1
 ```
 
 The described case may be useful for the Qt 5.15.x, because the QNetwork 5.15 depends on the SSL v1.1 and EasySSL works with the SSL >= 3.0. 
+
+### Build without the system OpenSSL (BUILD_WITH_OPENSSL)
+
+ If your system (or the target device) has no OpenSSL 3.0+ library, you can
+ build the OpenSSL library together with the EasySSL library. Just set the
+ **BUILD_WITH_OPENSSL** option to true:
+
+ ``` bash
+ cmake .. -DBUILD_WITH_OPENSSL=1
+ ```
+
+ In this case the EasySSL project clones the OpenSSL `openssl-3.0.9` sources,
+ builds the static OpenSSL libraries and links them privately into the EasySSL
+ binary. So your application has no runtime dependency on the system OpenSSL.
+
+ * Supported platforms: Linux, Windows (MinGW), Android, iOS and macOS (arm/x86).
+ * The WASM platform is **not** supported.
+ * On Windows the build requires the MinGW (GNU) compiler and the
+   `mingw32-make` tool. The OpenSSL Configure script also requires a perl
+   that produces Unix-like paths and that provides the perl core modules
+   (for example the MSYS2 perl; set the `MSYS2_ROOT` environment variable
+   to the MSYS2 installation directory if it is not found automatically).
+ * The OpenSSL version can be changed with the `EASYSSL_OPENSSL_TAG` option
+   (default `openssl-3.0.9`).
+
+### Unit tests
+
+ The unit tests of the EasySSL library are built and run by default. To
+ disable the tests, set the **EASYSSL_TESTS** option to false:
+
+ ``` bash
+ cmake .. -DEASYSSL_TESTS=0
+ ```
 
 ## Usage
 
@@ -113,12 +181,15 @@ edsa.auth(1000, &userID);
 
 ## Documentation
 
-* [Usage and working examples](docs/USAGE.md) — build with CMake and qmake,
-  RSA/ECDSA examples, X509 certificates, async authentication.
-* [Migration from the Qt-Secret library](docs/MIGRATION_FROM_QT_SECRET.md) —
+* [EasySSL on the web](https://quasarapp.github.io/easyssl/) — the GitHub
+  Pages site of this repository: the landing page and the full API reference
+  generated automatically with Doxygen.
+* [Usage and working examples](https://github.com/QuasarApp/easyssl/blob/main/docs/USAGE.md) —
+  build with CMake and qmake, RSA/ECDSA examples, X509 certificates, async authentication.
+* [Migration from the Qt-Secret library](https://github.com/QuasarApp/easyssl/blob/main/docs/MIGRATION_FROM_QT_SECRET.md) —
   API mapping, before/after code examples, key and signature format changes.
 
 ## Do not forget to help us make this library better...
 See our main documentation about contributing to [EasySSL](https://github.com/QuasarApp/easyssl/blob/main/CONTRIBUTING.md)
 
-Full documentation available [here](https://quasarapp.ddns.net:3031/docs/QuasarApp/easyssl/latest/index.html)
+Full documentation and the API reference available on the [EasySSL GitHub Pages](https://quasarapp.github.io/easyssl/) site.
