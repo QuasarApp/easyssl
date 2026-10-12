@@ -140,26 +140,29 @@ message(STATUS "The BUILD_WITH_OPENSSL option is enabled. The OpenSSL ${EASYSSL_
 # Strawberry perl that is preinstalled on the Windows CI runners does not
 # match this requirement, while the perl that ships with Git for Windows
 # (an MSYS2 based perl) does, so it is preferred there.
-set(_easyssl_openssl_perl "perl")
 if (WIN32)
+    # Note that find_program() skips the search when the result variable
+    # is already set to a value that is not a NOTFOUND value, so the
+    # variable must not be initialized before the call.
     find_program(_easyssl_openssl_perl
         NAMES perl.exe
         HINTS "C:/Program Files/Git/usr/bin"
         NO_DEFAULT_PATH
     )
-    if (_easyssl_openssl_perl-NOTFOUND STREQUAL _easyssl_openssl_perl)
+    if ("${_easyssl_openssl_perl}" MATCHES "NOTFOUND$")
         # No perl from Git for Windows found. Fall back to the perl that
         # is available on the PATH. It has to be a perl that produces
         # Unix-like paths (for example the perl of an MSYS2 installation),
         # otherwise the OpenSSL Configure script fails.
         find_program(_easyssl_openssl_perl NAMES perl)
-        if (_easyssl_openssl_perl-NOTFOUND STREQUAL _easyssl_openssl_perl)
+        if ("${_easyssl_openssl_perl}" MATCHES "NOTFOUND$")
             message(FATAL_ERROR "The BUILD_WITH_OPENSSL option on the Windows platform requires a perl that produces Unix-like paths. Install Git for Windows (that provides C:/Program Files/Git/usr/bin/perl.exe) or add such a perl (for example from MSYS2) to the PATH")
-        else()
-            message(WARNING "The BUILD_WITH_OPENSSL option on the Windows platform requires a perl that produces Unix-like paths. The perl of Git for Windows (C:/Program Files/Git/usr/bin) was not found, so the perl from the PATH is used: ${_easyssl_openssl_perl}")
         endif()
     endif()
+else()
+    set(_easyssl_openssl_perl "perl")
 endif()
+message(STATUS "The perl that is used for the OpenSSL build is: ${_easyssl_openssl_perl}")
 
 # The OpenSSL Configure is a perl script, so run it explicitly with perl.
 set(_easyssl_openssl_configure_cmd
