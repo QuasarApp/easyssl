@@ -52,31 +52,12 @@ jobs:
         with:
           version: v1.6.2445.b0ec904
 
-      - name: Install dependencies (Linux)
-        if: runner.os == 'Linux'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libssl-dev
-
-      - name: Install OpenSSL (Windows via MSYS2)
-        id: msys2
-        if: runner.os == 'Windows'
-        uses: msys2/setup-msys2@v2
-        with:
-          msystem: MINGW64
-          update: true
-          install: mingw-w64-x86_64-openssl
-
-      - name: Set OpenSSL Environment Variables (Windows)
-        if: runner.os == 'Windows'
-        run: |
-          # msys2/setup-msys2 installs MSYS2 under $RUNNER_TEMP by default,
-          # so use the action's msys2-location output instead of a hardcoded path
-          echo "OPENSSL_ROOT_DIR=${{ steps.msys2.outputs.msys2-location }}\mingw64" >> $env:GITHUB_ENV
-          # Add OpenSSL binaries to PATH for runtime execution
-          echo "${{ steps.msys2.outputs.msys2-location }}\mingw64\bin" >> $env:GITHUB_PATH
-        shell: pwsh
-
+      # The OpenSSL libraries are self-built by the project (the
+      # BUILD_WITH_OPENSSL option clones and builds OpenSSL, see
+      # cmake/BuildOpenSSL.cmake), so no system OpenSSL packages are needed.
+      # On Windows the self-build additionally needs mingw32-make (provided by
+      # the aqt tools_mingw1310 installed above) and perl (preinstalled on
+      # the windows-latest runner).
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
         run: >
@@ -88,7 +69,7 @@ jobs:
           -DCMAKE_CXX_COMPILER=g++
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-          -DOPENSSL_ROOT_DIR=${{ steps.msys2.outputs.msys2-location }}/mingw64
+          -DBUILD_WITH_OPENSSL=ON
           -S ${{ github.workspace }}
 
       - name: Configure CMake (Linux)
@@ -100,6 +81,7 @@ jobs:
           -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          -DBUILD_WITH_OPENSSL=ON
           -DCMAKE_PREFIX_PATH=${{ env.QT_ROOT_DIR }}
           -S ${{ github.workspace }}
 
