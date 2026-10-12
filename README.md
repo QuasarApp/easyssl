@@ -56,7 +56,7 @@ This library contains interfaces for the signing and encryption data.
 
       DEFINES += EASYSSL_LIBRARY
 
-      # Link the OpenSSL 3.0+ libraryes:
+      # Link the OpenSSL 3.0+ libraries:
       LIBS += -lcrypto -lssl
       ```
 
