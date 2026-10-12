@@ -1,0 +1,118 @@
+name: Build and Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }} (${{ matrix.build_type }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        build_type: [Release]
+
+    steps:
+      - name: Install Qt (Windows)
+        uses: jurplel/install-qt-action@v4.3.1
+        if: runner.os == 'Windows'
+        with:
+          version: '6.10.3' # aqt has bug with latest qt versions in windows
+          target: 'desktop'
+          arch: 'win64_mingw'
+          cache: true
+          tools: 'tools_mingw1310'
+          aqtversion: ==3.3.*
+
+      - name: Install Qt (Linux)
+        uses: jurplel/install-qt-action@v4.3.1
+        if: runner.os == 'Linux'
+        with:
+          version: '6.12.0'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          cache: true
+          aqtversion: ==3.3.*
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ matrix.os }}-${{ matrix.build_type }}
+
+      - name: Install CQtDeployer
+        uses: QuasarApp/cqtdeployer-install-action@v1.1.0
+        with:
+          version: v1.6.2445.b0ec904
+
+      # The OpenSSL libraries are self-built by the project (the
+      # BUILD_WITH_OPENSSL option clones and builds OpenSSL, see
+      # cmake/BuildOpenSSL.cmake), so no system OpenSSL packages are needed.
+      # On Windows the self-build additionally needs mingw32-make (provided by
+      # the aqt tools_mingw1310 installed above) and a perl that produces
+      # Unix-like paths and provides the perl core modules that are required
+      # by the OpenSSL build. The complete perl of MSYS2 (that is installed
+      # below) matches this requirement.
+      - name: Install MSYS2 perl (Windows)
+        id: msys2
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          update: true
+          install: perl
+
+      - name: Set MSYS2 environment variables (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          # msys2/setup-msys2 installs MSYS2 under $RUNNER_TEMP by default,
+          # so use the action's msys2-location output instead of a hardcoded
+          # path
+          echo "MSYS2_ROOT=${{ steps.msys2.outputs.msys2-location }}" >> $env:GITHUB_ENV
+        shell: pwsh
+
+      - name: Configure CMake (Windows)
+        if: runner.os == 'Windows'
+        run: >
+          cmake -B ${{ github.workspace }}/build
+          -G Ninja
+          -DBUILD_SHARED_LIBS=ON
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_C_COMPILER=gcc
+          -DCMAKE_CXX_COMPILER=g++
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          -DBUILD_WITH_OPENSSL=ON
+          -S ${{ github.workspace }}
+
+      - name: Configure CMake (Linux)
+        if: runner.os == 'Linux'
+        run: >
+          cmake -B ${{ github.workspace }}/build
+          -G Ninja
+          -DBUILD_SHARED_LIBS=ON
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          -DBUILD_WITH_OPENSSL=ON
+          -DCMAKE_PREFIX_PATH=${{ env.QT_ROOT_DIR }}
+          -S ${{ github.workspace }}
+
+      - name: Build
+        run: cmake --build ${{ github.workspace }}/build --config ${{ matrix.build_type }} --parallel 4
+
+      - name: ccache statistics
+        run: ccache -s
+
+      - name: Run Tests
+        env:
+          QT_FORCE_STDERR_LOGGING: 1
+          QT_ASSUME_STDERR_HAS_CONSOLE: 1
+        run: cmake --build ${{ github.workspace }}/build --target test

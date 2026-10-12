@@ -37,6 +37,15 @@ set(EASYSSL_PACKAGE_ID "quasarapp.core.easyssl")
 
 option(EASYSSL_TESTS "This option disables or enables tests of the ${PROJECT_NAME} project"  ON)
 option(EASYSSL_STATIC_SSL "This option enable or disabled static link ssl libraryes" OFF)
+option(BUILD_WITH_OPENSSL "This option enable or disabled build thirdparty libraryes with ${PROJECT_NAME} library (for example openssl)" OFF)
+
+if (BUILD_WITH_OPENSSL)
+    if (QA_WASM32)
+        message(FATAL_ERROR "The BUILD_WITH_OPENSSL option is not supported for the WASM platform")
+    endif()
+
+    include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BuildOpenSSL.cmake)
+endif()
 
 if (ANDROID OR IOS OR NOT QT_VERSION_MAJOR OR QA_WASM32)
     set(EASYSSL_TESTS OFF CACHE BOOL "This option force disbled for ANDROID IOS QA_WASM32 and Not Qt projects" FORCE)
@@ -47,6 +56,11 @@ make_directory(Distro)
 initAll()
 
 add_subdirectory(src/lib)
+
+if (BUILD_WITH_OPENSSL)
+    # The easyssl target must be built after the OpenSSL libraries.
+    add_dependencies(${PROJECT_NAME} easyssl_openssl)
+endif()
 
 if (EASYSSL_TESTS)
     add_subdirectory(tests)
