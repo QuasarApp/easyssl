@@ -79,17 +79,19 @@ The described case may be useful for the Qt 5.15.x, because the QNetwork 5.15 de
 
 ### Build without the system OpenSSL (BUILD_WITH_OPENSSL)
 
- If your system (or the target device) has no OpenSSL 3.0+ library, you can
- build the OpenSSL library together with the EasySSL library. Just set the
- **BUILD_WITH_OPENSSL** option to true:
+ By default the OpenSSL library is built together with the EasySSL library
+ (the **BUILD_WITH_OPENSSL** option is enabled). In this case the EasySSL
+ project clones the OpenSSL `openssl-4.0.3` sources, builds the static
+ OpenSSL libraries and links them privately into the EasySSL binary. So
+ your application has no runtime dependency on the system OpenSSL.
+
+ To use the OpenSSL library that is installed on the system (or the target
+ device) instead of the self-built one, set the **BUILD_WITH_OPENSSL**
+ option to false (the system needs the OpenSSL 3.0+ library):
 
  ``` bash
- cmake .. -DBUILD_WITH_OPENSSL=1
+ cmake .. -DBUILD_WITH_OPENSSL=0
  ```
-
- In this case the EasySSL project clones the OpenSSL `openssl-3.0.9` sources,
- builds the static OpenSSL libraries and links them privately into the EasySSL
- binary. So your application has no runtime dependency on the system OpenSSL.
 
  * Supported platforms: Linux, Windows (MinGW), Android, iOS and macOS (arm/x86).
  * The WASM platform is **not** supported.
@@ -99,7 +101,8 @@ The described case may be useful for the Qt 5.15.x, because the QNetwork 5.15 de
    (for example the MSYS2 perl; set the `MSYS2_ROOT` environment variable
    to the MSYS2 installation directory if it is not found automatically).
  * The OpenSSL version can be changed with the `EASYSSL_OPENSSL_TAG` option
-   (default `openssl-3.0.9`).
+   (default `openssl-4.0.3`; the OpenSSL 3.0.x tags, for example
+   `openssl-3.0.9`, are also supported).
 
 ### Unit tests
 
