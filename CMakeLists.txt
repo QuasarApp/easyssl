@@ -40,8 +40,8 @@ option(EASYSSL_STATIC_SSL "This option enable or disabled static link ssl librar
 option(BUILD_WITH_OPENSSL "This option enable or disabled build thirdparty libraryes with ${PROJECT_NAME} library (for example openssl)" OFF)
 
 if (BUILD_WITH_OPENSSL)
-    if (WIN32 OR QA_WASM32)
-        message(FATAL_ERROR "The BUILD_WITH_OPENSSL option is not supported for the Windows and WASM platforms")
+    if (QA_WASM32)
+        message(FATAL_ERROR "The BUILD_WITH_OPENSSL option is not supported for the WASM platform")
     endif()
 
     include(${CMAKE_CURRENT_SOURCE_DIR}/cmake/BuildOpenSSL.cmake)

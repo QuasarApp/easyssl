@@ -40,6 +40,11 @@ if (BUILD_WITH_OPENSSL)
     message("Use the OpenSSL libraries that are built with the project")
     target_link_libraries(${CURRENT_PROJECT} PRIVATE easyssl_openssl_ssl easyssl_openssl_crypto)
 
+    if (WIN32)
+        # The OpenSSL mingw64 build needs these Windows system libraries.
+        target_link_libraries(${CURRENT_PROJECT} PRIVATE ws2_32 gdi32 crypt32)
+    endif()
+
 else()
 
     if (EASYSSL_STATIC_SSL)
