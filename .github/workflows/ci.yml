@@ -1,0 +1,141 @@
+name: Build and Test
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-test:
+    name: ${{ matrix.os }} (${{ matrix.build_type }})
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest]
+        build_type: [Release]
+
+    steps:
+      - name: Install Qt (Windows)
+        uses: jurplel/install-qt-action@v4.3.1
+        if: runner.os == 'Windows'
+        with:
+          version: '6.10.3' # aqt has bug with latest qt versions in windows
+          target: 'desktop'
+          arch: 'win64_mingw'
+          cache: true
+          tools: 'tools_mingw1310'
+          aqtversion: ==3.3.*
+
+      - name: Install Qt (Linux)
+        uses: jurplel/install-qt-action@v4.3.1
+        if: runner.os == 'Linux'
+        with:
+          version: '6.12.0'
+          target: 'desktop'
+          arch: 'linux_gcc_64'
+          cache: true
+          aqtversion: ==3.3.*
+
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          submodules: recursive
+
+      - name: ccache
+        uses: hendrikmuhs/ccache-action@v1.2
+        with:
+          key: ${{ matrix.os }}-${{ matrix.build_type }}
+
+      - name: Install CQtDeployer
+        uses: QuasarApp/cqtdeployer-install-action@v1.1.0
+
+      # The released Windows CQtDeployer binary (CQtDeployer.exe) is built with the
+      # MSVCRT-based MinGW (aqt win64_mingw / tools_mingw1310, GCC 13.1.0), but the
+      # bundled libstdc++-6.dll / libgcc_s_seh-1.dll / libwinpthread-1.dll in the
+      # release zip are from a UCRT-based MinGW (GCC 13.2.0, "x86_64-ucrt-posix-seh").
+      # Loading the UCRT C++ runtime from the MSVCRT exe fails with
+      # STATUS_ENTRYPOINT_NOT_FOUND (0xc0000139) before the deploy step can run.
+      # Overwrite the three runtime DLLs with the matching MSVCRT versions shipped by
+      # aqt tools_mingw1310 so the bundle is self-consistent.
+      # aqt installs that toolchain under %IQTA_TOOLS%\mingw1310_64.
+      - name: Fix CQtDeployer MinGW runtime (Windows)
+        if: runner.os == 'Windows'
+        shell: cmd
+        run: |
+          echo "Aligning CQtDeployer bundled MinGW runtime with aqt tools_mingw1310 (MSVCRT)"
+          set "MINGW_BIN=%IQTA_TOOLS%\mingw1310_64\bin"
+          if not exist "%MINGW_BIN%\libstdc++-6.dll" (
+            echo "ERROR: aqt MSVCRT MinGW runtime not found at %MINGW_BIN%"
+            echo "--- contents of %IQTA_TOOLS% ---"
+            dir "%IQTA_TOOLS%" 2>nul
+            exit /b 1
+          )
+          copy /Y "%MINGW_BIN%\libstdc++-6.dll" "%GITHUB_WORKSPACE%\cqt\libstdc++-6.dll"
+          copy /Y "%MINGW_BIN%\libgcc_s_seh-1.dll" "%GITHUB_WORKSPACE%\cqt\libgcc_s_seh-1.dll"
+          copy /Y "%MINGW_BIN%\libwinpthread-1.dll" "%GITHUB_WORKSPACE%\cqt\libwinpthread-1.dll"
+          echo "Done."
+
+      - name: Install dependencies (Linux)
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libssl-dev
+
+      # easyssl requires OpenSSL >= 3.0. Install the official Win64 OpenSSL build via
+      # Chocolatey (default location: C:\Program Files\OpenSSL-Win with bin/include/lib)
+      # and expose it to CMake (OPENSSL_ROOT_DIR) and to the deployed test executable
+      # (bin on PATH, so CQtDeployer can copy the runtime DLLs into Testing/).
+      - name: Install OpenSSL (Windows)
+        if: runner.os == 'Windows'
+        shell: pwsh
+        run: |
+          choco install openssl -y --no-progress
+          $candidates = @("C:\Program Files\OpenSSL-Win", "C:\Program Files\OpenSSL")
+          $opensslDir = $candidates | Where-Object { Test-Path (Join-Path $_ "lib\libssl.lib") } | Select-Object -First 1
+          if (-not $opensslDir) {
+            Write-Error "OpenSSL import libraries (lib\libssl.lib) not found. Tried: $($candidates -join ', ')"
+            exit 1
+          }
+          Write-Host "Using OpenSSL from $opensslDir"
+          Add-Content -Path $env:GITHUB_ENV -Value "OPENSSL_ROOT_DIR=$opensslDir"
+          Add-Content -Path $env:GITHUB_PATH -Value "$opensslDir\bin"
+
+      - name: Configure CMake (Windows)
+        if: runner.os == 'Windows'
+        run: >
+          cmake -B ${{ github.workspace }}/build
+          -G Ninja
+          -DBUILD_SHARED_LIBS=ON
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_C_COMPILER=gcc
+          -DCMAKE_CXX_COMPILER=g++
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          -DCMAKE_PREFIX_PATH=${{ env.QT_ROOT_DIR }}
+          -DOPENSSL_ROOT_DIR="${env:OPENSSL_ROOT_DIR}"
+          -S ${{ github.workspace }}
+
+      - name: Configure CMake (Linux)
+        if: runner.os == 'Linux'
+        run: >
+          cmake -B ${{ github.workspace }}/build
+          -G Ninja
+          -DBUILD_SHARED_LIBS=ON
+          -DCMAKE_BUILD_TYPE=${{ matrix.build_type }}
+          -DCMAKE_C_COMPILER_LAUNCHER=ccache
+          -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
+          -DCMAKE_PREFIX_PATH=${{ env.QT_ROOT_DIR }}
+          -S ${{ github.workspace }}
+
+      - name: Build
+        run: cmake --build ${{ github.workspace }}/build --config ${{ matrix.build_type }} --parallel 4
+
+      - name: ccache statistics
+        run: ccache -s
+
+      - name: Run Tests
+        env:
+          QT_FORCE_STDERR_LOGGING: 1
+          QT_ASSUME_STDERR_HAS_CONSOLE: 1
+        run: cmake --build ${{ github.workspace }}/build --target test
