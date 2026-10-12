@@ -190,6 +190,19 @@ endif()
 
 message(STATUS "The perl that is used for the OpenSSL build is: ${_easyssl_openssl_perl}")
 
+# The OpenSSL Configure script embeds the perl program (the PERL
+# environment variable or the path of the running perl interpreter) in
+# the generated Makefile, and the perl scripts of the OpenSSL build and
+# install steps are executed with this embedded path. The MSYS2 perl
+# reports itself with an MSYS-like path (for example /usr/bin/perl) when
+# it is executed from a native context, and the native make program
+# (mingw32-make) cannot find the perl at this location. So the PERL
+# environment variable with the native path of the selected perl is set
+# when the OpenSSL Configure script is executed.
+if (WIN32)
+    list(PREPEND _easyssl_openssl_env "PERL=${_easyssl_openssl_perl}")
+endif()
+
 # The OpenSSL Configure is a perl script, so run it explicitly with perl.
 set(_easyssl_openssl_configure_cmd
     ${CMAKE_COMMAND}
