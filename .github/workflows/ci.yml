@@ -58,32 +58,23 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libssl-dev
 
-      # - name: Install OpenSSL (Windows)
-      #   if: runner.os == 'Windows'
-      #   run: |
-      #     choco install openssl -y
-      #     ls "C:\Program Files\OpenSSL"
-      #     echo "OPENSSL_ROOT_DIR=C:\Program Files\OpenSSL" >> $env:GITHUB_ENV
-      - name: Install Full OpenSSL (with libs and headers)
+      - name: Install OpenSSL (Windows via MSYS2)
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MINGW64
+          update: true
+          install: mingw-w64-x86_64-openssl
+
+      - name: Set OpenSSL Environment Variables (Windows)
         if: runner.os == 'Windows'
         run: |
-          # Download official full installer for Windows 64-bit
-          $installerUrl = "https://slproweb.com/download/Win64OpenSSL-3_6_5.exe"
-          Invoke-WebRequest -Uri $installerUrl -OutFile "openssl_installer.exe"
-            
-          # Run silent installation to a predictable directory
-          Start-Process -FilePath "openssl_installer.exe" -ArgumentList "/silent /verysilent /sp- /suppressmsgboxes /dir=C:\OpenSSL-Win64" -Wait
+          # Point CMake to MSYS2 MINGW64 root directory
+          echo "OPENSSL_ROOT_DIR=C:/msys64/mingw64" >> $env:GITHUB_ENV
+          # Add OpenSSL binaries to PATH for runtime execution
+          echo "C:\msys64\mingw64\bin" >> $env:GITHUB_PATH
         shell: pwsh
-      
-      - name: Set OpenSSL Environment Variables
-        if: runner.os == 'Windows'
-        run: |
-          # Point CMake / MSBuild / Linker to OpenSSL root directory
-          echo "OPENSSL_ROOT_DIR=C:\OpenSSL-Win64" >> $env:GITHUB_ENV
-          # Add binaries to PATH
-          echo "C:\OpenSSL-Win64\bin" >> $env:GITHUB_PATH
-        shell: pwsh
-    
+
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
         run: >
@@ -95,8 +86,7 @@ jobs:
           -DCMAKE_CXX_COMPILER=g++
           -DCMAKE_C_COMPILER_LAUNCHER=ccache
           -DCMAKE_CXX_COMPILER_LAUNCHER=ccache
-          -DCMAKE_PREFIX_PATH=${{ env.QT_ROOT_DIR }}
-          -DOPENSSL_ROOT_DIR="${env:OPENSSL_ROOT_DIR}"
+          -DOPENSSL_ROOT_DIR=C:/msys64/mingw64
           -S ${{ github.workspace }}
 
       - name: Configure CMake (Linux)
