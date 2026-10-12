@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="EasySSL - A simple OpenSSL 3.0+ wrapper library for C++ Qt projects. RSA and ECDSA encryption, signing, X509 certificates and async authentication.">
+<title>EasySSL - Simple OpenSSL wrapper for C++ Qt projects</title>
+<style>
+  :root {
+    --md-primary: #0b8043;
+    --md-primary-dark: #0a6e3b;
+    --md-on-primary: #ffffff;
+    --md-surface: #ffffff;
+    --md-background: #f5faf7;
+    --md-on-surface: #202124;
+    --md-on-surface-variant: #5f6368;
+    --md-outline: #dadce0;
+    --md-shadow-1: 0 1px 2px rgba(60,64,67,.30), 0 1px 3px 1px rgba(60,64,67,.15);
+    --md-shadow-2: 0 1px 2px rgba(60,64,67,.30), 0 2px 6px 2px rgba(60,64,67,.15);
+    --md-radius: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: Roboto, "Segoe UI", "Helvetica Neue", Arial, sans-serif;
+    background: var(--md-background);
+    color: var(--md-on-surface);
+    line-height: 1.6;
+  }
+
+  /* App bar */
+  .app-bar {
+    position: sticky; top: 0; z-index: 10;
+    display: flex; align-items: center; gap: 16px;
+    background: var(--md-surface);
+    box-shadow: var(--md-shadow-1);
+    padding: 10px 24px;
+  }
+  .app-bar .brand { font-size: 1.15rem; font-weight: 500; color: var(--md-on-surface); text-decoration: none; }
+  .app-bar .brand b { color: var(--md-primary); }
+  .app-bar nav { margin-left: auto; display: flex; gap: 8px; }
+
+  /* Buttons */
+  .btn {
+    display: inline-block;
+    border: none; cursor: pointer;
+    border-radius: 999px;
+    padding: 10px 22px;
+    font-size: .95rem; font-weight: 500;
+    text-decoration: none;
+    transition: box-shadow .2s, background-color .2s;
+  }
+  .btn-filled { background: var(--md-primary); color: var(--md-on-primary); box-shadow: var(--md-shadow-1); }
+  .btn-filled:hover { background: var(--md-primary-dark); box-shadow: var(--md-shadow-2); }
+  .btn-tonal { background: #e6f4ea; color: var(--md-primary); }
+  .btn-tonal:hover { background: #d2e9dd; }
+  .btn-outlined { background: transparent; color: var(--md-primary); border: 1px solid var(--md-outline); }
+  .btn-outlined:hover { background: #f0f8f3; }
+
+  /* Hero */
+  .hero {
+    max-width: 960px; margin: 0 auto;
+    padding: 56px 24px 24px;
+    text-align: center;
+  }
+  .hero h1 { font-size: 2.2rem; font-weight: 400; margin: 0 0 8px; }
+  .hero h1 b { color: var(--md-primary); font-weight: 500; }
+  .hero p.lead { font-size: 1.1rem; color: var(--md-on-surface-variant); max-width: 680px; margin: 0 auto 28px; }
+  .hero .actions { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
+
+  /* Cards */
+  .cards {
+    max-width: 960px; margin: 32px auto 0; padding: 0 24px;
+    display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px;
+  }
+  .card {
+    background: var(--md-surface);
+    border-radius: var(--md-radius);
+    box-shadow: var(--md-shadow-1);
+    padding: 24px;
+    transition: box-shadow .2s, transform .2s;
+  }
+  .card:hover { box-shadow: var(--md-shadow-2); transform: translateY(-2px); }
+  .card h2 { font-size: 1.15rem; font-weight: 500; margin: 0 0 8px; }
+  .card p { font-size: .95rem; color: var(--md-on-surface-variant); margin: 0 0 14px; }
+  .card ul { margin: 0; padding-left: 20px; font-size: .95rem; color: var(--md-on-surface-variant); }
+  .card li { margin-bottom: 6px; }
+  .card a { color: var(--md-primary); text-decoration: none; font-weight: 500; }
+  .card a:hover { text-decoration: underline; }
+  .card code { background: #f1f3f4; border-radius: 4px; padding: 1px 5px; font-size: .9em; }
+
+  /* Usage section */
+  .usage { max-width: 960px; margin: 40px auto 0; padding: 0 24px; }
+  .usage h2 { font-size: 1.4rem; font-weight: 400; margin: 0 0 12px; }
+  .usage p { font-size: .95rem; color: var(--md-on-surface-variant); margin: 0 0 12px; }
+  .usage pre {
+    background: #202124; color: #e8eaed;
+    border-radius: var(--md-radius);
+    padding: 20px; overflow-x: auto;
+    font-family: "Roboto Mono", Consolas, monospace;
+    font-size: .9rem; line-height: 1.5;
+  }
+
+  /* Footer */
+  footer {
+    margin-top: 56px;
+    background: var(--md-surface);
+    border-top: 1px solid var(--md-outline);
+    padding: 20px 24px;
+    text-align: center;
+    font-size: .85rem;
+    color: var(--md-on-surface-variant);
+  }
+  footer a { color: var(--md-primary); text-decoration: none; }
+</style>
+
+<body>
+
+<header class="app-bar">
+  <a class="brand" href="index.html"><b>Easy</b>SSL</a>
+  <nav>
+    <a class="btn btn-tonal" href="doc/index.html">Documentation</a>
+    <a class="btn btn-outlined" href="https://github.com/QuasarApp/easyssl">GitHub</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <h1><b>Easy</b>SSL - Simple OpenSSL wrapper for C++ Qt projects</h1>
+  <p class="lead">
+    EasySSL is a Qt wrapper of the OpenSSL 3.0+ library that makes working with
+    the asymmetric cryptography simple: RSA and ECDSA encryption and signing,
+    key generation, self-signed X509 certificates and asynchronous
+    authentication.
+  </p>
+  <div class="actions">
+    <a class="btn btn-filled" href="doc/index.html">Read the Documentation</a>
+    <a class="btn btn-tonal" href="https://github.com/QuasarApp/easyssl">Get it on GitHub</a>
+  </div>
+</section>
+
+<section class="cards">
+  <div class="card">
+    <h2>API Reference</h2>
+    <p>Complete reference of the EasySSL classes (<code>RSASSL</code>, <code>ECDSASSL</code>,
+       <code>X509</code>, <code>AuthECDSA</code>, ...), generated automatically with Doxygen.</p>
+    <a href="doc/index.html">Open API Reference &rarr;</a>
+  </div>
+  <div class="card">
+    <h2>Features</h2>
+    <ul>
+      <li>RSA: encryption, decryption and signing</li>
+      <li>ECDSA: signing and checking the sign</li>
+      <li>Self-signed X509 certificates</li>
+      <li>Async authentication based on the asymmetric keys</li>
+      <li>Works with Qt 5 and Qt 6, CMake and qmake</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Build Options</h2>
+    <ul>
+      <li><code>EASYSSL_STATIC_SSL</code> - link the static OpenSSL libraries into the EasySSL binary</li>
+      <li><code>BUILD_WITH_OPENSSL</code> - build the OpenSSL 3.0+ library together with EasySSL (no system OpenSSL needed)</li>
+      <li><code>EASYSSL_TESTS</code> - enable or disable the unit tests</li>
+    </ul>
+  </div>
+  <div class="card">
+    <h2>Repository</h2>
+    <ul>
+      <li><a href="https://github.com/QuasarApp/easyssl">QuasarApp/easyssl</a></li>
+      <li><a href="https://github.com/QuasarApp/easyssl#build-and-include">Build instructions</a></li>
+      <li><a href="https://github.com/QuasarApp/easyssl/issues">Issues &amp; Discussions</a></li>
+    </ul>
+  </div>
+</section>
+
+
+<section class="usage">
+  <h2>Quick example</h2>
+  <p>Create the RSA keys, encrypt and decrypt the data and check the signature:</p>
+  <pre>#include &lt;easyssl/rsassl.h&gt;
+#include &lt;QByteArray&gt;
+
+int main() {
+    // create a public and private keys array.
+    EasySSL::RSASSL crypto;
+    QByteArray pub, priv;
+    crypto.makeKeys(pub, priv);
+
+    QByteArray message = "Hello EasySSL!";
+
+    auto signature = crypto.signMessage(message, priv);
+    crypto.checkSign(message, signature, pub);
+
+    auto encryptedMsg = crypto.encrypt(message, pub);
+    auto decryptedMsg = crypto.decrypt(encryptedMsg, priv);
+}</pre>
+</section>
+
+<section class="usage">
+  <h2>Build with CMake</h2>
+  <p>Add the repository as a submodule and include it in your CMakeLists.txt.
+     To build without the system OpenSSL library, set the <code>BUILD_WITH_OPENSSL</code> option:</p>
+  <pre># add the repository of EasySSL into your repo like submodule
+git submodule add https://github.com/QuasarApp/easyssl.git
+git submodule update --init --recursive
+
+# CMakeLists.txt
+add_subdirectory(easyssl)
+target_link_libraries(yourLib PUBLIC easyssl)
+
+# build without the system OpenSSL 3.0+ library
+cmake .. -DBUILD_WITH_OPENSSL=1</pre>
+</section>
+
+<footer>
+  EasySSL is distributed under the GPL v3 license. &middot;
+  Documentation generated with <a href="https://www.doxygen.nl/">Doxygen</a> &middot;
+  <a href="https://github.com/QuasarApp">QuasarApp</a>
+</footer>
+
+</body>
+</html>
+

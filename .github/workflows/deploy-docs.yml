@@ -1,0 +1,56 @@
+name: Deploy Documentation (GitHub Pages)
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-deploy:
+    name: Build Doxygen and deploy to GitHub Pages
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # The full history is required to compute the
+          # 0.<commit-count>.<short-sha> project version.
+          fetch-depth: 0
+          # The CMake submodule provides the Doxygen style sheet
+          # (submodules/CMake/DoxyStyle/doxygenStyles.css).
+          submodules: recursive
+
+      - name: Install Doxygen and Graphviz
+        uses: doxygen/setup-doxygen@v2
+
+      - name: Generate the Doxygen configuration file
+        run: |
+          PROJECT_VERSION="0.$(git rev-list --count HEAD).$(git rev-parse --short HEAD)"
+          sed -e "s|@PROJECT_NAME@|easyssl|" \
+              -e "s|@EASYSSL_VERSION@|${PROJECT_VERSION}|" \
+              doxygen.conf.in > doxygen.conf
+          grep -E '^(PROJECT_NAME|PROJECT_NUMBER)' doxygen.conf
+
+      - name: Generate Doxygen HTML documentation
+        run: doxygen doxygen.conf
+
+      - name: Stage the website
+        run: |
+          mkdir -p stage/doc
+          cp pages/index.html stage/index.html
+          cp -r docs/. stage/doc/
+          # Remove the raw markdown documents from the staged docs folder:
+          # they are not part of the generated documentation.
+          rm -f stage/doc/USAGE.md stage/doc/MIGRATION_FROM_QT_SECRET.md
+          ls -la stage stage/doc | head -30
+
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: gh-pages
+          folder: stage
+          clean: true
