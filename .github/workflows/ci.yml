@@ -57,8 +57,27 @@ jobs:
       # cmake/BuildOpenSSL.cmake), so no system OpenSSL packages are needed.
       # On Windows the self-build additionally needs mingw32-make (provided by
       # the aqt tools_mingw1310 installed above) and a perl that produces
-      # Unix-like paths (the one that ships with Git for Windows, that is
-      # preinstalled on the windows-latest runner).
+      # Unix-like paths and provides the perl core modules that are required
+      # by the OpenSSL build. The complete perl of MSYS2 (that is installed
+      # below) matches this requirement.
+      - name: Install MSYS2 perl (Windows)
+        id: msys2
+        if: runner.os == 'Windows'
+        uses: msys2/setup-msys2@v2
+        with:
+          msystem: MSYS
+          update: true
+          install: perl
+
+      - name: Set MSYS2 environment variables (Windows)
+        if: runner.os == 'Windows'
+        run: |
+          # msys2/setup-msys2 installs MSYS2 under $RUNNER_TEMP by default,
+          # so use the action's msys2-location output instead of a hardcoded
+          # path
+          echo "MSYS2_ROOT=${{ steps.msys2.outputs.msys2-location }}" >> $env:GITHUB_ENV
+        shell: pwsh
+
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
         run: >

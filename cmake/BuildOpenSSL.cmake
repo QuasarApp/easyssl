@@ -136,32 +136,58 @@ message(STATUS "The BUILD_WITH_OPENSSL option is enabled. The OpenSSL ${EASYSSL_
 # The perl program that is used to run the OpenSSL Configure script. On
 # Windows the OpenSSL Configure script requires a perl that produces
 # Unix-like paths (with forward slash directory separators, see the
-# Configurations/unix-checker.pm check of the OpenSSL source). The
-# Strawberry perl that is preinstalled on the Windows CI runners does not
-# match this requirement, while the perl that ships with Git for Windows
-# (an MSYS2 based perl) does, so it is preferred there.
+# Configurations/unix-checker.pm check of the OpenSSL source) and a perl
+# with a complete set of core modules (see the NOTES-PERL.md of the
+# OpenSSL source). A complete MSYS2 perl matches this requirement. The
+# perl that ships with Git for Windows produces Unix-like paths, but
+# recent versions of it are stripped down and miss perl core modules
+# that are required by the OpenSSL build, so the MSYS2 perl is preferred.
 if (WIN32)
     # Note that find_program() skips the search when the result variable
     # is already set to a value that is not a NOTFOUND value, so the
     # variable must not be initialized before the call.
+    set(_easyssl_openssl_perl_hints
+        "C:/msys64/usr/bin"
+        "C:/Program Files/Git/usr/bin"
+    )
+    if (DEFINED ENV{MSYS2_ROOT})
+        list(PREPEND _easyssl_openssl_perl_hints "$ENV{MSYS2_ROOT}/usr/bin")
+    endif()
     find_program(_easyssl_openssl_perl
         NAMES perl.exe
-        HINTS "C:/Program Files/Git/usr/bin"
+        HINTS ${_easyssl_openssl_perl_hints}
         NO_DEFAULT_PATH
     )
     if ("${_easyssl_openssl_perl}" MATCHES "NOTFOUND$")
-        # No perl from Git for Windows found. Fall back to the perl that
-        # is available on the PATH. It has to be a perl that produces
-        # Unix-like paths (for example the perl of an MSYS2 installation),
-        # otherwise the OpenSSL Configure script fails.
+        # No MSYS2 or Git for Windows perl found. Fall back to the perl
+        # that is available on the PATH. It has to be a perl that
+        # produces Unix-like paths (for example the perl of an MSYS2
+        # installation), otherwise the OpenSSL Configure script fails.
         find_program(_easyssl_openssl_perl NAMES perl)
         if ("${_easyssl_openssl_perl}" MATCHES "NOTFOUND$")
-            message(FATAL_ERROR "The BUILD_WITH_OPENSSL option on the Windows platform requires a perl that produces Unix-like paths. Install Git for Windows (that provides C:/Program Files/Git/usr/bin/perl.exe) or add such a perl (for example from MSYS2) to the PATH")
+            message(FATAL_ERROR "The BUILD_WITH_OPENSSL option on the Windows platform requires a perl that produces Unix-like paths and that provides the perl core modules that are required by the OpenSSL build. Install MSYS2 (https://www.msys2.org/) with the perl package (pacman -S perl) or add such a perl to the PATH")
         endif()
     endif()
 else()
     set(_easyssl_openssl_perl "perl")
 endif()
+
+# The OpenSSL Configure script and the perl scripts of the OpenSSL build
+# rely on perl core modules (for example Locale::Maketext::Simple, see
+# the NOTES-PERL.md of the OpenSSL source). Check that the selected perl
+# provides them, so that a stripped down perl (for example the perl of
+# recent Git for Windows versions) is reported with a clear error message
+# instead of a failing OpenSSL configure step.
+execute_process(
+    COMMAND ${_easyssl_openssl_perl} -e "require IPC::Cmd; require Params::Check; require Locale::Maketext::Simple;"
+    RESULT_VARIABLE _easyssl_openssl_perl_modules_result
+    OUTPUT_QUIET
+    ERROR_QUIET
+)
+if (NOT _easyssl_openssl_perl_modules_result EQUAL 0)
+    message(FATAL_ERROR "The perl ${_easyssl_openssl_perl} that is used for the OpenSSL build does not provide the perl core modules (IPC::Cmd, Params::Check, Locale::Maketext::Simple) that are required by the OpenSSL build. Install MSYS2 (https://www.msys2.org/) with the perl package (pacman -S perl), set the MSYS2_ROOT environment variable to the MSYS2 installation directory and configure the project again, or use another perl with a complete set of core modules")
+endif()
+
 message(STATUS "The perl that is used for the OpenSSL build is: ${_easyssl_openssl_perl}")
 
 # The OpenSSL Configure is a perl script, so run it explicitly with perl.
