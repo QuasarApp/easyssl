@@ -58,13 +58,32 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libssl-dev
 
-      - name: Install OpenSSL (Windows)
+      # - name: Install OpenSSL (Windows)
+      #   if: runner.os == 'Windows'
+      #   run: |
+      #     choco install openssl -y
+      #     ls "C:\Program Files\OpenSSL"
+      #     echo "OPENSSL_ROOT_DIR=C:\Program Files\OpenSSL" >> $env:GITHUB_ENV
+      - name: Install Full OpenSSL (with libs and headers)
         if: runner.os == 'Windows'
         run: |
-          choco install openssl -y
-          ls "C:\Program Files\OpenSSL"
-          echo "OPENSSL_ROOT_DIR=C:\Program Files\OpenSSL" >> $env:GITHUB_ENV
-
+          # Download official full installer for Windows 64-bit
+          $installerUrl = "https://slproweb.com/download/Win64OpenSSL-3_6_5.exe"
+          Invoke-WebRequest -Uri $installerUrl -OutFile "openssl_installer.exe"
+            
+          # Run silent installation to a predictable directory
+          Start-Process -FilePath "openssl_installer.exe" -ArgumentList "/silent /verysilent /sp- /suppressmsgboxes /dir=C:\OpenSSL-Win64" -Wait
+        shell: pwsh
+      
+      - name: Set OpenSSL Environment Variables
+        if: runner.os == 'Windows'
+        run: |
+          # Point CMake / MSBuild / Linker to OpenSSL root directory
+          echo "OPENSSL_ROOT_DIR=C:\OpenSSL-Win64" >> $env:GITHUB_ENV
+          # Add binaries to PATH
+          echo "C:\OpenSSL-Win64\bin" >> $env:GITHUB_PATH
+        shell: pwsh
+    
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
         run: >
