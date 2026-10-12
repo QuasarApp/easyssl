@@ -13,7 +13,7 @@ set(CURRENT_PROJECT "${PROJECT_NAME}")
 add_definitions(-DEASYSSL_LIBRARY)
 
 list(APPEND CMAKE_FIND_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
-find_package(OpenSSL 3.0...<5.0 REQUIRED)
+find_package(OpenSSL 3.0.0...<5.0.0 REQUIRED)
 
 file(GLOB_RECURSE SOURCE_CPP
     "src/*.cpp"
