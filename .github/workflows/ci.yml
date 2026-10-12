@@ -58,13 +58,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libssl-dev
 
-      # Pinned to 3.6.2: choco "openssl" 4.x (Win64OpenSSL-4_0_x.exe) does not ship the
-      # CMake import libraries (lib/libssl.lib, lib/libcrypto.lib) that easyssl links,
-      # so find_package(OpenSSL 3.0) fails. 3.6.2 deploys to C:\Program Files\OpenSSL-Win.
       - name: Install OpenSSL (Windows)
         if: runner.os == 'Windows'
         run: |
-          choco install openssl --version=3.7.0 -y
+          choco install openssl -y
           echo "OPENSSL_ROOT_DIR=C:\Program Files\OpenSSL-Win" >> $env:GITHUB_ENV
 
       - name: Configure CMake (Windows)
