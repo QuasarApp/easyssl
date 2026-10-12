@@ -133,6 +133,34 @@ endif()
 
 message(STATUS "The BUILD_WITH_OPENSSL option is enabled. The OpenSSL ${EASYSSL_OPENSSL_TAG} will be built for the '${_easyssl_openssl_target}' platform")
 
+# The perl program that is used to run the OpenSSL Configure script. On
+# Windows the OpenSSL Configure script requires a perl that produces
+# Unix-like paths (with forward slash directory separators, see the
+# Configurations/unix-checker.pm check of the OpenSSL source). The
+# Strawberry perl that is preinstalled on the Windows CI runners does not
+# match this requirement, while the perl that ships with Git for Windows
+# (an MSYS2 based perl) does, so it is preferred there.
+set(_easyssl_openssl_perl "perl")
+if (WIN32)
+    find_program(_easyssl_openssl_perl
+        NAMES perl.exe
+        HINTS "C:/Program Files/Git/usr/bin"
+        NO_DEFAULT_PATH
+    )
+    if (_easyssl_openssl_perl-NOTFOUND STREQUAL _easyssl_openssl_perl)
+        # No perl from Git for Windows found. Fall back to the perl that
+        # is available on the PATH. It has to be a perl that produces
+        # Unix-like paths (for example the perl of an MSYS2 installation),
+        # otherwise the OpenSSL Configure script fails.
+        find_program(_easyssl_openssl_perl NAMES perl)
+        if (_easyssl_openssl_perl-NOTFOUND STREQUAL _easyssl_openssl_perl)
+            message(FATAL_ERROR "The BUILD_WITH_OPENSSL option on the Windows platform requires a perl that produces Unix-like paths. Install Git for Windows (that provides C:/Program Files/Git/usr/bin/perl.exe) or add such a perl (for example from MSYS2) to the PATH")
+        else()
+            message(WARNING "The BUILD_WITH_OPENSSL option on the Windows platform requires a perl that produces Unix-like paths. The perl of Git for Windows (C:/Program Files/Git/usr/bin) was not found, so the perl from the PATH is used: ${_easyssl_openssl_perl}")
+        endif()
+    endif()
+endif()
+
 # The OpenSSL Configure is a perl script, so run it explicitly with perl.
 set(_easyssl_openssl_configure_cmd
     ${CMAKE_COMMAND}
@@ -145,7 +173,7 @@ foreach(_env_item ${_easyssl_openssl_env})
 endforeach()
 
 list(APPEND _easyssl_openssl_configure_cmd
-    perl
+    ${_easyssl_openssl_perl}
     ${EASYSSL_OPENSSL_DIR}/source/Configure
     ${_easyssl_openssl_target}
     ${_easyssl_openssl_options}

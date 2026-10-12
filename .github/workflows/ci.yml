@@ -56,8 +56,9 @@ jobs:
       # BUILD_WITH_OPENSSL option clones and builds OpenSSL, see
       # cmake/BuildOpenSSL.cmake), so no system OpenSSL packages are needed.
       # On Windows the self-build additionally needs mingw32-make (provided by
-      # the aqt tools_mingw1310 installed above) and perl (preinstalled on
-      # the windows-latest runner).
+      # the aqt tools_mingw1310 installed above) and a perl that produces
+      # Unix-like paths (the one that ships with Git for Windows, that is
+      # preinstalled on the windows-latest runner).
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
         run: >
