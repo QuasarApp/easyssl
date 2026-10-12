@@ -1,0 +1,5 @@
+<map id="EasySSL::ICertificate" name="EasySSL::ICertificate">
+<area shape="rect" id="Node000001" title="The ICertificate class is base interface for all certificate generators classes." alt="" coords="5,5,152,111"/>
+<area shape="rect" id="Node000002" href="$classEasySSL_1_1X509.html" title="The X509 class This is wrapper of the ssl objects." alt="" coords="24,159,133,244"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="81,124,81,159,76,159,76,124"/>
+</map>

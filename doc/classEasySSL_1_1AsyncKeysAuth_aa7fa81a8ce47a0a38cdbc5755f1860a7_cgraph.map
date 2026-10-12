@@ -1,0 +1,11 @@
+<map id="EasySSL::AsyncKeysAuth::prepare" name="EasySSL::AsyncKeysAuth::prepare">
+<area shape="rect" id="Node000001" title="prepare This method will generate signature for autentication of client. Please inboke this method be..." alt="" coords="5,101,189,141"/>
+<area shape="rect" id="Node000002" href="$classEasySSL_1_1AsyncKeysAuth.html#a0a420b20d74ca16e5decc351bddf44e5" title="getPrivateKey This method should be return private key for the public key that saved in this object." alt="" coords="237,5,421,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="138,99,236,55,255,48,257,53,238,60,141,104"/>
+<area shape="rect" id="Node000003" href="$classEasySSL_1_1AsyncKeysAuth.html#a998535c628a4cafbe3d52970e25ec384" title="isValid this method check this ibject to valid." alt="" coords="237,69,421,109"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="190,106,223,101,224,107,190,111"/>
+<area shape="rect" id="Node000004" href="$classEasySSL_1_1AsyncKeysAuth.html#a13a8a45030dcb106d551680d539a5cba" title="setSignature Tihis is internal method for sets new signature value." alt="" coords="237,133,421,173"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="190,131,224,136,223,141,190,137"/>
+<area shape="rect" id="Node000005" href="$classEasySSL_1_1AsyncKeysAuth.html#a7f27d9a3aa22c927539dd96b46dd55c6" title=" " alt="" coords="237,197,421,237"/>
+<area shape="poly" id="edge4_Node000001_Node000005" title=" " alt="" coords="141,139,238,183,257,190,255,195,236,188,138,144"/>
+</map>

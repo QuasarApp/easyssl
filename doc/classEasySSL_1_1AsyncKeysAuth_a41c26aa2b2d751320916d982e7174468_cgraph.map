@@ -1,0 +1,9 @@
+<map id="EasySSL::AsyncKeysAuth::auth" name="EasySSL::AsyncKeysAuth::auth">
+<area shape="rect" id="Node000001" title="auth This method make authentication and return true if the authentication finished successful else f..." alt="" coords="5,37,189,77"/>
+<area shape="rect" id="Node000002" href="$classEasySSL_1_1AsyncKeysAuth.html#a641ee47f7b2c684c0affc8d32d4a06d0" title=" " alt="" coords="237,5,421,45"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="190,42,223,37,224,43,190,47"/>
+<area shape="rect" id="Node000004" href="$classEasySSL_1_1AsyncKeysAuth.html#ad2fd64503dd7d791a7c3e8342c6e9717" title="getUserId This method return user id that generated from the public key." alt="" coords="237,69,421,109"/>
+<area shape="poly" id="edge3_Node000001_Node000004" title=" " alt="" coords="190,67,224,72,223,77,190,73"/>
+<area shape="rect" id="Node000003" href="$classEasySSL_1_1AsyncKeysAuth.html#aa2dd128ddc4e23f93d3327107251b2a4" title="signature This method return signature array." alt="" coords="469,5,653,45"/>
+<area shape="poly" id="edge2_Node000002_Node000003" title=" " alt="" coords="422,23,455,23,455,28,422,28"/>
+</map>
