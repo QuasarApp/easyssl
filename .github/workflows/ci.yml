@@ -58,24 +58,10 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y libssl-dev
 
-      # easyssl requires OpenSSL >= 3.0. Install the official Win64 OpenSSL build via
-      # Chocolatey (default location: C:\Program Files\OpenSSL-Win with bin/include/lib)
-      # and expose it to CMake (OPENSSL_ROOT_DIR) and to the deployed test executable
-      # (bin on PATH, so CQtDeployer can copy the runtime DLLs into Testing/).
       - name: Install OpenSSL (Windows)
         if: runner.os == 'Windows'
-        shell: pwsh
         run: |
-          choco install openssl -y --no-progress
-          $candidates = @("C:\Program Files\OpenSSL-Win", "C:\Program Files\OpenSSL")
-          $opensslDir = $candidates | Where-Object { Test-Path (Join-Path $_ "lib\libssl.lib") } | Select-Object -First 1
-          if (-not $opensslDir) {
-            Write-Error "OpenSSL import libraries (lib\libssl.lib) not found. Tried: $($candidates -join ', ')"
-            exit 1
-          }
-          Write-Host "Using OpenSSL from $opensslDir"
-          Add-Content -Path $env:GITHUB_ENV -Value "OPENSSL_ROOT_DIR=$opensslDir"
-          Add-Content -Path $env:GITHUB_PATH -Value "$opensslDir\bin"
+          choco install openssl
 
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
