@@ -24,8 +24,14 @@ jobs:
           # (submodules/CMake/DoxyStyle/doxygenStyles.css).
           submodules: recursive
 
-      - name: Install Doxygen and Graphviz
-        uses: doxygen/setup-doxygen@v2
+      - name: Install Doxygen
+        uses: ssciwr/doxygen-install@v2.0.3
+        with:
+          # The version the documentation was generated and validated with.
+          version: 1.9.8
+
+      - name: Install Graphviz
+        uses: ts-graphviz/setup-graphviz@v2.0.2
 
       - name: Generate the Doxygen configuration file
         run: |
