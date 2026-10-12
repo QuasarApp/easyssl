@@ -62,8 +62,8 @@ jobs:
         if: runner.os == 'Windows'
         run: |
           choco install openssl -y
-          ls "C:\Program Files\OpenSSL-Win64"
-          echo "OPENSSL_ROOT_DIR=C:\Program Files\OpenSSL-Win64" >> $env:GITHUB_ENV
+          ls "C:\Program Files\OpenSSL"
+          echo "OPENSSL_ROOT_DIR=C:\Program Files\OpenSSL" >> $env:GITHUB_ENV
 
       - name: Configure CMake (Windows)
         if: runner.os == 'Windows'
