@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.87.745ff01</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.90.bdf5ae6</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -130,15 +130,15 @@ $(document).ready(function(){initNavTree('index.html',''); initResizable(); });
 <div class="line">cmake .. -DEASYSSL_STATIC_SSL=1 </div>
 </div><!-- fragment --><p>The described case may be useful for the Qt 5.15.x, because the QNetwork 5.15 depends on the SSL v1.1 and <a class="el" href="namespaceEasySSL.html">EasySSL</a> works with the SSL &gt;= 3.0.</p>
 <h3>Build without the system OpenSSL (BUILD_WITH_OPENSSL)</h3>
-<p>If your system (or the target device) has no OpenSSL 3.0+ library, you can build the OpenSSL library together with the <a class="el" href="namespaceEasySSL.html">EasySSL</a> library. Just set the <b>BUILD_WITH_OPENSSL</b> option to true:</p>
+<p>By default the OpenSSL library is built together with the <a class="el" href="namespaceEasySSL.html">EasySSL</a> library (the <b>BUILD_WITH_OPENSSL</b> option is enabled). In this case the <a class="el" href="namespaceEasySSL.html">EasySSL</a> project clones the OpenSSL <code>openssl-4.0.3</code> sources, builds the static OpenSSL libraries and links them privately into the <a class="el" href="namespaceEasySSL.html">EasySSL</a> binary. So your application has no runtime dependency on the system OpenSSL.</p>
+<p>To use the OpenSSL library that is installed on the system (or the target device) instead of the self-built one, set the <b>BUILD_WITH_OPENSSL</b> option to false (the system needs the OpenSSL 3.0+ library):</p>
 <div class="fragment"><div class="line">bash</div>
-<div class="line">cmake .. -DBUILD_WITH_OPENSSL=1</div>
-</div><!-- fragment --><p>In this case the <a class="el" href="namespaceEasySSL.html">EasySSL</a> project clones the OpenSSL <code>openssl-3.0.9</code> sources, builds the static OpenSSL libraries and links them privately into the <a class="el" href="namespaceEasySSL.html">EasySSL</a> binary. So your application has no runtime dependency on the system OpenSSL.</p>
-<ul>
+<div class="line">cmake .. -DBUILD_WITH_OPENSSL=0</div>
+</div><!-- fragment --><ul>
 <li>Supported platforms: Linux, Windows (MinGW), Android, iOS and macOS (arm/x86).</li>
 <li>The WASM platform is <b>not</b> supported.</li>
 <li>On Windows the build requires the MinGW (GNU) compiler and the <code>mingw32-make</code> tool. The OpenSSL Configure script also requires a perl that produces Unix-like paths and that provides the perl core modules (for example the MSYS2 perl; set the <code>MSYS2_ROOT</code> environment variable to the MSYS2 installation directory if it is not found automatically).</li>
-<li>The OpenSSL version can be changed with the <code>EASYSSL_OPENSSL_TAG</code> option (default <code>openssl-3.0.9</code>).</li>
+<li>The OpenSSL version can be changed with the <code>EASYSSL_OPENSSL_TAG</code> option (default <code>openssl-4.0.3</code>; the OpenSSL 3.0.x tags, for example <code>openssl-3.0.9</code>, are also supported).</li>
 </ul>
 <h3>Unit tests</h3>
 <p>The unit tests of the <a class="el" href="namespaceEasySSL.html">EasySSL</a> library are built and run by default. To disable the tests, set the <b>EASYSSL_TESTS</b> option to false:</p>

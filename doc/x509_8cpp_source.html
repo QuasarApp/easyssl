@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.87.745ff01</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.90.bdf5ae6</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -118,55 +118,64 @@ $(document).ready(function(){initNavTree('x509_8cpp_source.html',''); initResiza
 <div class="line"><a id="l00033" name="l00033"></a><span class="lineno">   33</span>    X509_gmtime_adj(X509_get_notBefore(x509), 0); <span class="comment">// not before current time</span></div>
 <div class="line"><a id="l00034" name="l00034"></a><span class="lineno">   34</span>    X509_gmtime_adj(X509_get_notAfter(x509), certificateData.<a class="code hl_variable" href="structEasySSL_1_1SslSrtData.html#a285834c29a484f1712413709116c6efd">endTime</a>); <span class="comment">// not after a year from this point</span></div>
 <div class="line"><a id="l00035" name="l00035"></a><span class="lineno">   35</span>    X509_set_pubkey(x509, pkey);</div>
-<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span>    name = X509_get_subject_name(x509);</div>
-<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    q_check_ptr(name);</div>
-<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span> </div>
-<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *C = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(certificateData.<a class="code hl_variable" href="structEasySSL_1_1SslSrtData.html#a98f62801b8b589669a9d3a81178f8f1f">country</a>.toLatin1().data());</div>
-<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    X509_NAME_add_entry_by_txt(name, <span class="stringliteral">&quot;C&quot;</span>, MBSTRING_ASC, C, -1, -1, 0);</div>
-<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span> </div>
-<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *O = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(certificateData.<a class="code hl_variable" href="structEasySSL_1_1SslSrtData.html#abfb187eddee7554b83bc6451de257062">organization</a>.toLatin1().data());</div>
-<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    X509_NAME_add_entry_by_txt(name, <span class="stringliteral">&quot;O&quot;</span>, MBSTRING_ASC, O, -1, -1, 0);</div>
-<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span> </div>
-<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *CN = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(certificateData.<a class="code hl_variable" href="structEasySSL_1_1SslSrtData.html#ae5fc457a49407ad6c6431b9ae90e344d">commonName</a>.toLatin1().data());</div>
-<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    X509_NAME_add_entry_by_txt(name, <span class="stringliteral">&quot;CN&quot;</span>, MBSTRING_ASC, CN, -1, -1, 0);</div>
-<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span> </div>
-<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span>    X509_set_issuer_name(x509, name);</div>
-<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    X509_sign(x509, pkey, EVP_sha256());</div>
-<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span> </div>
-<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span>    result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#a66cdc4a5d4638aad16100deb659f2f2f">key</a> = QSslKey(<a class="code hl_function" href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85">EasySSLUtils::extractPrivateKey</a>(pkey), <a class="code hl_function" href="classEasySSL_1_1ICertificate.html#a48528d3be0548424273105b17e601ffe">keyGenerator</a>()-&gt;keyAlgorithm());</div>
-<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordflow">if</span>(result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#a66cdc4a5d4638aad16100deb659f2f2f">key</a>.isNull()) {</div>
-<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>        EVP_PKEY_free(pkey);</div>
-<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span>        X509_free(x509);</div>
-<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>        qCritical(<span class="stringliteral">&quot;Failed to generate a random private key&quot;</span>);</div>
-<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    }</div>
-<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    EVP_PKEY_free(pkey);</div>
+<div class="line"><a id="l00036" name="l00036"></a><span class="lineno">   36</span> </div>
+<div class="line"><a id="l00037" name="l00037"></a><span class="lineno">   37</span>    <span class="comment">// The subject name of the certificate is filled with a separate</span></div>
+<div class="line"><a id="l00038" name="l00038"></a><span class="lineno">   38</span>    <span class="comment">// X509_NAME object: the X509_get_subject_name method returns a const</span></div>
+<div class="line"><a id="l00039" name="l00039"></a><span class="lineno">   39</span>    <span class="comment">// pointer in the OpenSSL 4.x releases, so the name of the certificate</span></div>
+<div class="line"><a id="l00040" name="l00040"></a><span class="lineno">   40</span>    <span class="comment">// can not be changed in place. The X509_set_subject_name and</span></div>
+<div class="line"><a id="l00041" name="l00041"></a><span class="lineno">   41</span>    <span class="comment">// X509_set_issuer_name methods copy the name, so it can be freed</span></div>
+<div class="line"><a id="l00042" name="l00042"></a><span class="lineno">   42</span>    <span class="comment">// after the calls.</span></div>
+<div class="line"><a id="l00043" name="l00043"></a><span class="lineno">   43</span>    name = X509_NAME_new();</div>
+<div class="line"><a id="l00044" name="l00044"></a><span class="lineno">   44</span>    q_check_ptr(name);</div>
+<div class="line"><a id="l00045" name="l00045"></a><span class="lineno">   45</span> </div>
+<div class="line"><a id="l00046" name="l00046"></a><span class="lineno">   46</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *C = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(certificateData.<a class="code hl_variable" href="structEasySSL_1_1SslSrtData.html#a98f62801b8b589669a9d3a81178f8f1f">country</a>.toLatin1().data());</div>
+<div class="line"><a id="l00047" name="l00047"></a><span class="lineno">   47</span>    X509_NAME_add_entry_by_txt(name, <span class="stringliteral">&quot;C&quot;</span>, MBSTRING_ASC, C, -1, -1, 0);</div>
+<div class="line"><a id="l00048" name="l00048"></a><span class="lineno">   48</span> </div>
+<div class="line"><a id="l00049" name="l00049"></a><span class="lineno">   49</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *O = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(certificateData.<a class="code hl_variable" href="structEasySSL_1_1SslSrtData.html#abfb187eddee7554b83bc6451de257062">organization</a>.toLatin1().data());</div>
+<div class="line"><a id="l00050" name="l00050"></a><span class="lineno">   50</span>    X509_NAME_add_entry_by_txt(name, <span class="stringliteral">&quot;O&quot;</span>, MBSTRING_ASC, O, -1, -1, 0);</div>
+<div class="line"><a id="l00051" name="l00051"></a><span class="lineno">   51</span> </div>
+<div class="line"><a id="l00052" name="l00052"></a><span class="lineno">   52</span>    <span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *CN = <span class="keyword">reinterpret_cast&lt;</span><span class="keywordtype">unsigned</span> <span class="keywordtype">char</span> *<span class="keyword">&gt;</span>(certificateData.<a class="code hl_variable" href="structEasySSL_1_1SslSrtData.html#ae5fc457a49407ad6c6431b9ae90e344d">commonName</a>.toLatin1().data());</div>
+<div class="line"><a id="l00053" name="l00053"></a><span class="lineno">   53</span>    X509_NAME_add_entry_by_txt(name, <span class="stringliteral">&quot;CN&quot;</span>, MBSTRING_ASC, CN, -1, -1, 0);</div>
+<div class="line"><a id="l00054" name="l00054"></a><span class="lineno">   54</span> </div>
+<div class="line"><a id="l00055" name="l00055"></a><span class="lineno">   55</span>    X509_set_subject_name(x509, name);</div>
+<div class="line"><a id="l00056" name="l00056"></a><span class="lineno">   56</span>    X509_set_issuer_name(x509, name); <span class="comment">// the issuer of the self-signed certificate is the same as the subject</span></div>
+<div class="line"><a id="l00057" name="l00057"></a><span class="lineno">   57</span>    X509_NAME_free(name);</div>
+<div class="line"><a id="l00058" name="l00058"></a><span class="lineno">   58</span>    X509_sign(x509, pkey, EVP_sha256());</div>
 <div class="line"><a id="l00059" name="l00059"></a><span class="lineno">   59</span> </div>
-<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    BIO * bp_public = BIO_new(BIO_s_mem());</div>
-<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    q_check_ptr(bp_public);</div>
-<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>    <span class="keywordflow">if</span>(PEM_write_bio_X509(bp_public, x509) != 1){</div>
+<div class="line"><a id="l00060" name="l00060"></a><span class="lineno">   60</span>    result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#a66cdc4a5d4638aad16100deb659f2f2f">key</a> = QSslKey(<a class="code hl_function" href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85">EasySSLUtils::extractPrivateKey</a>(pkey), <a class="code hl_function" href="classEasySSL_1_1ICertificate.html#a48528d3be0548424273105b17e601ffe">keyGenerator</a>()-&gt;keyAlgorithm());</div>
+<div class="line"><a id="l00061" name="l00061"></a><span class="lineno">   61</span>    <span class="keywordflow">if</span>(result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#a66cdc4a5d4638aad16100deb659f2f2f">key</a>.isNull()) {</div>
+<div class="line"><a id="l00062" name="l00062"></a><span class="lineno">   62</span>        EVP_PKEY_free(pkey);</div>
 <div class="line"><a id="l00063" name="l00063"></a><span class="lineno">   63</span>        X509_free(x509);</div>
-<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        BIO_free_all(bp_public);</div>
-<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        qCritical(<span class="stringliteral">&quot;PEM_write_bio_PrivateKey&quot;</span>);</div>
-<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    }</div>
+<div class="line"><a id="l00064" name="l00064"></a><span class="lineno">   64</span>        qCritical(<span class="stringliteral">&quot;Failed to generate a random private key&quot;</span>);</div>
+<div class="line"><a id="l00065" name="l00065"></a><span class="lineno">   65</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00066" name="l00066"></a><span class="lineno">   66</span>    }</div>
+<div class="line"><a id="l00067" name="l00067"></a><span class="lineno">   67</span>    EVP_PKEY_free(pkey);</div>
 <div class="line"><a id="l00068" name="l00068"></a><span class="lineno">   68</span> </div>
-<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#add9247ca8f1aee1620f111785c4cb69d">crt</a> = QSslCertificate(<a class="code hl_function" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766">EasySSLUtils::bioToByteArray</a>(bp_public));</div>
-<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    <span class="keywordflow">if</span>(result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#add9247ca8f1aee1620f111785c4cb69d">crt</a>.isNull()) {</div>
-<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>        X509_free(x509);</div>
-<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        BIO_free_all(bp_public);</div>
-<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        qCritical(<span class="stringliteral">&quot;Failed to generate a random client certificate&quot;</span>);</div>
-<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        <span class="keywordflow">return</span> {};</div>
-<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>    }</div>
-<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span> </div>
-<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span>    X509_free(x509);</div>
-<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    BIO_free_all(bp_public);</div>
-<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span> </div>
-<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>    <span class="keywordflow">return</span> result;</div>
-<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>}</div>
+<div class="line"><a id="l00069" name="l00069"></a><span class="lineno">   69</span>    BIO * bp_public = BIO_new(BIO_s_mem());</div>
+<div class="line"><a id="l00070" name="l00070"></a><span class="lineno">   70</span>    q_check_ptr(bp_public);</div>
+<div class="line"><a id="l00071" name="l00071"></a><span class="lineno">   71</span>    <span class="keywordflow">if</span>(PEM_write_bio_X509(bp_public, x509) != 1){</div>
+<div class="line"><a id="l00072" name="l00072"></a><span class="lineno">   72</span>        X509_free(x509);</div>
+<div class="line"><a id="l00073" name="l00073"></a><span class="lineno">   73</span>        BIO_free_all(bp_public);</div>
+<div class="line"><a id="l00074" name="l00074"></a><span class="lineno">   74</span>        qCritical(<span class="stringliteral">&quot;PEM_write_bio_PrivateKey&quot;</span>);</div>
+<div class="line"><a id="l00075" name="l00075"></a><span class="lineno">   75</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00076" name="l00076"></a><span class="lineno">   76</span>    }</div>
+<div class="line"><a id="l00077" name="l00077"></a><span class="lineno">   77</span> </div>
+<div class="line"><a id="l00078" name="l00078"></a><span class="lineno">   78</span>    result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#add9247ca8f1aee1620f111785c4cb69d">crt</a> = QSslCertificate(<a class="code hl_function" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766">EasySSLUtils::bioToByteArray</a>(bp_public));</div>
+<div class="line"><a id="l00079" name="l00079"></a><span class="lineno">   79</span>    <span class="keywordflow">if</span>(result.<a class="code hl_variable" href="structEasySSL_1_1SelfSignedSertificate.html#add9247ca8f1aee1620f111785c4cb69d">crt</a>.isNull()) {</div>
+<div class="line"><a id="l00080" name="l00080"></a><span class="lineno">   80</span>        X509_free(x509);</div>
+<div class="line"><a id="l00081" name="l00081"></a><span class="lineno">   81</span>        BIO_free_all(bp_public);</div>
+<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span>        qCritical(<span class="stringliteral">&quot;Failed to generate a random client certificate&quot;</span>);</div>
+<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>        <span class="keywordflow">return</span> {};</div>
+<div class="line"><a id="l00084" name="l00084"></a><span class="lineno">   84</span>    }</div>
+<div class="line"><a id="l00085" name="l00085"></a><span class="lineno">   85</span> </div>
+<div class="line"><a id="l00086" name="l00086"></a><span class="lineno">   86</span>    X509_free(x509);</div>
+<div class="line"><a id="l00087" name="l00087"></a><span class="lineno">   87</span>    BIO_free_all(bp_public);</div>
+<div class="line"><a id="l00088" name="l00088"></a><span class="lineno">   88</span> </div>
+<div class="line"><a id="l00089" name="l00089"></a><span class="lineno">   89</span>    <span class="keywordflow">return</span> result;</div>
+<div class="line"><a id="l00090" name="l00090"></a><span class="lineno">   90</span>}</div>
 </div>
-<div class="line"><a id="l00082" name="l00082"></a><span class="lineno">   82</span> </div>
-<div class="line"><a id="l00083" name="l00083"></a><span class="lineno">   83</span>}</div>
+<div class="line"><a id="l00091" name="l00091"></a><span class="lineno">   91</span> </div>
+<div class="line"><a id="l00092" name="l00092"></a><span class="lineno">   92</span>}</div>
 <div class="ttc" id="aclassEasySSL_1_1EasySSLUtils_html_ab2a2133d9037115a46a13a7cb848e766"><div class="ttname"><a href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766">EasySSL::EasySSLUtils::bioToByteArray</a></div><div class="ttdeci">static QByteArray bioToByteArray(BIO *bio)</div><div class="ttdoc">bioToByteArray This method converts the openssl BIO to the QByteArry</div><div class="ttdef"><b>Definition</b> <a href="easysslutils_8cpp_source.html#l00042">easysslutils.cpp:42</a></div></div>
 <div class="ttc" id="aclassEasySSL_1_1EasySSLUtils_html_ab4bf621b726509cd1d98461ad9a6dc85"><div class="ttname"><a href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85">EasySSL::EasySSLUtils::extractPrivateKey</a></div><div class="ttdeci">static QByteArray extractPrivateKey(EVP_PKEY *ssl_keys)</div><div class="ttdoc">extractPrivateKey This method extracts the private key from the ssl (pem) structure.</div><div class="ttdef"><b>Definition</b> <a href="easysslutils_8cpp_source.html#l00075">easysslutils.cpp:75</a></div></div>
 <div class="ttc" id="aclassEasySSL_1_1ICertificate_html"><div class="ttname"><a href="classEasySSL_1_1ICertificate.html">EasySSL::ICertificate</a></div><div class="ttdoc">The ICertificate class is base interface for all certificate generators classes.</div><div class="ttdef"><b>Definition</b> <a href="icertificate_8h_source.html#l00047">icertificate.h:48</a></div></div>
