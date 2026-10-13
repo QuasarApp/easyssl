@@ -31,41 +31,6 @@ This library contains interfaces for the signing and encryption data.
      ```
  * rebuild your project
 
-### qmake
-
-  * cd yourRepo
-  * git submodule add https://github.com/QuasarApp/easyssl.git # add the repository of EasySSL into your repo like submodule
-  * git submodule update --init --recursive
-  * Include in your `.pro` file the EasySSL sources directly:
-
-      ```qmake
-      # myapp.pro
-
-      QT       += core network
-
-      INCLUDEPATH += $$PWD/../easyssl/src/lib/src/public
-
-      SOURCES += \
-                  ../easyssl/src/lib/src/public/easyssl.cpp \
-                  ../easyssl/src/lib/src/public/easyssl/icrypto.cpp \
-                  ../easyssl/src/lib/src/public/easyssl/ecdsassl.cpp \
-                  ../easyssl/src/lib/src/public/easyssl/rsassl.cpp \
-                  ../easyssl/src/lib/src/public/easyssl/x509.cpp \
-                  ../easyssl/src/lib/src/public/easyssl/icertificate.cpp \
-                  ../easyssl/src/lib/src/private/easysslutils.cpp
-
-      DEFINES += EASYSSL_LIBRARY
-
-      # Link the OpenSSL 3.0+ libraries:
-      LIBS += -lcrypto -lssl
-      ```
-
-  * rebuild your project
-
-  > **Note:** the CMake build is the recommended way. The EasySSL library has the
-  > `EASYSSL_STATIC_SSL` and `BUILD_WITH_OPENSSL` build options that are only
-  > available for the CMake build.
-
 ### Independent of SSL build
 Dependency on the ssl library greatly complicates the deployment of the final product. For fix this issue, you can build EasySSL library with static SSL library. In this case, SSL library code will be saved in your EasySSL binary, and deploy of your application will be easily. The ssl code will not available for your application or other libraries, so you will not get conflicts between different major versions ssl libraries if your distribution kit has it.  
 
