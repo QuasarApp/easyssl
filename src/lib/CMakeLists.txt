@@ -79,6 +79,31 @@ else()
 
 endif()
 
+# When the OpenSSL libraries are static archives (the self-built OpenSSL or
+# the EASYSSL_STATIC_SSL option) and the easyssl library is built as a shared
+# library, the linker exports all the OpenSSL symbols (the public API and the
+# internal functions) from the shared library by default. This breaks the
+# coexistence with another OpenSSL that is loaded into the same process (for
+# example, the system OpenSSL that the Qt TLS backend plugin uses): the
+# dynamic linker resolves the OpenSSL symbols of the other library to the
+# embedded copies inside the easyssl library (symbol interposition) and the
+# mixed OpenSSL versions corrupt the internal OpenSSL data structures at
+# runtime. The --exclude-libs option keeps the symbols of the static
+# archives out of the dynamic symbol table of the shared library (the
+# easyssl public API is not affected, because it is compiled into the
+# shared library objects and not into the static archives). The option is
+# supported by the GNU and the LLVM linkers of the ELF platforms (Linux,
+# Windows (MinGW), Android and iOS); it is not needed for the MSVC and the
+# Apple platforms (their loaders do not interpose the symbols of the
+# statically linked libraries).
+if (BUILD_SHARED_LIBS AND (BUILD_WITH_OPENSSL OR EASYSSL_STATIC_SSL))
+    if (NOT MSVC
+            AND NOT APPLE
+            AND NOT CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+        target_link_options(${CURRENT_PROJECT} PRIVATE "LINKER:--exclude-libs,ALL")
+    endif()
+endif()
+
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
 

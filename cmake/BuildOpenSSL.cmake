@@ -16,8 +16,14 @@ include_guard()
 
 include(ExternalProject)
 
-set(EASYSSL_OPENSSL_TAG "openssl-3.0.9" CACHE STRING
-    "The OpenSSL git tag that will be cloned and built with the project")
+# The OpenSSL tag that is cloned and built with the project by default.
+# The OpenSSL 4.0.x line is the default: the EasySSL library is compatible
+# with the OpenSSL 4.x API (it uses only the EVP and X509 high level
+# interfaces), and the 4.x releases are the actively maintained line. The
+# OpenSSL 3.0.x tags (for example openssl-3.0.9) can still be selected
+# with this option.
+set(EASYSSL_OPENSSL_TAG "openssl-4.0.3" CACHE STRING
+    "The OpenSSL git tag that will be cloned and built with the project (default: openssl-4.0.3)")
 
 set(EASYSSL_OPENSSL_DIR "${CMAKE_BINARY_DIR}/openssl-build" CACHE PATH
     "The directory where the OpenSSL sources and the build results are stored")
@@ -31,11 +37,27 @@ set(_easyssl_openssl_options
     -no-shared
     -no-tests
     -no-ui-console
-    -no-ssl3
     -no-comp
-    -no-engine
     --libdir=lib
 )
+
+# The no-ssl3 and no-engine options do not exist in the OpenSSL 4.x
+# releases: the SSLv3 protocol and the legacy ENGINE interface were
+# removed in 4.0 and the OpenSSL Configure script reports these options
+# as deprecated no-ops. They are only passed for the OpenSSL 3.x tags
+# (where the features are disabled by default, but can be disabled
+# explicitly).
+set(_easyssl_openssl_major 0)
+if (EASYSSL_OPENSSL_TAG MATCHES "^openssl-([0-9]+)")
+    set(_easyssl_openssl_major ${CMAKE_MATCH_1})
+endif()
+
+if (NOT _easyssl_openssl_major GREATER_EQUAL 4)
+    list(APPEND _easyssl_openssl_options
+        -no-ssl3
+        -no-engine
+    )
+endif()
 
 # Select the OpenSSL configure target and the extra environment variables
 # for the current build platform.

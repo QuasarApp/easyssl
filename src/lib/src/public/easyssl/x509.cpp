@@ -33,7 +33,14 @@ SelfSignedSertificate X509::create(const SslSrtData &certificateData) const {
     X509_gmtime_adj(X509_get_notBefore(x509), 0); // not before current time
     X509_gmtime_adj(X509_get_notAfter(x509), certificateData.endTime); // not after a year from this point
     X509_set_pubkey(x509, pkey);
-    name = X509_get_subject_name(x509);
+
+    // The subject name of the certificate is filled with a separate
+    // X509_NAME object: the X509_get_subject_name method returns a const
+    // pointer in the OpenSSL 4.x releases, so the name of the certificate
+    // can not be changed in place. The X509_set_subject_name and
+    // X509_set_issuer_name methods copy the name, so it can be freed
+    // after the calls.
+    name = X509_NAME_new();
     q_check_ptr(name);
 
     unsigned char *C = reinterpret_cast<unsigned char *>(certificateData.country.toLatin1().data());
@@ -45,7 +52,9 @@ SelfSignedSertificate X509::create(const SslSrtData &certificateData) const {
     unsigned char *CN = reinterpret_cast<unsigned char *>(certificateData.commonName.toLatin1().data());
     X509_NAME_add_entry_by_txt(name, "CN", MBSTRING_ASC, CN, -1, -1, 0);
 
-    X509_set_issuer_name(x509, name);
+    X509_set_subject_name(x509, name);
+    X509_set_issuer_name(x509, name); // the issuer of the self-signed certificate is the same as the subject
+    X509_NAME_free(name);
     X509_sign(x509, pkey, EVP_sha256());
 
     result.key = QSslKey(EasySSLUtils::extractPrivateKey(pkey), keyGenerator()->keyAlgorithm());

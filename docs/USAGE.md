@@ -14,7 +14,9 @@ EasySSL is a Qt wrapper of the OpenSSL 3.0+ library. It simplifies the working w
 
 * CMake 3.19+ or qmake,
 * Qt 5 or Qt 6 (Core, Network, Test modules for the tests),
-* OpenSSL 3.0 or newer (or the `BUILD_WITH_OPENSSL` option, see below).
+* OpenSSL 3.0 or newer (the 3.x and 4.x lines; by default the OpenSSL
+  library is self-built with the project, see the `BUILD_WITH_OPENSSL`
+  option below).
 
 ## Build and Include
 
@@ -74,20 +76,22 @@ EasySSL is a Qt wrapper of the OpenSSL 3.0+ library. It simplifies the working w
 
 ### Build without the system OpenSSL (BUILD_WITH_OPENSSL)
 
-If your system (or the target device) has no OpenSSL 3.0+ library, you can build
-the OpenSSL library together with the EasySSL library. Just set the
-**BUILD_WITH_OPENSSL** option to true:
+By default the OpenSSL library is built together with the EasySSL library
+(the **BUILD_WITH_OPENSSL** option is enabled). In this case the EasySSL
+project clones the OpenSSL `openssl-4.0.3` sources, builds the static
+OpenSSL libraries and links them privately into the EasySSL binary. The
+built OpenSSL libraries are saved in the build directory
+(`build/openssl-build`), so the deployment of your application does not
+depend on the system OpenSSL libraries and you will not get conflicts
+between different major versions of the SSL libraries.
+
+To use the OpenSSL library that is installed on the system (or the target
+device) instead of the self-built one, set the **BUILD_WITH_OPENSSL**
+option to false (the system needs the OpenSSL 3.0+ library):
 
 ``` bash
-cmake .. -DBUILD_WITH_OPENSSL=1
+cmake .. -DBUILD_WITH_OPENSSL=0
 ```
-
-In this case the EasySSL project clones the OpenSSL `openssl-3.0.9` sources,
-builds the static OpenSSL libraries and links them privately into the EasySSL
-binary. The built OpenSSL libraries are saved in the build directory
-(`build/openssl-build`), so the deployment of your application does not depend
-on the system OpenSSL libraries and you will not get conflicts between
-different major versions of the SSL libraries.
 
 * Supported platforms: Linux, Windows (MinGW), Android, iOS and macOS (arm/x86).
 * The WASM platform is **not** supported.
@@ -97,7 +101,8 @@ different major versions of the SSL libraries.
   (for example the MSYS2 perl; set the `MSYS2_ROOT` environment variable
   to the MSYS2 installation directory if it is not found automatically).
 * The OpenSSL version can be changed with the `EASYSSL_OPENSSL_TAG` option
-  (default `openssl-3.0.9`).
+  (default `openssl-4.0.3`; the OpenSSL 3.0.x tags, for example
+  `openssl-3.0.9`, are also supported).
 
 ### Static SSL link (EASYSSL_STATIC_SSL)
 
