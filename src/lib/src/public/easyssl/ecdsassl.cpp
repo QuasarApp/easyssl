@@ -26,8 +26,8 @@
 namespace EasySSL {
 
 
-ECDSASSL::ECDSASSL(EllipticCurveStandart curveStandart) {
-    setCurve(curveStandart);
+ECDSASSL::ECDSASSL(EllipticCurveStandard curveStandard) {
+    setCurve(curveStandard);
 }
 
 void * ECDSASSL::makeRawKeys() const {
@@ -132,11 +132,11 @@ bool ECDSASSL::checkSign(const QByteArray &inputData,
     }
 
     auto pkey = EasySSLUtils::byteArrayToBio(key);
-    auto rsaPublickKey = PEM_read_bio_PUBKEY(pkey, nullptr, nullptr, nullptr);
+    auto rsaPublicKey = PEM_read_bio_PUBKEY(pkey, nullptr, nullptr, nullptr);
     BIO_free(pkey);
 
     // Initialize the verification operation
-    if (EVP_DigestVerifyInit(mdctx, NULL, EVP_sha256(), NULL, rsaPublickKey) != 1) {
+    if (EVP_DigestVerifyInit(mdctx, NULL, EVP_sha256(), NULL, rsaPublicKey) != 1) {
         EasySSLUtils::printlastOpenSSlError();
 
         EVP_MD_CTX_free(mdctx);
@@ -173,15 +173,15 @@ QByteArray ECDSASSL::encrypt(const QByteArray &, const QByteArray &) {
     return {};
 }
 
-ECDSASSL::EllipticCurveStandart ECDSASSL::curve() const {
+ECDSASSL::EllipticCurveStandard ECDSASSL::curve() const {
     return _curve;
 }
 
-void ECDSASSL::setCurve(EllipticCurveStandart newCurve) {
+void ECDSASSL::setCurve(EllipticCurveStandard newCurve) {
     _curve = newCurve;
 }
 
-const char *ECDSASSL::getCStr(EllipticCurveStandart value) const {
+const char *ECDSASSL::getCStr(EllipticCurveStandard value) const {
     switch (value) {
     case P_256:     return "P-256";
     case P_384:     return "P-384";

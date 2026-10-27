@@ -79,7 +79,7 @@ public:
     void setPadding(RSAPadding newPadding);
 
     /**
-     * @brief bits return cuurrent rsa keys size mode. Using oly for generate keys.
+     * @brief bits return current rsa keys size mode. Using only for generating keys.
      * @return size of the rsa keys.
      */
     RSABits bits() const;

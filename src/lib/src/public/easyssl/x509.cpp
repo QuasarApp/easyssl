@@ -16,8 +16,8 @@ X509::X509(const QSharedPointer<ICrypto>& generator): ICertificate(generator) {
 
 }
 
-SelfSignedSertificate X509::create(const SslSrtData &certificateData) const {
-    SelfSignedSertificate result;
+SelfSignedCertificate X509::create(const SslCrtData &certificateData) const {
+    SelfSignedCertificate result;
     if (!(keyGenerator()->supportedFeatures() & ICrypto::Features::Signing)) {
         return {};
     }

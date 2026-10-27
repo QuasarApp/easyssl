@@ -103,11 +103,11 @@ bool RSASSL::checkSign(const QByteArray &inputData, const QByteArray &signature,
     }
 
     auto pkey = EasySSLUtils::byteArrayToBio(key);
-    auto rsaPublickKey = PEM_read_bio_PUBKEY(pkey, nullptr, nullptr, nullptr);
+    auto rsaPublicKey = PEM_read_bio_PUBKEY(pkey, nullptr, nullptr, nullptr);
     BIO_free(pkey);
 
     // Initialize the verification operation
-    if (EVP_DigestVerifyInit(mdctx, NULL, EVP_sha256(), NULL, rsaPublickKey) != 1) {
+    if (EVP_DigestVerifyInit(mdctx, NULL, EVP_sha256(), NULL, rsaPublicKey) != 1) {
         EasySSLUtils::printlastOpenSSlError();
         EVP_MD_CTX_free(mdctx);
         return false;
@@ -148,7 +148,7 @@ QByteArray RSASSL::decrypt(const QByteArray &message, const QByteArray &key) {
     const long long maxDencryptedSize = EVP_PKEY_size(rsaPrivateKey);
     if (message.length() % maxDencryptedSize) {
         qCritical() << "Error wrong encrypted data size.";
-        qCritical() << "Your key requir size multiple " << maxDencryptedSize;
+        qCritical() << "Your key require size multiple " << maxDencryptedSize;
 
         return {};
     }

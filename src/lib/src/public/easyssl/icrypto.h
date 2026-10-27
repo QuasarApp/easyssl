@@ -42,13 +42,13 @@ public:
     bool makeKeys(QByteArray &pubKey, QByteArray &privKey) const;
 
     /**
-     * @brief keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.)
+     * @brief keyAlgorithm This method should be return Qt Key algorithm (needed for generate certificates.)
      * @return
      */
     virtual QSsl::KeyAlgorithm keyAlgorithm() const = 0;
 
     /**
-     * @brief supportedFeatures This method should return supported featurs of the current encryption algorithm
+     * @brief supportedFeatures This method should return supported features of the current encryption algorithm
      * @return Features list.
      * @see Features
      */

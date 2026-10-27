@@ -36,10 +36,10 @@ set(EASYSSL_VERSION "0.${GIT_COMMIT_COUNT}.${GIT_COMMIT_HASH}")
 set(EASYSSL_PACKAGE_ID "quasarapp.core.easyssl")
 
 option(EASYSSL_TESTS "This option disables or enables tests of the ${PROJECT_NAME} project"  ON)
-option(EASYSSL_STATIC_SSL "This option enable or disabled static link ssl libraryes" OFF)
+option(EASYSSL_STATIC_SSL "This option enable or disabled static link ssl libraries" OFF)
 
 if (ANDROID OR IOS OR NOT QT_VERSION_MAJOR OR QA_WASM32)
-    set(EASYSSL_TESTS OFF CACHE BOOL "This option force disbled for ANDROID IOS QA_WASM32 and Not Qt projects" FORCE)
+    set(EASYSSL_TESTS OFF CACHE BOOL "This option force disabled for ANDROID IOS QA_WASM32 and Not Qt projects" FORCE)
 endif()
 
 make_directory(Distro)

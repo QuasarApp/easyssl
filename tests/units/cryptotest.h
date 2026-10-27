@@ -20,7 +20,7 @@ class CryptoTest: public Test, protected TestUtils
 public:
 
     void test() override {
-        // test short messges
+        // test short messages
         testImpl("Test");
 
         //test long messages
@@ -36,18 +36,18 @@ public:
 
 
     void testImpl(const QByteArray& message) const {
-        // create a publick and private keys array.
+        // create a public and private keys array.
         QByteArray pub, priv;
         TestClass crypto;
 
         QVERIFY2(crypto.makeKeys(pub, priv), "Failed to generate keys pair.");
-        QVERIFY2(pub.size(), "Publick key should be generated successfull");
-        QVERIFY2(priv.size(), "Private key should be generated successfull");
+        QVERIFY2(pub.size(), "Public key should be generated successful");
+        QVERIFY2(priv.size(), "Private key should be generated successful");
 
         if (crypto.supportedFeatures() & EasySSL::ICrypto::Features::Signing) {
-            auto siganture = crypto.signMessage(message, priv);
-            QVERIFY2(siganture.size(), "Siganture of the message should not be empty");
-            QVERIFY2(crypto.checkSign(message, siganture, pub), "failed to check message");
+            auto signature = crypto.signMessage(message, priv);
+            QVERIFY2(signature.size(), "Signature of the message should not be empty");
+            QVERIFY2(crypto.checkSign(message, signature, pub), "failed to check message");
         }
 
         if (crypto.supportedFeatures() & EasySSL::ICrypto::Features::Encryption) {

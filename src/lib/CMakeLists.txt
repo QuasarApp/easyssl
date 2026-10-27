@@ -27,8 +27,8 @@ if (${QT_VERSION_MAJOR})
 
 endif()
 
-set(PUBLIC_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/public")
-set(PRIVATE_INCUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/private")
+set(PUBLIC_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/public")
+set(PRIVATE_INCLUDE_DIR "${CMAKE_CURRENT_SOURCE_DIR}/src/private")
 
 
 add_library(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
@@ -58,8 +58,8 @@ endif()
 
 message("Use the OpenSSL libraries: ${OPENSSL_LIBRARIES}")
 
-target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCUDE_DIR})
-target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCUDE_DIR})
+target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCLUDE_DIR})
+target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCLUDE_DIR})
 
 set(LANGS ${CMAKE_CURRENT_SOURCE_DIR}/languages/en.ts)
 

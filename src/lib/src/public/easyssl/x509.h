@@ -24,7 +24,7 @@ public:
 
     // ICertificate interface
 public:
-    SelfSignedSertificate create(const SslSrtData& certificateData) const override;
+    SelfSignedCertificate create(const SslCrtData& certificateData) const override;
 };
 
 }

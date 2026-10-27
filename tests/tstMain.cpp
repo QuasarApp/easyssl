@@ -60,7 +60,7 @@ private:
 
 /**
  * @brief tstMain::tstMain
- * init all availabel units for testsing
+ * init all available units for testing
  */
 tstMain::tstMain() {
 
