@@ -12,9 +12,6 @@ get_filename_component(CURRENT_PROJECT_DIR ${CMAKE_CURRENT_SOURCE_DIR} NAME)
 set(CURRENT_PROJECT "${PROJECT_NAME}")
 add_definitions(-DEASYSSL_LIBRARY)
 
-list(APPEND CMAKE_FIND_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
-find_package(OpenSSL 3.0 REQUIRED)
-
 file(GLOB_RECURSE SOURCE_CPP
     "src/*.cpp"
     "src/*.h"
@@ -35,28 +32,77 @@ add_library(${CURRENT_PROJECT} ${SOURCE_CPP} ${SOURCE_QRC})
 
 target_link_libraries(${CURRENT_PROJECT} PUBLIC Qt${QT_VERSION_MAJOR}::Network Qt${QT_VERSION_MAJOR}::Core )
 
-if (EASYSSL_STATIC_SSL)
+if (BUILD_WITH_OPENSSL)
 
-    message("Use static ssl")
-    target_link_libraries(${CURRENT_PROJECT} PRIVATE libcrypto.a libssl.a)
+    # The OpenSSL libraries are built with the project (see the
+    # cmake/BuildOpenSSL.cmake file). The easyssl target is linked
+    # against the imported targets of the built OpenSSL libraries.
+    message("Use the OpenSSL libraries that are built with the project")
+    target_link_libraries(${CURRENT_PROJECT} PRIVATE easyssl_openssl_ssl easyssl_openssl_crypto)
+
+    if (WIN32)
+        # The OpenSSL mingw64 build needs these Windows system libraries.
+        target_link_libraries(${CURRENT_PROJECT} PRIVATE ws2_32 gdi32 crypt32)
+    endif()
+
 else()
 
-    message("Use shared ssl ")
-    target_link_libraries(${CURRENT_PROJECT} PRIVATE OpenSSL::Crypto OpenSSL::SSL)
-
-    if (ANDROID)
-        set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
-
-        set(ANDROID_EXTRA_LIBS
-            ${OPENSSL_ROOT_PATH}/lib/libcrypto_android.so
-            ${OPENSSL_ROOT_PATH}/lib/libssl_android.so
-        CACHE INTERNAL "")
-
-        message(ANDROID_EXTRA_LIBS = ${ANDROID_EXTRA_LIBS})
+    if (EASYSSL_STATIC_SSL)
+        set(OPENSSL_USE_STATIC_LIBS ON)
     endif()
+
+    list(APPEND CMAKE_FIND_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
+    find_package(OpenSSL 3.0.0...<5.0.0 REQUIRED)
+
+    if (EASYSSL_STATIC_SSL)
+
+        message("Use static ssl")
+        target_link_libraries(${CURRENT_PROJECT} PRIVATE ${OPENSSL_SSL_LIBRARY} ${OPENSSL_CRYPTO_LIBRARY})
+    else()
+
+        message("Use shared ssl ")
+        target_link_libraries(${CURRENT_PROJECT} PRIVATE OpenSSL::Crypto OpenSSL::SSL)
+
+        if (ANDROID)
+            set(OPENSSL_ROOT_PATH "$ENV{OPENSSL_ROOT_DIR}")
+
+            set(ANDROID_EXTRA_LIBS
+                ${OPENSSL_ROOT_PATH}/lib/libcrypto_android.so
+                ${OPENSSL_ROOT_PATH}/lib/libssl_android.so
+            CACHE INTERNAL "")
+
+            message(ANDROID_EXTRA_LIBS = ${ANDROID_EXTRA_LIBS})
+        endif()
+    endif()
+
+    message("Use the OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+
 endif()
 
-message("Use the OpenSSL libraries: ${OPENSSL_LIBRARIES}")
+# When the OpenSSL libraries are static archives (the self-built OpenSSL or
+# the EASYSSL_STATIC_SSL option) and the easyssl library is built as a shared
+# library, the linker exports all the OpenSSL symbols (the public API and the
+# internal functions) from the shared library by default. This breaks the
+# coexistence with another OpenSSL that is loaded into the same process (for
+# example, the system OpenSSL that the Qt TLS backend plugin uses): the
+# dynamic linker resolves the OpenSSL symbols of the other library to the
+# embedded copies inside the easyssl library (symbol interposition) and the
+# mixed OpenSSL versions corrupt the internal OpenSSL data structures at
+# runtime. The --exclude-libs option keeps the symbols of the static
+# archives out of the dynamic symbol table of the shared library (the
+# easyssl public API is not affected, because it is compiled into the
+# shared library objects and not into the static archives). The option is
+# supported by the GNU and the LLVM linkers of the ELF platforms (Linux,
+# Windows (MinGW), Android and iOS); it is not needed for the MSVC and the
+# Apple platforms (their loaders do not interpose the symbols of the
+# statically linked libraries).
+if (BUILD_SHARED_LIBS AND (BUILD_WITH_OPENSSL OR EASYSSL_STATIC_SSL))
+    if (NOT MSVC
+            AND NOT APPLE
+            AND NOT CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL "MSVC")
+        target_link_options(${CURRENT_PROJECT} PRIVATE "LINKER:--exclude-libs,ALL")
+    endif()
+endif()
 
 target_include_directories(${CURRENT_PROJECT} PUBLIC ${PUBLIC_INCLUDE_DIR})
 target_include_directories(${CURRENT_PROJECT} PRIVATE ${PRIVATE_INCLUDE_DIR})

@@ -240,7 +240,11 @@ QByteArray RSASSL::encrypt(const QByteArray &message, const QByteArray &key) {
     for (int index = 0; index < message.size();) {
 
         QByteArray encryptedDataPart(maxEncryptedSize, 0);
-        size_t realEncryptedDataPartSize = 0;
+        // EVP_PKEY_encrypt() uses *realEncryptedDataPartSize as the size of the
+        // output buffer on input (and as the actual size on output). OpenSSL >= 3.6
+        // validates it and fails with "rsa_encrypt: output buffer too small" when
+        // it is smaller than the key size, so it must be the buffer size, not 0.
+        size_t realEncryptedDataPartSize = maxEncryptedSize;
         int currentPartSize = std::min(message.length() - index, maxEncryptedSize - getPandingSize(_padding)) ;
         if (EVP_PKEY_encrypt(ctx,
                              reinterpret_cast<unsigned char*>(encryptedDataPart.data()),
