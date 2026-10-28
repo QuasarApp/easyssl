@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -92,10 +92,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a541c0164095011bf725613687980235e"><td class="mdescLeft">&#160;</td><td class="mdescRight">makeKeys This method generate the public and private keys of the ECDSA.  <br /></td></tr>
 <tr class="separator:a541c0164095011bf725613687980235e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a08e9e35402d1b8b79038571015537ade" id="r_a08e9e35402d1b8b79038571015537ade"><td class="memItemLeft" align="right" valign="top"><a class="el" href="classEasySSL_1_1ICrypto.html#a44a4eefbc8b23eda15ce28282647eb69">Features</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1RSASSL.html#a08e9e35402d1b8b79038571015537ade">supportedFeatures</a> () const override</td></tr>
-<tr class="memdesc:a08e9e35402d1b8b79038571015537ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">supportedFeatures This method should return supported featurs of the current encryption algorithm  <br /></td></tr>
+<tr class="memdesc:a08e9e35402d1b8b79038571015537ade"><td class="mdescLeft">&#160;</td><td class="mdescRight">supportedFeatures This method should return supported features of the current encryption algorithm  <br /></td></tr>
 <tr class="separator:a08e9e35402d1b8b79038571015537ade"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a99da71006d4337004486984e302d50a7" id="r_a99da71006d4337004486984e302d50a7"><td class="memItemLeft" align="right" valign="top">QSsl::KeyAlgorithm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1RSASSL.html#a99da71006d4337004486984e302d50a7">keyAlgorithm</a> () const override</td></tr>
-<tr class="memdesc:a99da71006d4337004486984e302d50a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.)  <br /></td></tr>
+<tr class="memdesc:a99da71006d4337004486984e302d50a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">keyAlgorithm This method should be return Qt Key algorithm (needed for generate certificates.)  <br /></td></tr>
 <tr class="separator:a99da71006d4337004486984e302d50a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a7c3c888a21b1cca0c227eec877e287a0" id="r_a7c3c888a21b1cca0c227eec877e287a0"><td class="memItemLeft" align="right" valign="top">QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1RSASSL.html#a7c3c888a21b1cca0c227eec877e287a0">signMessage</a> (const QByteArray &amp;inputData, const QByteArray &amp;key) const override</td></tr>
 <tr class="memdesc:a7c3c888a21b1cca0c227eec877e287a0"><td class="mdescLeft">&#160;</td><td class="mdescRight">signMessage This method should be sign the <em>message</em> using the <em>key</em>.  <br /></td></tr>
@@ -116,7 +116,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:ac23b18f3fdb62839fdbe93bf63ea22a6"><td class="mdescLeft">&#160;</td><td class="mdescRight">setPadding This method sets new mode for encryption pendong.  <br /></td></tr>
 <tr class="separator:ac23b18f3fdb62839fdbe93bf63ea22a6"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a596518cab04d84d3d4b099ec02adc929" id="r_a596518cab04d84d3d4b099ec02adc929"><td class="memItemLeft" align="right" valign="top">RSABits&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1RSASSL.html#a596518cab04d84d3d4b099ec02adc929">bits</a> () const</td></tr>
-<tr class="memdesc:a596518cab04d84d3d4b099ec02adc929"><td class="mdescLeft">&#160;</td><td class="mdescRight">bits return cuurrent rsa keys size mode. Using oly for generate keys.  <br /></td></tr>
+<tr class="memdesc:a596518cab04d84d3d4b099ec02adc929"><td class="mdescLeft">&#160;</td><td class="mdescRight">bits return current rsa keys size mode. Using only for generating keys.  <br /></td></tr>
 <tr class="separator:a596518cab04d84d3d4b099ec02adc929"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a686366cdd9561d621c05726870e1d7e3" id="r_a686366cdd9561d621c05726870e1d7e3"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1RSASSL.html#a686366cdd9561d621c05726870e1d7e3">setBits</a> (RSABits newBits)</td></tr>
 <tr class="memdesc:a686366cdd9561d621c05726870e1d7e3"><td class="mdescLeft">&#160;</td><td class="mdescRight">setBits sets new value of the rsa key generator.  <br /></td></tr>
@@ -208,7 +208,7 @@ Here is the call graph for this function:</div>
       </table>
 </div><div class="memdoc">
 
-<p>bits return cuurrent rsa keys size mode. Using oly for generate keys. </p>
+<p>bits return current rsa keys size mode. Using only for generating keys. </p>
 <dl class="section return"><dt>Returns</dt><dd>size of the rsa keys. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="rsassl_8cpp_source.html#l00299">299</a> of file <a class="el" href="rsassl_8cpp_source.html">rsassl.cpp</a>.</p>
@@ -418,7 +418,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.) </p>
+<p>keyAlgorithm This method should be return Qt Key algorithm (needed for generate certificates.) </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 <p>Implements <a class="el" href="classEasySSL_1_1ICrypto.html#a072a63faf7d9320b349d69eba2af271a">EasySSL::ICrypto</a>.</p>
@@ -654,7 +654,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>supportedFeatures This method should return supported featurs of the current encryption algorithm </p>
+<p>supportedFeatures This method should return supported features of the current encryption algorithm </p>
 <dl class="section return"><dt>Returns</dt><dd>Features list. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classEasySSL_1_1ICrypto.html#a44a4eefbc8b23eda15ce28282647eb69" title="The Features enum this is list of the supported description features.">Features</a> </dd></dl>
 

@@ -1,6 +1,6 @@
 var icertificate_8h =
 [
-    [ "EasySSL::SslSrtData", "structEasySSL_1_1SslSrtData.html", "structEasySSL_1_1SslSrtData" ],
-    [ "EasySSL::SelfSignedSertificate", "structEasySSL_1_1SelfSignedSertificate.html", "structEasySSL_1_1SelfSignedSertificate" ],
+    [ "EasySSL::SslCrtData", "structEasySSL_1_1SslCrtData.html", "structEasySSL_1_1SslCrtData" ],
+    [ "EasySSL::SelfSignedCertificate", "structEasySSL_1_1SelfSignedCertificate.html", "structEasySSL_1_1SelfSignedCertificate" ],
     [ "EasySSL::ICertificate", "classEasySSL_1_1ICertificate.html", "classEasySSL_1_1ICertificate" ]
 ];

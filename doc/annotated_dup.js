@@ -7,8 +7,8 @@ var annotated_dup =
       [ "ICertificate", "classEasySSL_1_1ICertificate.html", "classEasySSL_1_1ICertificate" ],
       [ "ICrypto", "classEasySSL_1_1ICrypto.html", "classEasySSL_1_1ICrypto" ],
       [ "RSASSL", "classEasySSL_1_1RSASSL.html", "classEasySSL_1_1RSASSL" ],
-      [ "SelfSignedSertificate", "structEasySSL_1_1SelfSignedSertificate.html", "structEasySSL_1_1SelfSignedSertificate" ],
-      [ "SslSrtData", "structEasySSL_1_1SslSrtData.html", "structEasySSL_1_1SslSrtData" ],
+      [ "SelfSignedCertificate", "structEasySSL_1_1SelfSignedCertificate.html", "structEasySSL_1_1SelfSignedCertificate" ],
+      [ "SslCrtData", "structEasySSL_1_1SslCrtData.html", "structEasySSL_1_1SslCrtData" ],
       [ "X509", "classEasySSL_1_1X509.html", "classEasySSL_1_1X509" ]
     ] ]
 ];

@@ -11,6 +11,6 @@ var hierarchy =
       [ "EasySSL::ECDSASSL", "classEasySSL_1_1ECDSASSL.html", null ],
       [ "EasySSL::RSASSL", "classEasySSL_1_1RSASSL.html", null ]
     ] ],
-    [ "EasySSL::SelfSignedSertificate", "structEasySSL_1_1SelfSignedSertificate.html", null ],
-    [ "EasySSL::SslSrtData", "structEasySSL_1_1SslSrtData.html", null ]
+    [ "EasySSL::SelfSignedCertificate", "structEasySSL_1_1SelfSignedCertificate.html", null ],
+    [ "EasySSL::SslCrtData", "structEasySSL_1_1SslCrtData.html", null ]
 ];

@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -99,10 +99,10 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a72c51fbf1124b703c2be177e751592ba"><td class="mdescLeft">&#160;</td><td class="mdescRight">makeKeys This method generate the public and private keys of the ECDSA.  <br /></td></tr>
 <tr class="separator:a72c51fbf1124b703c2be177e751592ba"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a072a63faf7d9320b349d69eba2af271a" id="r_a072a63faf7d9320b349d69eba2af271a"><td class="memItemLeft" align="right" valign="top">virtual QSsl::KeyAlgorithm&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1ICrypto.html#a072a63faf7d9320b349d69eba2af271a">keyAlgorithm</a> () const =0</td></tr>
-<tr class="memdesc:a072a63faf7d9320b349d69eba2af271a"><td class="mdescLeft">&#160;</td><td class="mdescRight">keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.)  <br /></td></tr>
+<tr class="memdesc:a072a63faf7d9320b349d69eba2af271a"><td class="mdescLeft">&#160;</td><td class="mdescRight">keyAlgorithm This method should be return Qt Key algorithm (needed for generate certificates.)  <br /></td></tr>
 <tr class="separator:a072a63faf7d9320b349d69eba2af271a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af521881b3875e2abe8b2c19570d09540" id="r_af521881b3875e2abe8b2c19570d09540"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="classEasySSL_1_1ICrypto.html#a44a4eefbc8b23eda15ce28282647eb69">Features</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1ICrypto.html#af521881b3875e2abe8b2c19570d09540">supportedFeatures</a> () const =0</td></tr>
-<tr class="memdesc:af521881b3875e2abe8b2c19570d09540"><td class="mdescLeft">&#160;</td><td class="mdescRight">supportedFeatures This method should return supported featurs of the current encryption algorithm  <br /></td></tr>
+<tr class="memdesc:af521881b3875e2abe8b2c19570d09540"><td class="mdescLeft">&#160;</td><td class="mdescRight">supportedFeatures This method should return supported features of the current encryption algorithm  <br /></td></tr>
 <tr class="separator:af521881b3875e2abe8b2c19570d09540"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a92afe32620a71aa514ca81156dcbddb2" id="r_a92afe32620a71aa514ca81156dcbddb2"><td class="memItemLeft" align="right" valign="top">virtual QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1ICrypto.html#a92afe32620a71aa514ca81156dcbddb2">decrypt</a> (const QByteArray &amp;message, const QByteArray &amp;key)=0</td></tr>
 <tr class="memdesc:a92afe32620a71aa514ca81156dcbddb2"><td class="mdescLeft">&#160;</td><td class="mdescRight">decrypt This method decrypt <em>message</em> using <em>key</em>.  <br /></td></tr>
@@ -347,7 +347,7 @@ Collaboration diagram for EasySSL::ICrypto:</div>
 </table>
 </div><div class="memdoc">
 
-<p>keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates.) </p>
+<p>keyAlgorithm This method should be return Qt Key algorithm (needed for generate certificates.) </p>
 <dl class="section return"><dt>Returns</dt><dd></dd></dl>
 
 <p>Implemented in <a class="el" href="classEasySSL_1_1ECDSASSL.html#a7139376030211a9ab221806ebde1fc4a">EasySSL::ECDSASSL</a>, and <a class="el" href="classEasySSL_1_1RSASSL.html#a99da71006d4337004486984e302d50a7">EasySSL::RSASSL</a>.</p>
@@ -399,9 +399,9 @@ Here is the call graph for this function:</div>
 <area shape="rect" title="makeKeys This method generate the public and private keys of the ECDSA." alt="" coords="5,45,212,70"/>
 <area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85" title="extractPrivateKey This method extracts the private key from the ssl (pem) structure." alt="" coords="260,5,428,45"/>
 <area shape="poly" title=" " alt="" coords="202,42,246,36,247,41,203,47"/>
-<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#a7e6404d18505cdb6e44066e222ebaabb" title="extractPublcKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,69,428,109"/>
+<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#a6a1a18a73d9db27841ce00c2bed9dd62" title="extractPublicKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,69,428,109"/>
 <area shape="poly" title=" " alt="" coords="203,67,247,73,246,79,202,73"/>
-<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArry" alt="" coords="476,37,644,77"/>
+<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArray" alt="" coords="476,37,644,77"/>
 <area shape="poly" title=" " alt="" coords="429,35,463,40,462,46,428,40"/>
 <area shape="poly" title=" " alt="" coords="428,74,462,69,463,74,429,80"/>
 </map>
@@ -511,7 +511,7 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>supportedFeatures This method should return supported featurs of the current encryption algorithm </p>
+<p>supportedFeatures This method should return supported features of the current encryption algorithm </p>
 <dl class="section return"><dt>Returns</dt><dd>Features list. </dd></dl>
 <dl class="section see"><dt>See also</dt><dd><a class="el" href="classEasySSL_1_1ICrypto.html#a44a4eefbc8b23eda15ce28282647eb69" title="The Features enum this is list of the supported description features.">Features</a> </dd></dl>
 

@@ -1,6 +1,6 @@
 <map id="EasySSL::X509::create" name="EasySSL::X509::create">
 <area shape="rect" id="Node000001" title="create This method create a self signed certificate." alt="" coords="5,41,172,66"/>
-<area shape="rect" id="Node000002" href="$classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArry" alt="" coords="436,5,604,45"/>
+<area shape="rect" id="Node000002" href="$classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArray" alt="" coords="436,5,604,45"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="130,38,173,27,220,19,324,13,423,15,422,20,325,18,220,24,174,32,132,43"/>
 <area shape="rect" id="Node000003" href="$classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85" title="extractPrivateKey This method extracts the private key from the ssl (pem) structure." alt="" coords="220,33,388,73"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="172,51,207,51,207,56,172,56"/>

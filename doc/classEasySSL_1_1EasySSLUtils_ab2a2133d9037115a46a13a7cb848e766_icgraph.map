@@ -1,10 +1,10 @@
 <map id="EasySSL::EasySSLUtils::bioToByteArray" name="EasySSL::EasySSLUtils::bioToByteArray">
-<area shape="rect" id="Node000001" title="bioToByteArray This method converts the openssl BIO to the QByteArry" alt="" coords="476,26,644,66"/>
-<area shape="rect" id="Node000002" href="$classEasySSL_1_1X509.html#aa49a60e41237f92380a17a265b3114b6" title="create This method create a self signed certificate." alt="" coords="25,5,192,31"/>
+<area shape="rect" id="Node000001" title="bioToByteArray This method converts the openssl BIO to the QByteArray" alt="" coords="476,26,644,66"/>
+<area shape="rect" id="Node000002" href="$classEasySSL_1_1X509.html#a719e8a00868d4b370bb389590bb0688d" title="create This method create a self signed certificate." alt="" coords="25,5,192,31"/>
 <area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="476,25,428,17,366,12,304,10,192,14,192,8,304,5,367,6,428,11,477,20"/>
 <area shape="rect" id="Node000003" href="$classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85" title="extractPrivateKey This method extracts the private key from the ssl (pem) structure." alt="" coords="260,26,428,66"/>
 <area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="462,49,428,49,428,43,462,43"/>
-<area shape="rect" id="Node000005" href="$classEasySSL_1_1EasySSLUtils.html#a7e6404d18505cdb6e44066e222ebaabb" title="extractPublcKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,90,428,130"/>
+<area shape="rect" id="Node000005" href="$classEasySSL_1_1EasySSLUtils.html#a6a1a18a73d9db27841ce00c2bed9dd62" title="extractPublicKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,90,428,130"/>
 <area shape="poly" id="edge5_Node000001_Node000005" title=" " alt="" coords="479,73,413,93,411,87,478,68"/>
 <area shape="poly" id="edge3_Node000003_Node000002" title=" " alt="" coords="246,37,192,31,192,25,247,32"/>
 <area shape="rect" id="Node000004" href="$classEasySSL_1_1ICrypto.html#a72c51fbf1124b703c2be177e751592ba" title="makeKeys This method generate the public and private keys of the ECDSA." alt="" coords="5,61,212,87"/>

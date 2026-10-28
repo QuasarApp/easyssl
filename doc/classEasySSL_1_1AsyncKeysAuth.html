@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -81,7 +81,7 @@ $(document).ready(function(){initNavTree('classEasySSL_1_1AsyncKeysAuth.html',''
 </div><!--header-->
 <div class="contents">
 
-<p>The <a class="el" href="classEasySSL_1_1AsyncKeysAuth.html" title="The AsyncKeysAuth class is temaplate class for works with authorization of a pair of asynchronous key...">AsyncKeysAuth</a> class is temaplate class for works with authorization of a pair of asynchronous keys This class contains base implementation for the authentication using async encryption. The base encryption algorithm defined on the template argument <b>CryptoImplementation</b>. You can use any crypto algorithm.  
+<p>The <a class="el" href="classEasySSL_1_1AsyncKeysAuth.html" title="The AsyncKeysAuth class is template class for works with authorization of a pair of asynchronous keys...">AsyncKeysAuth</a> class is template class for works with authorization of a pair of asynchronous keys This class contains base implementation for the authentication using async encryption. The base encryption algorithm defined on the template argument <b>CryptoImplementation</b>. You can use any crypto algorithm.  
  <a href="classEasySSL_1_1AsyncKeysAuth.html#details">More...</a></p>
 
 <p><code>#include &lt;<a class="el" href="asynckeysauth_8h_source.html">asynckeysauth.h</a>&gt;</code></p>
@@ -96,7 +96,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:a41c26aa2b2d751320916d982e7174468"><td class="mdescLeft">&#160;</td><td class="mdescRight">auth This method make authentication and return true if the authentication finished successful else false.  <br /></td></tr>
 <tr class="separator:a41c26aa2b2d751320916d982e7174468"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:aa7fa81a8ce47a0a38cdbc5755f1860a7" id="r_aa7fa81a8ce47a0a38cdbc5755f1860a7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7">prepare</a> ()</td></tr>
-<tr class="memdesc:aa7fa81a8ce47a0a38cdbc5755f1860a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">prepare This method will generate signature for autentication of client. Please inboke this method before send request to server.  <br /></td></tr>
+<tr class="memdesc:aa7fa81a8ce47a0a38cdbc5755f1860a7"><td class="mdescLeft">&#160;</td><td class="mdescRight">prepare This method will generate signature for authentication of client. Please inboke this method before send request to server.  <br /></td></tr>
 <tr class="separator:aa7fa81a8ce47a0a38cdbc5755f1860a7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a8481c0281ceac45bbaffd575c4eebe92" id="r_a8481c0281ceac45bbaffd575c4eebe92"><td class="memItemLeft" align="right" valign="top">unsigned int&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1AsyncKeysAuth.html#a8481c0281ceac45bbaffd575c4eebe92">unixTime</a> () const</td></tr>
 <tr class="memdesc:a8481c0281ceac45bbaffd575c4eebe92"><td class="mdescLeft">&#160;</td><td class="mdescRight">unixTime This method return unix time that client added for authentication.  <br /></td></tr>
@@ -108,7 +108,7 @@ Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa2dd128ddc4e23f93d3327107251b2a4"><td class="mdescLeft">&#160;</td><td class="mdescRight">signature This method return signature array.  <br /></td></tr>
 <tr class="separator:aa2dd128ddc4e23f93d3327107251b2a4"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a998535c628a4cafbe3d52970e25ec384" id="r_a998535c628a4cafbe3d52970e25ec384"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1AsyncKeysAuth.html#a998535c628a4cafbe3d52970e25ec384">isValid</a> () const</td></tr>
-<tr class="memdesc:a998535c628a4cafbe3d52970e25ec384"><td class="mdescLeft">&#160;</td><td class="mdescRight">isValid this method check this ibject to valid.  <br /></td></tr>
+<tr class="memdesc:a998535c628a4cafbe3d52970e25ec384"><td class="mdescLeft">&#160;</td><td class="mdescRight">isValid this method check this object to valid.  <br /></td></tr>
 <tr class="separator:a998535c628a4cafbe3d52970e25ec384"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ad2fd64503dd7d791a7c3e8342c6e9717" id="r_ad2fd64503dd7d791a7c3e8342c6e9717"><td class="memItemLeft" align="right" valign="top">QString&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1AsyncKeysAuth.html#ad2fd64503dd7d791a7c3e8342c6e9717">getUserId</a> () const</td></tr>
 <tr class="memdesc:ad2fd64503dd7d791a7c3e8342c6e9717"><td class="mdescLeft">&#160;</td><td class="mdescRight">getUserId This method return user id that generated from the public key.  <br /></td></tr>
@@ -148,12 +148,12 @@ Protected Attributes</h2></td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <div class="textblock"><div class="compoundTemplParams">template&lt;class CryptoImplementation&gt;<br />
-class EasySSL::AsyncKeysAuth&lt; CryptoImplementation &gt;</div><p>The <a class="el" href="classEasySSL_1_1AsyncKeysAuth.html" title="The AsyncKeysAuth class is temaplate class for works with authorization of a pair of asynchronous key...">AsyncKeysAuth</a> class is temaplate class for works with authorization of a pair of asynchronous keys This class contains base implementation for the authentication using async encryption. The base encryption algorithm defined on the template argument <b>CryptoImplementation</b>. You can use any crypto algorithm. </p>
-<h2>Exampel of use:</h2>
+class EasySSL::AsyncKeysAuth&lt; CryptoImplementation &gt;</div><p>The <a class="el" href="classEasySSL_1_1AsyncKeysAuth.html" title="The AsyncKeysAuth class is template class for works with authorization of a pair of asynchronous keys...">AsyncKeysAuth</a> class is template class for works with authorization of a pair of asynchronous keys This class contains base implementation for the authentication using async encryption. The base encryption algorithm defined on the template argument <b>CryptoImplementation</b>. You can use any crypto algorithm. </p>
+<h2>Example of use:</h2>
 <div class="fragment"><div class="line"><span class="preprocessor">#include &lt;<a class="code" href="easyssl_8h.html">easyssl.h</a>&gt;</span></div>
 <div class="line"> </div>
 <div class="line"><span class="keyword">using </span>ECDSAAuth = <a class="code hl_class" href="classEasySSL_1_1AsyncKeysAuth.html">AsyncKeysAuth&lt;ECDSA&gt;</a>;</div>
-<div class="ttc" id="aclassEasySSL_1_1AsyncKeysAuth_html"><div class="ttname"><a href="classEasySSL_1_1AsyncKeysAuth.html">EasySSL::AsyncKeysAuth</a></div><div class="ttdoc">The AsyncKeysAuth class is temaplate class for works with authorization of a pair of asynchronous key...</div><div class="ttdef"><b>Definition</b> <a href="asynckeysauth_8h_source.html#l00069">asynckeysauth.h:70</a></div></div>
+<div class="ttc" id="aclassEasySSL_1_1AsyncKeysAuth_html"><div class="ttname"><a href="classEasySSL_1_1AsyncKeysAuth.html">EasySSL::AsyncKeysAuth</a></div><div class="ttdoc">The AsyncKeysAuth class is template class for works with authorization of a pair of asynchronous keys...</div><div class="ttdef"><b>Definition</b> <a href="asynckeysauth_8h_source.html#l00069">asynckeysauth.h:70</a></div></div>
 <div class="ttc" id="aeasyssl_8h_html"><div class="ttname"><a href="easyssl_8h.html">easyssl.h</a></div></div>
 </div><!-- fragment --><h3>How to it works:</h3>
 <ul>
@@ -166,22 +166,22 @@ class EasySSL::AsyncKeysAuth&lt; CryptoImplementation &gt;</div><p>The <a class=
 <li>Client make a data for signing = S S = SHA256{U + PUB}</li>
 <li>Client make a signature SIG SIG = PRIV.signMessage(S)</li>
 <li>Client prepare a auth request for server = R: R = {U,SIG,PUB}</li>
-<li>Cleint send R to server</li>
+<li>Client send R to server</li>
 <li>--&mdash;</li>
 </ul>
 <p>** Server Part **</p>
 <ul>
 <li>Server receive R from client.</li>
 <li>Server compare U time with current unix time.</li>
-<li>If the diferrence more then allowed value then server reject an auth</li>
+<li>If the difference more then allowed value then server reject an auth</li>
 <li>Server make S value as a client</li>
-<li>Server check SIG value and comapre it with S value</li>
+<li>Server check SIG value and compare it with S value</li>
 <li>If message sign is valid then server accept an auth else reject.</li>
-<li>After accept server create new user with ID = sha256(PUB) or if user alredy exits make them as a logined user.</li>
+<li>After accept server create new user with ID = sha256(PUB) or if user already exits make them as a logined user.</li>
 </ul>
 <dl class="tparams"><dt>Template Parameters</dt><dd>
   <table class="tparams">
-    <tr><td class="paramname">CryptoImplementation</td><td>This is internal implementaion of base encryption functions. </td></tr>
+    <tr><td class="paramname">CryptoImplementation</td><td>This is internal implementation of base encryption functions. </td></tr>
   </table>
   </dd>
 </dl>
@@ -193,7 +193,7 @@ Inheritance diagram for EasySSL::AsyncKeysAuth&lt; CryptoImplementation &gt;:</d
 <div class="dyncontent">
 <div class="center"><img src="classEasySSL_1_1AsyncKeysAuth__inherit__graph.png" border="0" usemap="#aEasySSL_1_1AsyncKeysAuth_3_01CryptoImplementation_01_4_inherit__map" alt="Inheritance graph"/></div>
 <map name="aEasySSL_1_1AsyncKeysAuth_3_01CryptoImplementation_01_4_inherit__map" id="aEasySSL_1_1AsyncKeysAuth_3_01CryptoImplementation_01_4_inherit__map">
-<area shape="rect" title="The AsyncKeysAuth class is temaplate class for works with authorization of a pair of asynchronous key..." alt="" coords="5,119,196,559"/>
+<area shape="rect" title="The AsyncKeysAuth class is template class for works with authorization of a pair of asynchronous keys..." alt="" coords="5,119,196,559"/>
 <area shape="rect" title=" " alt="" coords="20,5,181,71"/>
 <area shape="poly" title=" " alt="" coords="103,85,103,119,98,119,98,85"/>
 </map>
@@ -203,7 +203,7 @@ Collaboration diagram for EasySSL::AsyncKeysAuth&lt; CryptoImplementation &gt;:<
 <div class="dyncontent">
 <div class="center"><img src="classEasySSL_1_1AsyncKeysAuth__coll__graph.png" border="0" usemap="#aEasySSL_1_1AsyncKeysAuth_3_01CryptoImplementation_01_4_coll__map" alt="Collaboration graph"/></div>
 <map name="aEasySSL_1_1AsyncKeysAuth_3_01CryptoImplementation_01_4_coll__map" id="aEasySSL_1_1AsyncKeysAuth_3_01CryptoImplementation_01_4_coll__map">
-<area shape="rect" title="The AsyncKeysAuth class is temaplate class for works with authorization of a pair of asynchronous key..." alt="" coords="5,119,196,559"/>
+<area shape="rect" title="The AsyncKeysAuth class is template class for works with authorization of a pair of asynchronous keys..." alt="" coords="5,119,196,559"/>
 <area shape="rect" title=" " alt="" coords="20,5,181,71"/>
 <area shape="poly" title=" " alt="" coords="103,85,103,119,98,119,98,85"/>
 </map>
@@ -504,7 +504,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classEasySSL_1_1AsyncKeysAuth_a0a420b20d74ca16e5decc351bddf44e5_icgraph.png" border="0" usemap="#aclassEasySSL_1_1AsyncKeysAuth_a0a420b20d74ca16e5decc351bddf44e5_icgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1AsyncKeysAuth_a0a420b20d74ca16e5decc351bddf44e5_icgraph" id="aclassEasySSL_1_1AsyncKeysAuth_a0a420b20d74ca16e5decc351bddf44e5_icgraph">
 <area shape="rect" title="getPrivateKey This method should be return private key for the public key that saved in this object." alt="" coords="237,5,421,45"/>
-<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for autentication of client. Please inboke this method be..." alt="" coords="5,5,189,45"/>
+<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for authentication of client. Please inboke this method b..." alt="" coords="5,5,189,45"/>
 <area shape="poly" title=" " alt="" coords="223,28,190,28,190,23,223,23"/>
 </map>
 </div>
@@ -579,9 +579,9 @@ template&lt;class CryptoImplementation &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>isValid this method check this ibject to valid. </p>
+<p>isValid this method check this object to valid. </p>
 <dl class="section return"><dt>Returns</dt><dd>return true if object contains valid signature else false. </dd></dl>
-<dl class="section note"><dt>Note</dt><dd>Invoke the <a class="el" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for autentication of client. Please inboke this method be...">AsyncKeysAuth::prepare</a> method before check valid of object. All object that not be preparred is invalid. </dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Invoke the <a class="el" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for authentication of client. Please inboke this method b...">AsyncKeysAuth::prepare</a> method before check valid of object. All object that not be preparred is invalid. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="asynckeysauth_8h_source.html#l00158">158</a> of file <a class="el" href="asynckeysauth_8h_source.html">asynckeysauth.h</a>.</p>
 <div class="dynheader">
@@ -589,8 +589,8 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classEasySSL_1_1AsyncKeysAuth_a998535c628a4cafbe3d52970e25ec384_icgraph.png" border="0" usemap="#aclassEasySSL_1_1AsyncKeysAuth_a998535c628a4cafbe3d52970e25ec384_icgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1AsyncKeysAuth_a998535c628a4cafbe3d52970e25ec384_icgraph" id="aclassEasySSL_1_1AsyncKeysAuth_a998535c628a4cafbe3d52970e25ec384_icgraph">
-<area shape="rect" title="isValid this method check this ibject to valid." alt="" coords="237,5,421,45"/>
-<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for autentication of client. Please inboke this method be..." alt="" coords="5,5,189,45"/>
+<area shape="rect" title="isValid this method check this object to valid." alt="" coords="237,5,421,45"/>
+<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for authentication of client. Please inboke this method b..." alt="" coords="5,5,189,45"/>
 <area shape="poly" title=" " alt="" coords="223,28,190,28,190,23,223,23"/>
 </map>
 </div>
@@ -622,7 +622,7 @@ template&lt;class CryptoImplementation &gt; </div>
 </table>
 </div><div class="memdoc">
 
-<p>prepare This method will generate signature for autentication of client. Please inboke this method before send request to server. </p>
+<p>prepare This method will generate signature for authentication of client. Please inboke this method before send request to server. </p>
 <dl class="section return"><dt>Returns</dt><dd>true if signature generated sucessuful. </dd></dl>
 
 <p class="definition">Definition at line <a class="el" href="asynckeysauth_8h_source.html#l00115">115</a> of file <a class="el" href="asynckeysauth_8h_source.html">asynckeysauth.h</a>.</p>
@@ -631,10 +631,10 @@ Here is the call graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classEasySSL_1_1AsyncKeysAuth_aa7fa81a8ce47a0a38cdbc5755f1860a7_cgraph.png" border="0" usemap="#aclassEasySSL_1_1AsyncKeysAuth_aa7fa81a8ce47a0a38cdbc5755f1860a7_cgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1AsyncKeysAuth_aa7fa81a8ce47a0a38cdbc5755f1860a7_cgraph" id="aclassEasySSL_1_1AsyncKeysAuth_aa7fa81a8ce47a0a38cdbc5755f1860a7_cgraph">
-<area shape="rect" title="prepare This method will generate signature for autentication of client. Please inboke this method be..." alt="" coords="5,101,189,141"/>
+<area shape="rect" title="prepare This method will generate signature for authentication of client. Please inboke this method b..." alt="" coords="5,101,189,141"/>
 <area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#a0a420b20d74ca16e5decc351bddf44e5" title="getPrivateKey This method should be return private key for the public key that saved in this object." alt="" coords="237,5,421,45"/>
 <area shape="poly" title=" " alt="" coords="138,99,236,55,255,48,257,53,238,60,141,104"/>
-<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#a998535c628a4cafbe3d52970e25ec384" title="isValid this method check this ibject to valid." alt="" coords="237,69,421,109"/>
+<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#a998535c628a4cafbe3d52970e25ec384" title="isValid this method check this object to valid." alt="" coords="237,69,421,109"/>
 <area shape="poly" title=" " alt="" coords="190,106,223,101,224,107,190,111"/>
 <area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#a13a8a45030dcb106d551680d539a5cba" title="setSignature Tihis is internal method for sets new signature value." alt="" coords="237,133,421,173"/>
 <area shape="poly" title=" " alt="" coords="190,131,224,136,223,141,190,137"/>
@@ -760,7 +760,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classEasySSL_1_1AsyncKeysAuth_a13a8a45030dcb106d551680d539a5cba_icgraph.png" border="0" usemap="#aclassEasySSL_1_1AsyncKeysAuth_a13a8a45030dcb106d551680d539a5cba_icgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1AsyncKeysAuth_a13a8a45030dcb106d551680d539a5cba_icgraph" id="aclassEasySSL_1_1AsyncKeysAuth_a13a8a45030dcb106d551680d539a5cba_icgraph">
 <area shape="rect" title="setSignature Tihis is internal method for sets new signature value." alt="" coords="237,5,421,45"/>
-<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for autentication of client. Please inboke this method be..." alt="" coords="5,5,189,45"/>
+<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for authentication of client. Please inboke this method b..." alt="" coords="5,5,189,45"/>
 <area shape="poly" title=" " alt="" coords="223,28,190,28,190,23,223,23"/>
 </map>
 </div>
@@ -796,7 +796,7 @@ template&lt;class CryptoImplementation &gt; </div>
 <p>setUnixTime This method sets new value of the unixTime propertye. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">newUnixTime</td><td>This is new unix time value. Unix time sets in secunds from 1970 year </td></tr>
+    <tr><td class="paramname">newUnixTime</td><td>This is new unix time value. Unix time sets in seconds from 1970 year </td></tr>
   </table>
   </dd>
 </dl>
@@ -893,7 +893,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classEasySSL_1_1AsyncKeysAuth_a7f27d9a3aa22c927539dd96b46dd55c6_icgraph.png" border="0" usemap="#aclassEasySSL_1_1AsyncKeysAuth_a7f27d9a3aa22c927539dd96b46dd55c6_icgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1AsyncKeysAuth_a7f27d9a3aa22c927539dd96b46dd55c6_icgraph" id="aclassEasySSL_1_1AsyncKeysAuth_a7f27d9a3aa22c927539dd96b46dd55c6_icgraph">
 <area shape="rect" title=" " alt="" coords="237,5,421,45"/>
-<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for autentication of client. Please inboke this method be..." alt="" coords="5,5,189,45"/>
+<area shape="rect" href="classEasySSL_1_1AsyncKeysAuth.html#aa7fa81a8ce47a0a38cdbc5755f1860a7" title="prepare This method will generate signature for authentication of client. Please inboke this method b..." alt="" coords="5,5,189,45"/>
 <area shape="poly" title=" " alt="" coords="223,28,190,28,190,23,223,23"/>
 </map>
 </div>

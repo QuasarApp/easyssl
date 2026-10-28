@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -88,9 +88,9 @@ $(document).ready(function(){initNavTree('classEasySSL_1_1X509.html',''); initRe
 Public Member Functions</h2></td></tr>
 <tr class="memitem:a77d3827e1f6cdbb81c4da82773b3f07e" id="r_a77d3827e1f6cdbb81c4da82773b3f07e"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1X509.html#a77d3827e1f6cdbb81c4da82773b3f07e">X509</a> (const QSharedPointer&lt; <a class="el" href="classEasySSL_1_1ICrypto.html">ICrypto</a> &gt; &amp;generator)</td></tr>
 <tr class="separator:a77d3827e1f6cdbb81c4da82773b3f07e"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:aa49a60e41237f92380a17a265b3114b6" id="r_aa49a60e41237f92380a17a265b3114b6"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structEasySSL_1_1SelfSignedSertificate.html">SelfSignedSertificate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1X509.html#aa49a60e41237f92380a17a265b3114b6">create</a> (const <a class="el" href="structEasySSL_1_1SslSrtData.html">SslSrtData</a> &amp;certificateData) const override</td></tr>
-<tr class="memdesc:aa49a60e41237f92380a17a265b3114b6"><td class="mdescLeft">&#160;</td><td class="mdescRight">create This method create a self signed certificate.  <br /></td></tr>
-<tr class="separator:aa49a60e41237f92380a17a265b3114b6"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a719e8a00868d4b370bb389590bb0688d" id="r_a719e8a00868d4b370bb389590bb0688d"><td class="memItemLeft" align="right" valign="top"><a class="el" href="structEasySSL_1_1SelfSignedCertificate.html">SelfSignedCertificate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1X509.html#a719e8a00868d4b370bb389590bb0688d">create</a> (const <a class="el" href="structEasySSL_1_1SslCrtData.html">SslCrtData</a> &amp;certificateData) const override</td></tr>
+<tr class="memdesc:a719e8a00868d4b370bb389590bb0688d"><td class="mdescLeft">&#160;</td><td class="mdescRight">create This method create a self signed certificate.  <br /></td></tr>
+<tr class="separator:a719e8a00868d4b370bb389590bb0688d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="inherit_header pub_methods_classEasySSL_1_1ICertificate"><td colspan="2" onclick="javascript:toggleInherit('pub_methods_classEasySSL_1_1ICertificate')"><img src="closed.png" alt="-"/>&#160;Public Member Functions inherited from <a class="el" href="classEasySSL_1_1ICertificate.html">EasySSL::ICertificate</a></td></tr>
 <tr class="memitem:ab4537f960b104bf22050ccb55d141d85 inherit pub_methods_classEasySSL_1_1ICertificate" id="r_ab4537f960b104bf22050ccb55d141d85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1ICertificate.html#ab4537f960b104bf22050ccb55d141d85">ICertificate</a> (const QSharedPointer&lt; <a class="el" href="classEasySSL_1_1ICrypto.html">ICrypto</a> &gt; &amp;generator)</td></tr>
 <tr class="separator:ab4537f960b104bf22050ccb55d141d85 inherit pub_methods_classEasySSL_1_1ICertificate"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -148,8 +148,8 @@ Collaboration diagram for EasySSL::X509:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="aa49a60e41237f92380a17a265b3114b6" name="aa49a60e41237f92380a17a265b3114b6"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#aa49a60e41237f92380a17a265b3114b6">&#9670;&#160;</a></span>create()</h2>
+<a id="a719e8a00868d4b370bb389590bb0688d" name="a719e8a00868d4b370bb389590bb0688d"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a719e8a00868d4b370bb389590bb0688d">&#9670;&#160;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -158,9 +158,9 @@ Collaboration diagram for EasySSL::X509:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname"><a class="el" href="structEasySSL_1_1SelfSignedSertificate.html">SelfSignedSertificate</a> EasySSL::X509::create </td>
+          <td class="memname"><a class="el" href="structEasySSL_1_1SelfSignedCertificate.html">SelfSignedCertificate</a> EasySSL::X509::create </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structEasySSL_1_1SslSrtData.html">SslSrtData</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="structEasySSL_1_1SslCrtData.html">SslCrtData</a> &amp;&#160;</td>
           <td class="paramname"><em>certificateData</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -181,16 +181,16 @@ Collaboration diagram for EasySSL::X509:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>certificate data with private key. </dd></dl>
 
-<p>Implements <a class="el" href="classEasySSL_1_1ICertificate.html#a67d2131abc4f775df8e6d7cdc12de767">EasySSL::ICertificate</a>.</p>
+<p>Implements <a class="el" href="classEasySSL_1_1ICertificate.html#a3eb26d48dad112c717f3febcbc757da3">EasySSL::ICertificate</a>.</p>
 
 <p class="definition">Definition at line <a class="el" href="x509_8cpp_source.html#l00019">19</a> of file <a class="el" href="x509_8cpp_source.html">x509.cpp</a>.</p>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classEasySSL_1_1X509_aa49a60e41237f92380a17a265b3114b6_cgraph.png" border="0" usemap="#aclassEasySSL_1_1X509_aa49a60e41237f92380a17a265b3114b6_cgraph" alt=""/></div>
-<map name="aclassEasySSL_1_1X509_aa49a60e41237f92380a17a265b3114b6_cgraph" id="aclassEasySSL_1_1X509_aa49a60e41237f92380a17a265b3114b6_cgraph">
+<div class="center"><img src="classEasySSL_1_1X509_a719e8a00868d4b370bb389590bb0688d_cgraph.png" border="0" usemap="#aclassEasySSL_1_1X509_a719e8a00868d4b370bb389590bb0688d_cgraph" alt=""/></div>
+<map name="aclassEasySSL_1_1X509_a719e8a00868d4b370bb389590bb0688d_cgraph" id="aclassEasySSL_1_1X509_a719e8a00868d4b370bb389590bb0688d_cgraph">
 <area shape="rect" title="create This method create a self signed certificate." alt="" coords="5,41,172,66"/>
-<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArry" alt="" coords="436,5,604,45"/>
+<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArray" alt="" coords="436,5,604,45"/>
 <area shape="poly" title=" " alt="" coords="130,38,173,27,220,19,324,13,423,15,422,20,325,18,220,24,174,32,132,43"/>
 <area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85" title="extractPrivateKey This method extracts the private key from the ssl (pem) structure." alt="" coords="220,33,388,73"/>
 <area shape="poly" title=" " alt="" coords="172,51,207,51,207,56,172,56"/>

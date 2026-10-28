@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -89,9 +89,9 @@ $(document).ready(function(){initNavTree('classEasySSL_1_1ICertificate.html','')
 Public Member Functions</h2></td></tr>
 <tr class="memitem:ab4537f960b104bf22050ccb55d141d85" id="r_ab4537f960b104bf22050ccb55d141d85"><td class="memItemLeft" align="right" valign="top">&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1ICertificate.html#ab4537f960b104bf22050ccb55d141d85">ICertificate</a> (const QSharedPointer&lt; <a class="el" href="classEasySSL_1_1ICrypto.html">ICrypto</a> &gt; &amp;generator)</td></tr>
 <tr class="separator:ab4537f960b104bf22050ccb55d141d85"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a67d2131abc4f775df8e6d7cdc12de767" id="r_a67d2131abc4f775df8e6d7cdc12de767"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structEasySSL_1_1SelfSignedSertificate.html">SelfSignedSertificate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1ICertificate.html#a67d2131abc4f775df8e6d7cdc12de767">create</a> (const <a class="el" href="structEasySSL_1_1SslSrtData.html">SslSrtData</a> &amp;certificateData) const =0</td></tr>
-<tr class="memdesc:a67d2131abc4f775df8e6d7cdc12de767"><td class="mdescLeft">&#160;</td><td class="mdescRight">create This method create a self signed certificate.  <br /></td></tr>
-<tr class="separator:a67d2131abc4f775df8e6d7cdc12de767"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a3eb26d48dad112c717f3febcbc757da3" id="r_a3eb26d48dad112c717f3febcbc757da3"><td class="memItemLeft" align="right" valign="top">virtual <a class="el" href="structEasySSL_1_1SelfSignedCertificate.html">SelfSignedCertificate</a>&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1ICertificate.html#a3eb26d48dad112c717f3febcbc757da3">create</a> (const <a class="el" href="structEasySSL_1_1SslCrtData.html">SslCrtData</a> &amp;certificateData) const =0</td></tr>
+<tr class="memdesc:a3eb26d48dad112c717f3febcbc757da3"><td class="mdescLeft">&#160;</td><td class="mdescRight">create This method create a self signed certificate.  <br /></td></tr>
+<tr class="separator:a3eb26d48dad112c717f3febcbc757da3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a id="pro-methods" name="pro-methods"></a>
 Protected Member Functions</h2></td></tr>
@@ -143,8 +143,8 @@ Collaboration diagram for EasySSL::ICertificate:</div>
 </div>
 </div>
 <h2 class="groupheader">Member Function Documentation</h2>
-<a id="a67d2131abc4f775df8e6d7cdc12de767" name="a67d2131abc4f775df8e6d7cdc12de767"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a67d2131abc4f775df8e6d7cdc12de767">&#9670;&#160;</a></span>create()</h2>
+<a id="a3eb26d48dad112c717f3febcbc757da3" name="a3eb26d48dad112c717f3febcbc757da3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a3eb26d48dad112c717f3febcbc757da3">&#9670;&#160;</a></span>create()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -153,9 +153,9 @@ Collaboration diagram for EasySSL::ICertificate:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">virtual <a class="el" href="structEasySSL_1_1SelfSignedSertificate.html">SelfSignedSertificate</a> EasySSL::ICertificate::create </td>
+          <td class="memname">virtual <a class="el" href="structEasySSL_1_1SelfSignedCertificate.html">SelfSignedCertificate</a> EasySSL::ICertificate::create </td>
           <td>(</td>
-          <td class="paramtype">const <a class="el" href="structEasySSL_1_1SslSrtData.html">SslSrtData</a> &amp;&#160;</td>
+          <td class="paramtype">const <a class="el" href="structEasySSL_1_1SslCrtData.html">SslCrtData</a> &amp;&#160;</td>
           <td class="paramname"><em>certificateData</em></td><td>)</td>
           <td> const</td>
         </tr>
@@ -176,7 +176,7 @@ Collaboration diagram for EasySSL::ICertificate:</div>
 </dl>
 <dl class="section return"><dt>Returns</dt><dd>certificate data with private key. </dd></dl>
 
-<p>Implemented in <a class="el" href="classEasySSL_1_1X509.html#aa49a60e41237f92380a17a265b3114b6">EasySSL::X509</a>.</p>
+<p>Implemented in <a class="el" href="classEasySSL_1_1X509.html#a719e8a00868d4b370bb389590bb0688d">EasySSL::X509</a>.</p>
 
 </div>
 </div>
@@ -213,7 +213,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classEasySSL_1_1ICertificate_a48528d3be0548424273105b17e601ffe_icgraph.png" border="0" usemap="#aclassEasySSL_1_1ICertificate_a48528d3be0548424273105b17e601ffe_icgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1ICertificate_a48528d3be0548424273105b17e601ffe_icgraph" id="aclassEasySSL_1_1ICertificate_a48528d3be0548424273105b17e601ffe_icgraph">
 <area shape="rect" title="generator This method return private key generator." alt="" coords="220,5,375,45"/>
-<area shape="rect" href="classEasySSL_1_1X509.html#aa49a60e41237f92380a17a265b3114b6" title="create This method create a self signed certificate." alt="" coords="5,13,172,38"/>
+<area shape="rect" href="classEasySSL_1_1X509.html#a719e8a00868d4b370bb389590bb0688d" title="create This method create a self signed certificate." alt="" coords="5,13,172,38"/>
 <area shape="poly" title=" " alt="" coords="206,28,172,28,172,23,206,23"/>
 </map>
 </div>

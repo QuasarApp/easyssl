@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -96,14 +96,14 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memdesc:aa22d839f8f13c1d9e4745c0a07f2c889"><td class="mdescLeft">&#160;</td><td class="mdescRight">bignumFromArray This method converts the Qt bytes array into the opensll big num.  <br /></td></tr>
 <tr class="separator:aa22d839f8f13c1d9e4745c0a07f2c889"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab2a2133d9037115a46a13a7cb848e766" id="r_ab2a2133d9037115a46a13a7cb848e766"><td class="memItemLeft" align="right" valign="top">static QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766">bioToByteArray</a> (BIO *bio)</td></tr>
-<tr class="memdesc:ab2a2133d9037115a46a13a7cb848e766"><td class="mdescLeft">&#160;</td><td class="mdescRight">bioToByteArray This method converts the openssl BIO to the QByteArry  <br /></td></tr>
+<tr class="memdesc:ab2a2133d9037115a46a13a7cb848e766"><td class="mdescLeft">&#160;</td><td class="mdescRight">bioToByteArray This method converts the openssl BIO to the QByteArray  <br /></td></tr>
 <tr class="separator:ab2a2133d9037115a46a13a7cb848e766"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1236a9fbced0c7ee1031e7deac87ea1c" id="r_a1236a9fbced0c7ee1031e7deac87ea1c"><td class="memItemLeft" align="right" valign="top">static BIO *&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1EasySSLUtils.html#a1236a9fbced0c7ee1031e7deac87ea1c">byteArrayToBio</a> (const QByteArray &amp;byteArray)</td></tr>
 <tr class="memdesc:a1236a9fbced0c7ee1031e7deac87ea1c"><td class="mdescLeft">&#160;</td><td class="mdescRight">byteArrayToBio This method creates the BIO struct from the Qt QByteArray object.  <br /></td></tr>
 <tr class="separator:a1236a9fbced0c7ee1031e7deac87ea1c"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:a7e6404d18505cdb6e44066e222ebaabb" id="r_a7e6404d18505cdb6e44066e222ebaabb"><td class="memItemLeft" align="right" valign="top">static QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1EasySSLUtils.html#a7e6404d18505cdb6e44066e222ebaabb">extractPublcKey</a> (EVP_PKEY *ssl_keys)</td></tr>
-<tr class="memdesc:a7e6404d18505cdb6e44066e222ebaabb"><td class="mdescLeft">&#160;</td><td class="mdescRight">extractPublcKey This method extracts the public key from the ssl (pem) structure.  <br /></td></tr>
-<tr class="separator:a7e6404d18505cdb6e44066e222ebaabb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a6a1a18a73d9db27841ce00c2bed9dd62" id="r_a6a1a18a73d9db27841ce00c2bed9dd62"><td class="memItemLeft" align="right" valign="top">static QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1EasySSLUtils.html#a6a1a18a73d9db27841ce00c2bed9dd62">extractPublicKey</a> (EVP_PKEY *ssl_keys)</td></tr>
+<tr class="memdesc:a6a1a18a73d9db27841ce00c2bed9dd62"><td class="mdescLeft">&#160;</td><td class="mdescRight">extractPublicKey This method extracts the public key from the ssl (pem) structure.  <br /></td></tr>
+<tr class="separator:a6a1a18a73d9db27841ce00c2bed9dd62"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ab4bf621b726509cd1d98461ad9a6dc85" id="r_ab4bf621b726509cd1d98461ad9a6dc85"><td class="memItemLeft" align="right" valign="top">static QByteArray&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85">extractPrivateKey</a> (EVP_PKEY *ssl_keys)</td></tr>
 <tr class="memdesc:ab4bf621b726509cd1d98461ad9a6dc85"><td class="mdescLeft">&#160;</td><td class="mdescRight">extractPrivateKey This method extracts the private key from the ssl (pem) structure.  <br /></td></tr>
 <tr class="separator:ab4bf621b726509cd1d98461ad9a6dc85"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -230,10 +230,10 @@ Here is the call graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>bioToByteArray This method converts the openssl BIO to the QByteArry </p>
+<p>bioToByteArray This method converts the openssl BIO to the QByteArray </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramname">bio</td><td>input arrary. </td></tr>
+    <tr><td class="paramname">bio</td><td>input array. </td></tr>
   </table>
   </dd>
 </dl>
@@ -245,12 +245,12 @@ Here is the caller graph for this function:</div>
 <div class="dyncontent">
 <div class="center"><img src="classEasySSL_1_1EasySSLUtils_ab2a2133d9037115a46a13a7cb848e766_icgraph.png" border="0" usemap="#aclassEasySSL_1_1EasySSLUtils_ab2a2133d9037115a46a13a7cb848e766_icgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1EasySSLUtils_ab2a2133d9037115a46a13a7cb848e766_icgraph" id="aclassEasySSL_1_1EasySSLUtils_ab2a2133d9037115a46a13a7cb848e766_icgraph">
-<area shape="rect" title="bioToByteArray This method converts the openssl BIO to the QByteArry" alt="" coords="476,26,644,66"/>
-<area shape="rect" href="classEasySSL_1_1X509.html#aa49a60e41237f92380a17a265b3114b6" title="create This method create a self signed certificate." alt="" coords="25,5,192,31"/>
+<area shape="rect" title="bioToByteArray This method converts the openssl BIO to the QByteArray" alt="" coords="476,26,644,66"/>
+<area shape="rect" href="classEasySSL_1_1X509.html#a719e8a00868d4b370bb389590bb0688d" title="create This method create a self signed certificate." alt="" coords="25,5,192,31"/>
 <area shape="poly" title=" " alt="" coords="476,25,428,17,366,12,304,10,192,14,192,8,304,5,367,6,428,11,477,20"/>
 <area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85" title="extractPrivateKey This method extracts the private key from the ssl (pem) structure." alt="" coords="260,26,428,66"/>
 <area shape="poly" title=" " alt="" coords="462,49,428,49,428,43,462,43"/>
-<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#a7e6404d18505cdb6e44066e222ebaabb" title="extractPublcKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,90,428,130"/>
+<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#a6a1a18a73d9db27841ce00c2bed9dd62" title="extractPublicKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,90,428,130"/>
 <area shape="poly" title=" " alt="" coords="479,73,413,93,411,87,478,68"/>
 <area shape="poly" title=" " alt="" coords="246,37,192,31,192,25,247,32"/>
 <area shape="rect" href="classEasySSL_1_1ICrypto.html#a72c51fbf1124b703c2be177e751592ba" title="makeKeys This method generate the public and private keys of the ECDSA." alt="" coords="5,61,212,87"/>
@@ -359,7 +359,7 @@ Here is the call graph for this function:</div>
 <div class="center"><img src="classEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_cgraph.png" border="0" usemap="#aclassEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_cgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_cgraph" id="aclassEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_cgraph">
 <area shape="rect" title="extractPrivateKey This method extracts the private key from the ssl (pem) structure." alt="" coords="5,5,173,45"/>
-<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArry" alt="" coords="221,5,389,45"/>
+<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArray" alt="" coords="221,5,389,45"/>
 <area shape="poly" title=" " alt="" coords="174,23,208,23,208,28,174,28"/>
 </map>
 </div>
@@ -369,7 +369,7 @@ Here is the caller graph for this function:</div>
 <div class="center"><img src="classEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_icgraph.png" border="0" usemap="#aclassEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_icgraph" alt=""/></div>
 <map name="aclassEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_icgraph" id="aclassEasySSL_1_1EasySSLUtils_ab4bf621b726509cd1d98461ad9a6dc85_icgraph">
 <area shape="rect" title="extractPrivateKey This method extracts the private key from the ssl (pem) structure." alt="" coords="260,23,428,63"/>
-<area shape="rect" href="classEasySSL_1_1X509.html#aa49a60e41237f92380a17a265b3114b6" title="create This method create a self signed certificate." alt="" coords="25,5,192,31"/>
+<area shape="rect" href="classEasySSL_1_1X509.html#a719e8a00868d4b370bb389590bb0688d" title="create This method create a self signed certificate." alt="" coords="25,5,192,31"/>
 <area shape="poly" title=" " alt="" coords="246,35,192,30,192,24,247,30"/>
 <area shape="rect" href="classEasySSL_1_1ICrypto.html#a72c51fbf1124b703c2be177e751592ba" title="makeKeys This method generate the public and private keys of the ECDSA." alt="" coords="5,55,212,80"/>
 <area shape="poly" title=" " alt="" coords="247,56,213,59,212,54,246,51"/>
@@ -378,8 +378,8 @@ Here is the caller graph for this function:</div>
 
 </div>
 </div>
-<a id="a7e6404d18505cdb6e44066e222ebaabb" name="a7e6404d18505cdb6e44066e222ebaabb"></a>
-<h2 class="memtitle"><span class="permalink"><a href="#a7e6404d18505cdb6e44066e222ebaabb">&#9670;&#160;</a></span>extractPublcKey()</h2>
+<a id="a6a1a18a73d9db27841ce00c2bed9dd62" name="a6a1a18a73d9db27841ce00c2bed9dd62"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a6a1a18a73d9db27841ce00c2bed9dd62">&#9670;&#160;</a></span>extractPublicKey()</h2>
 
 <div class="memitem">
 <div class="memproto">
@@ -388,7 +388,7 @@ Here is the caller graph for this function:</div>
   <td class="mlabels-left">
       <table class="memname">
         <tr>
-          <td class="memname">QByteArray EasySSL::EasySSLUtils::extractPublcKey </td>
+          <td class="memname">QByteArray EasySSL::EasySSLUtils::extractPublicKey </td>
           <td>(</td>
           <td class="paramtype">EVP_PKEY *&#160;</td>
           <td class="paramname"><em>ssl_keys</em></td><td>)</td>
@@ -402,7 +402,7 @@ Here is the caller graph for this function:</div>
 </table>
 </div><div class="memdoc">
 
-<p>extractPublcKey This method extracts the public key from the ssl (pem) structure. </p>
+<p>extractPublicKey This method extracts the public key from the ssl (pem) structure. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">ssl_keys</td><td>These are objects of the ssl keys. </td></tr>
@@ -415,19 +415,19 @@ Here is the caller graph for this function:</div>
 <div class="dynheader">
 Here is the call graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_cgraph.png" border="0" usemap="#aclassEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_cgraph" alt=""/></div>
-<map name="aclassEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_cgraph" id="aclassEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_cgraph">
-<area shape="rect" title="extractPublcKey This method extracts the public key from the ssl (pem) structure." alt="" coords="5,5,173,45"/>
-<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArry" alt="" coords="221,5,389,45"/>
+<div class="center"><img src="classEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_cgraph.png" border="0" usemap="#aclassEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_cgraph" alt=""/></div>
+<map name="aclassEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_cgraph" id="aclassEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_cgraph">
+<area shape="rect" title="extractPublicKey This method extracts the public key from the ssl (pem) structure." alt="" coords="5,5,173,45"/>
+<area shape="rect" href="classEasySSL_1_1EasySSLUtils.html#ab2a2133d9037115a46a13a7cb848e766" title="bioToByteArray This method converts the openssl BIO to the QByteArray" alt="" coords="221,5,389,45"/>
 <area shape="poly" title=" " alt="" coords="174,23,208,23,208,28,174,28"/>
 </map>
 </div>
 <div class="dynheader">
 Here is the caller graph for this function:</div>
 <div class="dyncontent">
-<div class="center"><img src="classEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_icgraph.png" border="0" usemap="#aclassEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_icgraph" alt=""/></div>
-<map name="aclassEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_icgraph" id="aclassEasySSL_1_1EasySSLUtils_a7e6404d18505cdb6e44066e222ebaabb_icgraph">
-<area shape="rect" title="extractPublcKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,5,428,45"/>
+<div class="center"><img src="classEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_icgraph.png" border="0" usemap="#aclassEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_icgraph" alt=""/></div>
+<map name="aclassEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_icgraph" id="aclassEasySSL_1_1EasySSLUtils_a6a1a18a73d9db27841ce00c2bed9dd62_icgraph">
+<area shape="rect" title="extractPublicKey This method extracts the public key from the ssl (pem) structure." alt="" coords="260,5,428,45"/>
 <area shape="rect" href="classEasySSL_1_1ICrypto.html#a72c51fbf1124b703c2be177e751592ba" title="makeKeys This method generate the public and private keys of the ECDSA." alt="" coords="5,13,212,38"/>
 <area shape="poly" title=" " alt="" coords="246,28,212,28,212,23,246,23"/>
 </map>

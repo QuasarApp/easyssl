@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -102,13 +102,13 @@ $(document).ready(function(){initNavTree('md_CONTRIBUTING.html',''); initResizab
 <div class="line"> </div>
 <div class="line"> }</div>
 <div class="ttc" id="aclassEasySSL_1_1ICrypto_html"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html">EasySSL::ICrypto</a></div><div class="ttdoc">The ICrypto class, This is base interface that provide encryption functionality.</div><div class="ttdef"><b>Definition</b> <a href="icrypto_8h_source.html#l00021">icrypto.h:22</a></div></div>
-<div class="ttc" id="aclassEasySSL_1_1ICrypto_html_a072a63faf7d9320b349d69eba2af271a"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#a072a63faf7d9320b349d69eba2af271a">EasySSL::ICrypto::keyAlgorithm</a></div><div class="ttdeci">virtual QSsl::KeyAlgorithm keyAlgorithm() const =0</div><div class="ttdoc">keyAlgorithm This method should be return Qt Key algorithm (needed for generate cetrificates....</div></div>
+<div class="ttc" id="aclassEasySSL_1_1ICrypto_html_a072a63faf7d9320b349d69eba2af271a"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#a072a63faf7d9320b349d69eba2af271a">EasySSL::ICrypto::keyAlgorithm</a></div><div class="ttdeci">virtual QSsl::KeyAlgorithm keyAlgorithm() const =0</div><div class="ttdoc">keyAlgorithm This method should be return Qt Key algorithm (needed for generate certificates....</div></div>
 <div class="ttc" id="aclassEasySSL_1_1ICrypto_html_a10c828a48529386a9f4984d0fd8a5378"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#a10c828a48529386a9f4984d0fd8a5378">EasySSL::ICrypto::makeRawKeys</a></div><div class="ttdeci">virtual void * makeRawKeys() const =0</div><div class="ttdoc">makeKeys This method generate the public and private keys of the ECDSA.</div></div>
 <div class="ttc" id="aclassEasySSL_1_1ICrypto_html_a464060fc3ce0cbc32d1cfc13d9410a57"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#a464060fc3ce0cbc32d1cfc13d9410a57">EasySSL::ICrypto::signMessage</a></div><div class="ttdeci">virtual QByteArray signMessage(const QByteArray &amp;message, const QByteArray &amp;key) const =0</div><div class="ttdoc">signMessage This method should be sign the message using the key.</div></div>
 <div class="ttc" id="aclassEasySSL_1_1ICrypto_html_a64d4dce33d9fe4911ff20be5531b321a"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#a64d4dce33d9fe4911ff20be5531b321a">EasySSL::ICrypto::encrypt</a></div><div class="ttdeci">virtual QByteArray encrypt(const QByteArray &amp;message, const QByteArray &amp;key)=0</div><div class="ttdoc">encrypt This method encrypt message using key.</div></div>
 <div class="ttc" id="aclassEasySSL_1_1ICrypto_html_a92afe32620a71aa514ca81156dcbddb2"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#a92afe32620a71aa514ca81156dcbddb2">EasySSL::ICrypto::decrypt</a></div><div class="ttdeci">virtual QByteArray decrypt(const QByteArray &amp;message, const QByteArray &amp;key)=0</div><div class="ttdoc">decrypt This method decrypt message using key.</div></div>
 <div class="ttc" id="aclassEasySSL_1_1ICrypto_html_aa886b20a09f24b8dc0db2bee050b7429"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#aa886b20a09f24b8dc0db2bee050b7429">EasySSL::ICrypto::checkSign</a></div><div class="ttdeci">virtual bool checkSign(const QByteArray &amp;message, const QByteArray &amp;signature, const QByteArray &amp;key) const =0</div><div class="ttdoc">checkSign This method should be check signature of the message using the key.</div></div>
-<div class="ttc" id="aclassEasySSL_1_1ICrypto_html_af521881b3875e2abe8b2c19570d09540"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#af521881b3875e2abe8b2c19570d09540">EasySSL::ICrypto::supportedFeatures</a></div><div class="ttdeci">virtual Features supportedFeatures() const =0</div><div class="ttdoc">supportedFeatures This method should return supported featurs of the current encryption algorithm</div></div>
+<div class="ttc" id="aclassEasySSL_1_1ICrypto_html_af521881b3875e2abe8b2c19570d09540"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#af521881b3875e2abe8b2c19570d09540">EasySSL::ICrypto::supportedFeatures</a></div><div class="ttdeci">virtual Features supportedFeatures() const =0</div><div class="ttdoc">supportedFeatures This method should return supported features of the current encryption algorithm</div></div>
 <div class="ttc" id="aicrypto_8h_html"><div class="ttname"><a href="icrypto_8h.html">icrypto.h</a></div></div>
 </div><!-- fragment --></li>
 </ol>
@@ -129,7 +129,7 @@ $(document).ready(function(){initNavTree('md_CONTRIBUTING.html',''); initResizab
 <div class="line"> </div>
 <div class="line">    <span class="comment">// ICertificate interface</span></div>
 <div class="line"><span class="keyword">public</span>:</div>
-<div class="line">    SelfSignedSertificate create(<span class="keyword">const</span> SslSrtData&amp; certificateData) <span class="keyword">const override</span>;</div>
+<div class="line">    SelfSignedCertificate create(<span class="keyword">const</span> SslSrtData&amp; certificateData) <span class="keyword">const override</span>;</div>
 <div class="line">};</div>
 <div class="ttc" id="aclassEasySSL_1_1ICertificate_html"><div class="ttname"><a href="classEasySSL_1_1ICertificate.html">EasySSL::ICertificate</a></div><div class="ttdoc">The ICertificate class is base interface for all certificate generators classes.</div><div class="ttdef"><b>Definition</b> <a href="icertificate_8h_source.html#l00047">icertificate.h:48</a></div></div>
 </div><!-- fragment --><p>Full implementation of x509 certificate format you can see <a href="https://github.com/QuasarApp/easyssl/blob/main/src/lib/src/public/easyssl/x509.h">here</a>.</p>

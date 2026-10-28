@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.91.3c571d2</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
@@ -102,7 +102,7 @@ $(document).ready(function(){initNavTree('icrypto_8cpp_source.html',''); initRes
 <div class="line"><a id="l00019" name="l00019"></a><span class="lineno">   19</span>    <span class="keywordflow">if</span> (!keys)</div>
 <div class="line"><a id="l00020" name="l00020"></a><span class="lineno">   20</span>        <span class="keywordflow">return</span> <span class="keyword">false</span>;</div>
 <div class="line"><a id="l00021" name="l00021"></a><span class="lineno">   21</span> </div>
-<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    pubKey = <a class="code hl_function" href="classEasySSL_1_1EasySSLUtils.html#a7e6404d18505cdb6e44066e222ebaabb">EasySSLUtils::extractPublcKey</a>(keys);</div>
+<div class="line"><a id="l00022" name="l00022"></a><span class="lineno">   22</span>    pubKey = <a class="code hl_function" href="classEasySSL_1_1EasySSLUtils.html#a6a1a18a73d9db27841ce00c2bed9dd62">EasySSLUtils::extractPublicKey</a>(keys);</div>
 <div class="line"><a id="l00023" name="l00023"></a><span class="lineno">   23</span>    privKey = <a class="code hl_function" href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85">EasySSLUtils::extractPrivateKey</a>(keys);</div>
 <div class="line"><a id="l00024" name="l00024"></a><span class="lineno">   24</span>    <span class="keywordflow">return</span> <span class="keyword">true</span>;</div>
 <div class="line"><a id="l00025" name="l00025"></a><span class="lineno">   25</span>}</div>
@@ -110,7 +110,7 @@ $(document).ready(function(){initNavTree('icrypto_8cpp_source.html',''); initRes
 <div class="line"><a id="l00026" name="l00026"></a><span class="lineno">   26</span> </div>
 <div class="line"><a id="l00027" name="l00027"></a><span class="lineno">   27</span> </div>
 <div class="line"><a id="l00028" name="l00028"></a><span class="lineno">   28</span>}</div>
-<div class="ttc" id="aclassEasySSL_1_1EasySSLUtils_html_a7e6404d18505cdb6e44066e222ebaabb"><div class="ttname"><a href="classEasySSL_1_1EasySSLUtils.html#a7e6404d18505cdb6e44066e222ebaabb">EasySSL::EasySSLUtils::extractPublcKey</a></div><div class="ttdeci">static QByteArray extractPublcKey(EVP_PKEY *ssl_keys)</div><div class="ttdoc">extractPublcKey This method extracts the public key from the ssl (pem) structure.</div><div class="ttdef"><b>Definition</b> <a href="easysslutils_8cpp_source.html#l00059">easysslutils.cpp:59</a></div></div>
+<div class="ttc" id="aclassEasySSL_1_1EasySSLUtils_html_a6a1a18a73d9db27841ce00c2bed9dd62"><div class="ttname"><a href="classEasySSL_1_1EasySSLUtils.html#a6a1a18a73d9db27841ce00c2bed9dd62">EasySSL::EasySSLUtils::extractPublicKey</a></div><div class="ttdeci">static QByteArray extractPublicKey(EVP_PKEY *ssl_keys)</div><div class="ttdoc">extractPublicKey This method extracts the public key from the ssl (pem) structure.</div><div class="ttdef"><b>Definition</b> <a href="easysslutils_8cpp_source.html#l00059">easysslutils.cpp:59</a></div></div>
 <div class="ttc" id="aclassEasySSL_1_1EasySSLUtils_html_ab4bf621b726509cd1d98461ad9a6dc85"><div class="ttname"><a href="classEasySSL_1_1EasySSLUtils.html#ab4bf621b726509cd1d98461ad9a6dc85">EasySSL::EasySSLUtils::extractPrivateKey</a></div><div class="ttdeci">static QByteArray extractPrivateKey(EVP_PKEY *ssl_keys)</div><div class="ttdoc">extractPrivateKey This method extracts the private key from the ssl (pem) structure.</div><div class="ttdef"><b>Definition</b> <a href="easysslutils_8cpp_source.html#l00075">easysslutils.cpp:75</a></div></div>
 <div class="ttc" id="aclassEasySSL_1_1ICrypto_html_a72c51fbf1124b703c2be177e751592ba"><div class="ttname"><a href="classEasySSL_1_1ICrypto.html#a72c51fbf1124b703c2be177e751592ba">EasySSL::ICrypto::makeKeys</a></div><div class="ttdeci">bool makeKeys(QByteArray &amp;pubKey, QByteArray &amp;privKey) const</div><div class="ttdoc">makeKeys This method generate the public and private keys of the ECDSA.</div><div class="ttdef"><b>Definition</b> <a href="icrypto_8cpp_source.html#l00016">icrypto.cpp:16</a></div></div>
 <div class="ttc" id="aeasysslutils_8h_html"><div class="ttname"><a href="easysslutils_8h.html">easysslutils.h</a></div></div>
