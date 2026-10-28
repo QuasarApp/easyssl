@@ -37,7 +37,7 @@ AuthTest::AuthTest() {}
 AuthTest::~AuthTest() {}
 
 void AuthTest::test() {
-    // create a publick and private keys array.
+    // create a public and private keys array.
     QByteArray pub, priv;
     QString userID;
 
@@ -54,13 +54,13 @@ void AuthTest::test() {
                                                       QCryptographicHash::Sha256).
                              toBase64(QByteArray::Base64UrlEncoding);
 
-    // check createed keys. should be larget then 0.
+    // check created keys. should be larger than 0.
     QVERIFY(pub.length() && priv.length());
 
     // The terst object should be invalid because it is not prepared.
     QVERIFY(!edsa.isValid());
 
-    // the authetication should be failed bacause ecdsa class is invalid.
+    // the authentication should be failed because ecdsa class is invalid.
     QVERIFY(!edsa.auth(600, &userID));
     QVERIFY(userID.isEmpty());
 
@@ -76,11 +76,11 @@ void AuthTest::test() {
     // forget user id before new auth
     userID.clear();
 
-    // authentication should be failed because the time range is depricated.
+    // authentication should be failed because the time range is deprecated.
     QVERIFY(!edsa.auth(0, &userID));
     QVERIFY(userID.isEmpty());
 
-    // change subsribe time and try login.
+    // change subscribe time and try login.
     edsa.setUnixTime(time(0) + 1);
 
     std::this_thread::sleep_for(std::chrono::seconds(1));

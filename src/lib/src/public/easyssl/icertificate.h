@@ -17,10 +17,10 @@
 namespace EasySSL {
 
 /**
- * @brief The SslSrtData struct This structure contains base information to generate self-signed SSL certification.
+ * @brief The SslCrtData struct This structure contains base information to generate self-signed SSL certification.
  * Use this interface for creating a new certificates algorithms.
  */
-struct SslSrtData {
+struct SslCrtData {
     QString country = "BY";
     QString organization = "QuasarApp";
     QString commonName = "";
@@ -28,11 +28,11 @@ struct SslSrtData {
 };
 
 /**
- * @brief The SelfSignedSertificate struct contains qt certificate object and private key of them.
+ * @brief The SelfSignedCertificate struct contains qt certificate object and private key of them.
  */
-struct EASYSSL_EXPORT SelfSignedSertificate {
-    SelfSignedSertificate(){}
-    SelfSignedSertificate(const SelfSignedSertificate & other)  {
+struct EASYSSL_EXPORT SelfSignedCertificate {
+    SelfSignedCertificate(){}
+    SelfSignedCertificate(const SelfSignedCertificate & other)  {
         crt = other.crt;
         key = other.key;
     };
@@ -55,7 +55,7 @@ public:
      * @param certificateData This input extra data of certificate.
      * @return certificate data with private key.
      */
-    virtual SelfSignedSertificate create(const SslSrtData& certificateData) const = 0;
+    virtual SelfSignedCertificate create(const SslCrtData& certificateData) const = 0;
 
 protected:
     /**

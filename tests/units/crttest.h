@@ -17,8 +17,8 @@
 
 
 /**
- * @brief The CrtTest class is bse test class for the testin all certificate generators
- * @tparam CrtGenerator This any class inheret of ICertificate interface.
+ * @brief The CrtTest class is bse test class for the testing all certificate generators
+ * @tparam CrtGenerator This any class inherit of ICertificate interface.
  *
  * @example
  * @code{cpp}
@@ -36,7 +36,7 @@ public:
     void test() override {
 
         CrtGenerator gen(QSharedPointer<Algorithm>::create());
-        EasySSL::SslSrtData data;
+        EasySSL::SslCrtData data;
 
         auto crt = gen.create(data);
         QVERIFY2(!crt.crt.isNull(), "Failed to generate certificate.");

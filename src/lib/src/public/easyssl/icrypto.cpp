@@ -19,7 +19,7 @@ bool EasySSL::ICrypto::makeKeys(QByteArray &pubKey, QByteArray &privKey) const
     if (!keys)
         return false;
 
-    pubKey = EasySSLUtils::extractPublcKey(keys);
+    pubKey = EasySSLUtils::extractPublicKey(keys);
     privKey = EasySSLUtils::extractPrivateKey(keys);
     return true;
 }

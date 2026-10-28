@@ -13,7 +13,7 @@ namespace EasySSL {
 
 /**
  * @brief init main initialize method of The easyssl library
- * @return true if library initialized successfull
+ * @return true if library initialized successful
  */
 bool EASYSSL_EXPORT init();
 

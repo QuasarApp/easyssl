@@ -20,9 +20,9 @@ namespace EasySSL {
 class EASYSSL_EXPORT ECDSASSL: public EasySSL::ICrypto
 {
     /**
-     * @brief The EllipticCurveStandart enum List of supported Elliptic Curve Standarts
+     * @brief The EllipticCurveStandard enum List of supported Elliptic Curve Standards
      */
-    enum EllipticCurveStandart {
+    enum EllipticCurveStandard {
         /// Private key (point on Elliptic Curve ) based on 256 bit prime number
         P_256,
         /// Private key (point on Elliptic Curve ) based on 384 bit prime number
@@ -36,7 +36,7 @@ class EASYSSL_EXPORT ECDSASSL: public EasySSL::ICrypto
     };
 
 public:
-    ECDSASSL(EllipticCurveStandart curveStandart = EllipticCurveStandart::P_256);
+    ECDSASSL(EllipticCurveStandard curveStandard = EllipticCurveStandard::P_256);
     Features supportedFeatures() const override;
     QSsl::KeyAlgorithm keyAlgorithm() const override;
 
@@ -58,21 +58,21 @@ public:
     /**
      * @brief curve This method returns the current curve method. Using only for generating new pair of keys.
      * @return current cursve type.
-     * @see EllipticCurveStandart
+     * @see EllipticCurveStandard
      */
-    EllipticCurveStandart curve() const;
+    EllipticCurveStandard curve() const;
 
     /**
-     * @brief setCurve This method sets new curve standart value.
-     * @param newCurve this is new value of curve standart.
+     * @brief setCurve This method sets new curve standard value.
+     * @param newCurve this is new value of curve standard.
      */
-    void setCurve(EllipticCurveStandart newCurve);
+    void setCurve(EllipticCurveStandard newCurve);
 
     void * makeRawKeys() const override;
 
 private:
-    const char *getCStr(EllipticCurveStandart value) const;
-    EllipticCurveStandart _curve = EllipticCurveStandart::P_256;
+    const char *getCStr(EllipticCurveStandard value) const;
+    EllipticCurveStandard _curve = EllipticCurveStandard::P_256;
 };
 
 }

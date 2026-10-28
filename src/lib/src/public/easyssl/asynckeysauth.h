@@ -17,11 +17,11 @@
 namespace EasySSL {
 
 /**
- * @brief The AsyncKeysAuth class is temaplate class for works with authorization of a pair of asynchronous keys
+ * @brief The AsyncKeysAuth class is template class for works with authorization of a pair of asynchronous keys
  *  This class contains base implementation for the authentication using async encryption. The base encryption algorithm defined on the template argument **CryptoImplementation**.
  *  You can use any crypto algorithm.
  *
- *  ## Exampel of use:
+ *  ## Example of use:
  *
  *  @code{cpp}
  *  #include <easyssl.h>
@@ -45,7 +45,7 @@ namespace EasySSL {
  *      SIG = PRIV.signMessage(S)
  * * Client prepare a auth request for server = R:
  *      R = {U,SIG,PUB}
- * * Cleint send R to server
+ * * Client send R to server
  *
  * * -----
  *
@@ -53,14 +53,14 @@ namespace EasySSL {
  *
  * * Server receive R from client.
  * * Server compare U time with current unix time.
- * * If the diferrence more then allowed value then server reject an auth
+ * * If the difference more then allowed value then server reject an auth
  * * Server make S value as a client
- * * Server check SIG value and comapre it with S value
+ * * Server check SIG value and compare it with S value
  * * If message sign is valid then server accept an auth else reject.
  * * After accept server create new user with ID = sha256(PUB) or
- * if user alredy exits make them as a logined user.
+ * if user already exits make them as a logined user.
  *
- * @tparam CryptoImplementation This is internal implementaion of base encryption functions.
+ * @tparam CryptoImplementation This is internal implementation of base encryption functions.
  * @see iCrypto class.
  *
  */
@@ -109,7 +109,7 @@ public:
     }
 
     /**
-     * @brief prepare This method will generate signature for autentication of client. Please inboke this method before send request to server.
+     * @brief prepare This method will generate signature for authentication of client. Please inboke this method before send request to server.
      * @return true if signature generated sucessuful.
      */
     bool prepare() {
@@ -135,7 +135,7 @@ public:
 
     /**
      * @brief setUnixTime This method sets new value of the unixTime propertye.
-     * @param newUnixTime This is new unix time value. Unix time sets in secunds from 1970 year
+     * @param newUnixTime This is new unix time value. Unix time sets in seconds from 1970 year
      */
     void setUnixTime(unsigned int newUnixTime) {
         _unixTime = newUnixTime;
@@ -151,7 +151,7 @@ public:
     }
 
     /**
-     * @brief isValid this method check this ibject to valid.
+     * @brief isValid this method check this object to valid.
      * @return return true if object contains valid signature else false.
      * @note Invoke the AsyncKeysAuth::prepare method before check valid of object. All object that not be preparred is invalid.
      */

@@ -39,8 +39,8 @@ public:
     static BIGNUM* bignumFromArray(const QByteArray& array);
 
     /**
-     * @brief bioToByteArray This method converts the openssl BIO to the QByteArry
-     * @param bio input arrary.
+     * @brief bioToByteArray This method converts the openssl BIO to the QByteArray
+     * @param bio input array.
      * @return Qt Array
      */
     static QByteArray bioToByteArray(BIO *bio);
@@ -55,11 +55,11 @@ public:
     static BIO *byteArrayToBio(const QByteArray &byteArray);
 
     /**
-     * @brief extractPublcKey This method extracts the public key from the ssl (pem) structure.
+     * @brief extractPublicKey This method extracts the public key from the ssl (pem) structure.
      * @param ssl_keys These are objects of the ssl keys.
      * @return bytes array of the extracted key.
      */
-    static QByteArray extractPublcKey(EVP_PKEY* ssl_keys);
+    static QByteArray extractPublicKey(EVP_PKEY* ssl_keys);
 
     /**
      * @brief extractPrivateKey This method extracts the private key from the ssl (pem) structure.

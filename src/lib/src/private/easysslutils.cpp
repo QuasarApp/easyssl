@@ -56,7 +56,7 @@ BIO* EasySSLUtils::byteArrayToBio(const QByteArray& byteArray) {
     return bio;
 }
 
-QByteArray EasySSLUtils::extractPublcKey(EVP_PKEY *ssl_keys) {
+QByteArray EasySSLUtils::extractPublicKey(EVP_PKEY *ssl_keys) {
     if (!ssl_keys)
         return {};
 
