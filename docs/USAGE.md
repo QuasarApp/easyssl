@@ -64,7 +64,7 @@ EasySSL is a Qt wrapper of the OpenSSL 3.0+ library. It simplifies the working w
 
       DEFINES += EASYSSL_LIBRARY
 
-      # Link the OpenSSL 3.0+ libraryes:
+      # Link the OpenSSL 3.0+ libraries:
       LIBS += -lcrypto -lssl
       ```
 
