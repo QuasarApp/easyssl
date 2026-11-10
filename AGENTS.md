@@ -20,7 +20,7 @@ authentication. Supported algorithms: ECDSA, RSA.
 | `cmake/BuildOpenSSL.cmake` | optional OpenSSL source build (default path) |
 | `tests/` | Qt Test suite (`easyssltests`: auth, crypto, crt units) |
 | `submodules/CMake` | the QuasarApp CMake layer (`QuasarApp/CMake` submodule) |
-| `docs/`, `pages/` | documentation (mkdocs → `quasarapp.github.io`) |
+| `docs/`, `pages/` | documentation (Doxygen API docs + landing page → `quasarapp.github.io`) |
 
 ### Architecture
 
@@ -167,7 +167,9 @@ gh pr create \
 
 ### Documentation rules
 
-- `docs/` (mkdocs) is the public documentation — keep it in sync with API
+- `docs/` (Doxygen API docs + Markdown pages, deployed by
+  `.github/workflows/deploy-docs.yml`) is the public documentation — keep it
+  in sync with API
   changes in the same PR.
 
 ## Testing process
