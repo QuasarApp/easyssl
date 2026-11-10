@@ -200,15 +200,3 @@ cmake --build build --target test
 A green run ends with `Totals: 7 passed, 0 failed`. (The raw executable in
 `build/tests/easyssltests` can be run directly as well, but the `test`
 target is what deploys and runs the suite the way CI does.)
-
-### Smoke tests — the most important testing step
-
-The smoke test is the same three-step sequence from CMake: configure,
-`cmake --build build`, then `cmake --build build --target test`, with the
-deployed `easyssltests` suite passing headless (Qt Test runs in a
-`QCoreApplication`, no display needed). CI runs exactly this on every
-pull request (`.github/workflows/ci.yml`: Release build on Linux + Windows
-— Qt 6.12.0 on Linux, Qt 6.10.3 on Windows — with CQtDeployer installed
-via `QuasarApp/cqtdeployer-install-action`) and it gates the merge: a red
-suite blocks it. It is the fastest proof that the crypto/auth surface
-still works.
