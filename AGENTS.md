@@ -38,16 +38,16 @@ authentication. Supported algorithms: ECDSA, RSA.
 |---|---|
 | CMake | ≥ 3.19 |
 | Compiler | C++17 |
-| Qt | 6.10 (CI installs 6.10.3), modules: Core, Network, Test |
+| Qt | 5 or 6 (modules: Core, Network, Test; CI: 6.12.0 on Linux, 6.10.3 on Windows) |
 | Ninja | preferred generator |
 | OpenSSL | built from source by default (`BUILD_WITH_OPENSSL=ON`) or system dev package |
 | CQtDeployer | `cqtdeployer` on `PATH` — required by the `deploy`/`testeasyssl` targets |
 
 ### Build
 
-Step by step; the same commands run in CI
-(`.github/workflows/ci.yml`: on every pull request, Release build on
-Linux + Windows with Qt 6.10.3, then the test suite).
+Step by step; CI (`.github/workflows/ci.yml`) runs the same flow on
+every pull request — a Release build on Linux (Qt 6.12.0) and Windows
+(Qt 6.10.3, an aqt workaround), then the test suite via the `test` target.
 
 **1. One-time toolchain setup.** Qt 6.10.3 via aqtinstall
 (`aqt install-qt linux desktop 6.10.3 gcc_64 -O /opt/Qt`) plus CMake ≥ 3.19
@@ -175,23 +175,38 @@ gh pr create \
 ### Test infrastructure
 
 Qt Test suite in `tests/` (`tstMain.cpp` + `tests/units/`: auth, crypto,
-crt): the executable `easyssltests` links `Qt6::Test` and `easyssl`; built
-with `EASYSSL_TESTS=ON`. The QuasarApp CMake layer registers `testeasyssl`
-(deploy via cqtdeployer + execute) under the `test` aggregate.
+crt): the executable `easyssltests` links `Qt::Test` and `easyssl`; built
+with `EASYSSL_TESTS=ON` (default; forced `OFF` on Android, iOS and wasm32).
+The QuasarApp CMake layer registers the suite under the `test` aggregate:
+`test` → `testeasyssl` → `deployTesteasyssl` — `cqtdeployer` deploys the
+suite and its Qt runtime into the gitignored `Testing/easyssl/` directory
+and generates the `easyssltests.sh` run script — then `testeasyssl`
+executes that script from `Testing/easyssl/`. `cqtdeployer` must be on
+`PATH`.
 
 ### Running the tests from CMake
+
+The supported entry point is the `test` target (the same command CI runs):
 
 ```sh
 cmake -B build -G Ninja -DCMAKE_PREFIX_PATH=/opt/Qt/6.10.3/gcc_64 \
   -DCMAKE_BUILD_TYPE=Debug -DEASYSSL_TESTS=ON
 cmake --build build --parallel 16
-./build/tests/easyssltests
+cmake --build build --target test
 ```
+
+A green run ends with `Totals: 7 passed, 0 failed`. (The raw executable in
+`build/tests/easyssltests` can be run directly as well, but the `test`
+target is what deploys and runs the suite the way CI does.)
 
 ### Smoke tests — the most important testing step
 
-The smoke test is: configure + build + run `easyssltests` headless (Qt Test
-runs in a `QCoreApplication`, no display needed) in a Debug build, all
-units passing. It is the fastest proof that the crypto/auth surface still
-works, and it is what CI runs on every pull request
-(`.github/workflows/ci.yml`). A red suite blocks the merge.
+The smoke test is the same three-step sequence from CMake: configure,
+`cmake --build build`, then `cmake --build build --target test`, with the
+deployed `easyssltests` suite passing headless (Qt Test runs in a
+`QCoreApplication`, no display needed). CI runs exactly this on every
+pull request (`.github/workflows/ci.yml`: Release build on Linux + Windows
+— Qt 6.12.0 on Linux, Qt 6.10.3 on Windows — with CQtDeployer installed
+via `QuasarApp/cqtdeployer-install-action`) and it gates the merge: a red
+suite blocks it. It is the fastest proof that the crypto/auth surface
+still works.
