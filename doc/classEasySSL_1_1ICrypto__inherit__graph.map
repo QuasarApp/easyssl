@@ -1,7 +1,7 @@
 <map id="EasySSL::ICrypto" name="EasySSL::ICrypto">
-<area shape="rect" id="Node000001" title="The ICrypto class, This is base interface that provide encryption functionality." alt="" coords="97,5,257,211"/>
-<area shape="rect" id="Node000002" href="$classEasySSL_1_1ECDSASSL.html" title="The ECDSASSL class is ecdsa implementation of the Async authentication. This implementation based on ..." alt="" coords="5,279,165,524"/>
-<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="144,225,126,279,121,278,139,223"/>
-<area shape="rect" id="Node000003" href="$classEasySSL_1_1RSASSL.html" title="The RSASSL class This is wrapper for RSA algorithm of openssl 3.0 libraryry." alt="" coords="189,259,349,544"/>
-<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="216,223,227,258,222,259,211,225"/>
+<area shape="rect" id="Node000001" title="The ICrypto class, This is base interface that provide encryption functionality." alt="" coords="96,5,254,234"/>
+<area shape="rect" id="Node000002" href="$classEasySSL_1_1ECDSASSL.html" title="The ECDSASSL class is ecdsa implementation of the Async authentication. This implementation based on ..." alt="" coords="5,304,163,578"/>
+<area shape="poly" id="edge1_Node000001_Node000002" title=" " alt="" coords="140,246,125,305,120,304,138,251"/>
+<area shape="rect" id="Node000003" href="$classEasySSL_1_1RSASSL.html" title="The RSASSL class This is wrapper for RSA algorithm of openssl 3.0 libraryry." alt="" coords="188,282,346,600"/>
+<area shape="poly" id="edge2_Node000001_Node000003" title=" " alt="" coords="212,246,224,283,219,282,211,251"/>
 </map>

@@ -26,7 +26,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.97.b0f393a</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.102.44e4b11</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
