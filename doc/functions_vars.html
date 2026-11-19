@@ -17,7 +17,6 @@
 <script type="text/javascript" src="search/search.js"></script>
 <link rel="search" href="search_opensearch.php?v=opensearch.xml" type="application/opensearchdescription+xml" title="easyssl"/>
 <link href="doxygen.css" rel="stylesheet" type="text/css" />
-<link href="doxygenStyles.css" rel="stylesheet" type="text/css"/>
 </head>
 <body>
 <div id="top"><!-- do not remove this div, it is closed by doxygen! -->
@@ -26,7 +25,7 @@
  <tbody>
  <tr id="projectrow">
   <td id="projectalign">
-   <div id="projectname">easyssl<span id="projectnumber">&#160;0.102.44e4b11</span>
+   <div id="projectname">easyssl<span id="projectnumber">&#160;0.103.c7b1e39</span>
    </div>
    <div id="projectbrief">EasySSL is base back end library for your c++ Qt projects.</div>
   </td>
